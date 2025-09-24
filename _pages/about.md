@@ -24,6 +24,4 @@ latest_posts:
   limit: 3 # leave blank to include all the blog posts
 ---
 
-I am currently continuing my work on resource-constrained CNN implementations on FPGAs. I also like to create posts for technical guides and writeups to document solutions I've come up with.
-
-Feel free to reach out to me on LinkedIn (below) if you have questions or just want to say hi. Thanks for stopping by!
+Page is still under construction.
