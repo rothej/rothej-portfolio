@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-subtitle: Engineer at Lockheed Martin. Johns Hopkins Alumnus.
+subtitle: Engineer at Lockheed Martin. Johns Hopkins alumnus.
 
 profile:
   align: right
