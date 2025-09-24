@@ -5,6 +5,7 @@ description: Using machine learning to detect COVID-19 and other respitory illne
 img: assets/img/covid_xray_learn.png
 importance: 3
 category: grad work
+github: https://github.com/rothej/jh_ml_covid_detect/
 ---
 
 <div class="d-flex justify-content-center mb-4">
