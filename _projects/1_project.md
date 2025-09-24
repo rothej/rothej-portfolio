@@ -5,8 +5,6 @@ description: (OpenCV/Python) System with SMS alerts and server logging for unaut
 img: assets/img/opencv.png
 importance: 1
 category: grad work
-github: rothej/jh_facial_recog_lock
+redirect: https://github.com/rothej/jh_facial_recog_lock
 related_publications: true
 ---
-
-**For detailed implementation, setup instructions, and functionality, see the [GitHub repository](https://github.com/rothej/jh_facial_recog_lock).**
