@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Detecting COVID-19 from Chest X-Rays
-description: Using machine learning to detect COVID-19 and other respitory illness using radiographic images.
+description: Using machine learning algorithms to detect COVID-19 and other respiratory illness using radiographic images.
 img: assets/img/covid_xray_learn.png
 importance: 3
 category: grad work

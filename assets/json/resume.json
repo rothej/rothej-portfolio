@@ -118,12 +118,28 @@
   ],
   "projects": [
     {
-      "name": "lorem ipsum",
-      "summary": "need to update this.",
-      "highlights": ["lorem", "ipsum"],
-      "startDate": "2018-01-01",
-      "endDate": "2018-01-01",
-      "url": "https://example.com"
+      "name": "OpenCV Facial Recognition Lock",
+      "summary": "System with SMS alerts and server logging for unauthorized entry attempts.",
+      "highlights": ["OpenCV", "Python"],
+      "startDate": "2023-01-01",
+      "endDate": "2023-05-01",
+      "url": "https://github.com/rothej/jh_facial_recog_lock"
+    },
+    {
+      "name": "Implementing DDR2 Cache Memory",
+      "summary": "Implementing DDR2 Cache Memory using the Xilinx Memory Interface Generator on a pipelined MIPS processor.",
+      "highlights": ["Xilinx Vivado", "Memory Interface Generator", "DDR2"],
+      "startDate": "2022-01-01",
+      "endDate": "2022-05-01",
+      "url": "https://portfolio.rothellc.com/projects/implementing_ddr2_cache_memory/"
+    },
+    {
+      "name": "Detecting COVID-19 from Chest X-Rays",
+      "summary": "Using machine learning algorithms to detect COVID-19 and other respiratory illness using radiographic images.",
+      "highlights": ["Matlab", "Machine Learning"],
+      "startDate": "2021-08-01",
+      "endDate": "2021-12-01",
+      "url": "https://portfolio.rothellc.com//projects/detecting_covid-19_from_chest_x-rays/"
     }
   ]
 }
