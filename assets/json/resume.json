@@ -57,7 +57,7 @@
       "studyType": "MS",
       "startDate": "2020-01-20",
       "endDate": "2024-05-21",
-      "courses": ["Digital Signal Processing", "FPGA Design Using VHDL", "Machine Learning for Signal Processing", "Probability and Stocastic Processes for Engineers", "UAV Systems and Control", "Masters Thesis"]
+      "courses": ["Digital Signal Processing", "System-on-a-Chip FPGA Design Laboratory", "FPGA Design Using VHDL", "Machine Learning for Signal Processing", "Embedded Systems Development Lab", "Computer Architecture", "UAV Systems and Control", "Probability and Stocastic Processes for Engineers", "UAV Systems and Control", "Masters Thesis"]
     },
     {
       "institution": "California State University Northridge",
