@@ -44,22 +44,7 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "projects-opencv-facial-recognition-lock",
-          title: 'OpenCV Facial Recognition Lock',
-          description: "(OpenCV/Python) System with SMS alerts and server logging for unauthorized entry attempts.",
-          section: "Projects",handler: () => {
-              window.location.href = "/projects/1_project/";
-            },},{id: "projects-implementing-ddr2-cache-memory",
-          title: 'Implementing DDR2 Cache Memory',
-          description: "Implementing DDR2 Cache Memory using Xilinx Memory Interface Generator in Pipeline MIPS.",
-          section: "Projects",handler: () => {
-              window.location.href = "/projects/2_project/";
-            },},{id: "projects-detecting-covid-19-from-chest-x-rays",
-          title: 'Detecting COVID-19 from Chest X-Rays',
-          description: "Using machine learning to detect COVID-19 and other respitory illness using radiographic images.",
-          section: "Projects",handler: () => {
-              window.location.href = "/projects/3_project/";
-            },},{id: "projects-project-4",
+        },{id: "projects-project-4",
           title: 'project 4',
           description: "another without an image",
           section: "Projects",handler: () => {
@@ -89,40 +74,62 @@ ninja.data = [{
           description: "another project with an image 🎉",
           section: "Projects",handler: () => {
               window.location.href = "/projects/9_project/";
+            },},{id: "projects-detecting-covid-19-from-chest-x-rays",
+          title: 'Detecting COVID-19 from Chest X-Rays',
+          description: "Using machine learning algorithms to detect COVID-19 and other respiratory illness using radiographic images.",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/detecting_covid-19_from_chest_x-rays/";
+            },},{id: "projects-implementing-ddr2-cache-memory",
+          title: 'Implementing DDR2 Cache Memory',
+          description: "Implementing DDR2 Cache Memory using Xilinx Memory Interface Generator in Pipeline MIPS.",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/implementing_ddr2_cache_memory/";
+            },},{id: "projects-opencv-facial-recognition-lock",
+          title: 'OpenCV Facial Recognition Lock',
+          description: "(OpenCV/Python) System with SMS alerts and server logging for unauthorized entry attempts.",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/opencv_facial_recognition_lock/";
             },},{
         id: 'social-email',
         title: 'email',
         section: 'Socials',
         handler: () => {
-          window.open("mailto:%79%6F%75@%65%78%61%6D%70%6C%65.%63%6F%6D", "_blank");
+          window.open("mailto:%6A%6F%73%68%72%6F%74%68%65@%67%6D%61%69%6C.%63%6F%6D", "_blank");
         },
       },{
-        id: 'social-inspire',
-        title: 'Inspire HEP',
+        id: 'social-github',
+        title: 'GitHub',
         section: 'Socials',
         handler: () => {
-          window.open("https://inspirehep.net/authors/1010907", "_blank");
+          window.open("https://github.com/rothej", "_blank");
         },
       },{
-        id: 'social-rss',
-        title: 'RSS Feed',
+        id: 'social-linkedin',
+        title: 'LinkedIn',
         section: 'Socials',
         handler: () => {
-          window.open("/feed.xml", "_blank");
+          window.open("https://www.linkedin.com/in/joshua-rothe-22b18827", "_blank");
+        },
+      },{
+        id: 'social-orcid',
+        title: 'ORCID',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://orcid.org/0009-0002-9604-5301", "_blank");
+        },
+      },{
+        id: 'social-researchgate',
+        title: 'ResearchGate',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://www.researchgate.net/profile/Joshua-Rothe/", "_blank");
         },
       },{
         id: 'social-scholar',
         title: 'Google Scholar',
         section: 'Socials',
         handler: () => {
-          window.open("https://scholar.google.com/citations?user=qc6CJjYAAAAJ", "_blank");
-        },
-      },{
-        id: 'social-custom_social',
-        title: 'Custom_social',
-        section: 'Socials',
-        handler: () => {
-          window.open("https://www.alberteinstein.com/", "_blank");
+          window.open("https://scholar.google.com/citations?user=QmTscq4AAAAJ", "_blank");
         },
       },{
       id: 'light-theme',
