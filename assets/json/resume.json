@@ -1,8 +1,7 @@
 {
   "basics": {
     "name": "Joshua Rothe",
-    "label": "FPGA Engineer",
-    "image": "prof_pic.jpg",
+    "image": "assets/img/prof_pic.jpg",
     "email": "joshrothe@gmail.com",
     "url": "https://portfolio.rothellc.com/",
     "summary": "Senior engineer at Lockheed Martin with a M.S. in Electrical Engineering from Johns Hopkins University. Specializes in FPGA firmware design with experience in electrical and mechanical hardware as well as software development. Proficient in Verilog, SystemVerilog, VHDL, and various simulation and software tools.",

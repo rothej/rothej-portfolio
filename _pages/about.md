@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-subtitle: Engineer at Lockheed Martin. Johns Hopkins alumnus.
+subtitle: Engineer at Lockheed Martin, Johns Hopkins alumnus.
 
 profile:
   align: right
@@ -24,4 +24,6 @@ latest_posts:
   limit: 3 # leave blank to include all the blog posts
 ---
 
-Page is under construction as of Sep 23 - give me a couple days to set this up, and thanks for visiting!
+I am currently continuing my work on resource-constrained CNN implementations on FPGAs. I also like to create posts for technical guides and writeups to document solutions I've come up with.
+
+Feel free to reach out to me on LinkedIn (below) if you have questions or just want to say hi. Thanks for stopping by!
