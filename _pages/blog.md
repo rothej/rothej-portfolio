@@ -193,4 +193,14 @@ pagination:
 {% include pagination.liquid %}
 {% endif %}
 
+<div class="blog-footer mt-5 pt-4" style="border-top: 1px solid #dee2e6;">
+  <p class="text-muted small text-center">
+    <i class="fab fa-creative-commons"></i> 
+    All blog content is licensed under 
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">
+      Creative Commons Attribution 4.0 International License
+    </a>
+  </p>
+</div>
+
 </div>
