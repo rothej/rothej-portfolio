@@ -24,7 +24,7 @@ AllowedIPs = 0.0.0.0/0
 PersistentKeepalive = 25
 </code></pre></div></div> <p>Note that you have three items to fill in above. You will need the PublicKey from the server, not from what you have here on the client. So hold off on that for now.</p> <p>Private key on the client can be acquired using:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo cat</span> /etc/wireguard/privatekey
 </code></pre></div></div> <p>The public key on the client (which will be needed on the server) can be acquired using:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo cat</span> /etc/wireguard/publickey
-</code></pre></div></div> <p>Now SSH into the WireGuard server and edit the WireGuard config using:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>nano /etc/wireguard/wg0.conf
+</code></pre></div></div> <p>Now SSH into the WireGuard server and edit the WireGuard config using:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>vim /etc/wireguard/wg0.conf
 </code></pre></div></div> <p>Append the following to the file:</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Peer]
 PublicKey = # Paste your client's public key here.
 AllowedIPs = 10.0.0.2/32
