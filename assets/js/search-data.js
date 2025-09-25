@@ -44,7 +44,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/repositories/";
           },
-        },{id: "projects-project-4",
+        },{id: "post-setting-up-wireguard-vpn-client-on-linux",
+        
+          title: "setting up wireguard vpn client on linux",
+        
+        description: "guide for configuring a client-side linux (debian) system for wireguard vpn, automating network settings on both home and away networks",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/draft/";
+          
+        },
+      },{id: "projects-project-4",
           title: 'project 4',
           description: "another without an image",
           section: "Projects",handler: () => {
