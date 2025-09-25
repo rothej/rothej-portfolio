@@ -66,11 +66,6 @@ PersistentKeepalive = 25
 </code></pre></div></div> <p>Note for above, you need your server’s external IP. This will be your home router’s IP, port forwarded to your VPN server. This was likely set up when the WIreGuard server was set up, and you only need a service like <a href="https://whatismyip.com" rel="external nofollow noopener" target="_blank">this</a> to check your external IP.</p> <p>These two <code class="language-plaintext highlighter-rouge">wg0-*</code> scripts will replace wg0.conf dynamically depending on what network the client is on. This will be triggered by the detection script, which we will now build.</p> <h3 id="detection-script">Detection Script</h3> <p>Run:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>vim /etc/NetworkManager/dispatcher.d/99-wireguard-auto
 </code></pre></div></div> <p>Add the following, adjusting the <code class="language-plaintext highlighter-rouge">HOME_*</code> values as needed:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
 
-<span class="c"># Script:   99-wireguard-switch</span>
-<span class="c"># Purpose:  Automatically switch WireGuard configs based on network location.</span>
-<span class="c">#           Triggers when it detects network switch, and checks if home or away.</span>
-<span class="c"># Location: /etc/NetworkManager/dispatcher.d/99-wireguard-switch</span>
-
 <span class="nv">INTERFACE</span><span class="o">=</span><span class="nv">$1</span>
 <span class="nv">ACTION</span><span class="o">=</span><span class="nv">$2</span>
 
