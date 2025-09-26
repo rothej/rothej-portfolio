@@ -7,7 +7,7 @@ authors:
   - name: Joshua Rothe
     url: "https://portfolio.rothellc.com"
 excerpt: "Setting up a Wireguard VPN for privacy and security involves setting up both server and client side systems. This guide explains how to set up a client side Linux system - with or without [Pi-hole DNS filtering](https://pi-hole.net/) on the home network - and then configure the system so that Wireguard settings will switch depending on if the client system is on the home network or not. This is necessary because the Wireguard client will ruin your network connection if you are on your home network, and there is no need to manually switch your VPN on and off when automation exists."
-date: 2025-09-25
+date: 2025-09-26
 description: guide for configuring a client-side linux (debian) system for wireguard vpn, automating network settings on both home and away networks
 tags: [linux, vpn, wireguard, pihole, devops]
 categories: [linux, devops]
