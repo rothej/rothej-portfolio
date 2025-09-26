@@ -29,12 +29,11 @@ VPNs are a great tool for security and privacy, with key benefits being:
 **Functionality:**
 - **Ad Blocking:** If you run a [Pi-Hole](https://pi-hole.net/) system at home for ad blocking, you can use that same tool while off your home network.
 - **Home Network Access:** This secure tunnel to your home network means you can access devices on your home network such as cameras, NAS systems, and IoT devices without needing to expose them to the internet.
-- **Fast:** [WireGuard is fast](https://www.wireguard.com/performance/), faster than most other comparable VPN services.
+- **Speed:** [WireGuard is fast](https://www.wireguard.com/performance/), faster than most other comparable VPN services.
 
 **Practicality:**
 - **Low Overhead:** Works on virtually all modern hardware.
 - **Cryptographically Secure:** Uses proven, modern cryptographic primitives detailed on the [WireGuard homepage](https://www.wireguard.com/).
-
 - **Free:** Self explanatory. No risk of subscription fees in the future, either. Open source comes with benefits!
 
 If you do not have a WireGuard VPN server set up and find this interesting, I've worked through the [official WireGuard documentation](https://www.wireguard.com/quickstart/) and found it more than sufficient. Make sure this is complete before setting up clients! Windows and MacOS have [dedicated programs](https://www.wireguard.com/install/) for clients, but Linux is a bit more complicated; hence this guide.
