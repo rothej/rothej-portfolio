@@ -19,10 +19,10 @@ function determineGiscusTheme() {
   let giscusAttributes = {
     src: "https://giscus.app/client.js",
     "data-repo": "rothej/rothej-portfolio",
-    "data-repo-id": "",
+    "data-repo-id": "R_kgDOP1umMQ",
     "data-category": "Comments",
     "data-category-id": "",
-    "data-mapping": "title",
+    "data-mapping": "pathname",
     "data-strict": "1",
     "data-reactions-enabled": "1",
     "data-emit-metadata": "0",
