@@ -21,7 +21,7 @@ function determineGiscusTheme() {
     "data-repo": "rothej/rothej-portfolio",
     "data-repo-id": "R_kgDOP1umMQ",
     "data-category": "Comments",
-    "data-category-id": "",
+    "data-category-id": "DIC_kwDOP1umMc4Cv50z",
     "data-mapping": "pathname",
     "data-strict": "1",
     "data-reactions-enabled": "1",
