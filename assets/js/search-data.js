@@ -52,7 +52,7 @@ ninja.data = [{
         section: "Posts",
         handler: () => {
           
-            window.location.href = "/blog/2025/draft/";
+            window.location.href = "/blog/2025/setting-up-a-wireguard-vpn-client-on-linux/";
           
         },
       },{id: "projects-project-4",
