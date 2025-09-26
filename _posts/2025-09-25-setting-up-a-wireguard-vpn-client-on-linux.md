@@ -2,6 +2,7 @@
 layout: post
 title: setting up a wireguard vpn client on linux
 featured: false
+giscus_comments: true
 authors:
   - name: Joshua Rothe
     url: "https://portfolio.rothellc.com"
