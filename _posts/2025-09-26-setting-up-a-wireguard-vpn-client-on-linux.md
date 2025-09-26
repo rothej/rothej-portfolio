@@ -16,7 +16,7 @@ toc:
 ---
 Setting up a WireGuard VPN for privacy and security involves setting up both server and client side systems. This guide explains how to set up a client side Linux system - with or without [Pi-hole DNS filtering](https://pi-hole.net/) on the home network - and then configure the system so that WireGuard settings will switch depending on if the client system is on the home network or not. This is necessary because the WireGuard client will ruin your network connection if you are on your home network, and there is no need to manually switch your VPN client on and off when automation exists.
 
-Guide assumes a [WireGuard VPN server](https://www.wireguard.com/quickstart/) is set up, and port forwarding is configured on the home router. Guide is also written for Linux Mint - while this should also work for most Debian systems, you may need to modify some filepaths depending on your distro.
+This guide assumes a [WireGuard VPN server](https://www.wireguard.com/quickstart/) is set up, and port forwarding is configured on the home router. This guide is also written for Linux Mint - while this should also work for most Debian systems, you may need to modify some filepaths depending on your distro.
 
 ## Background
 
@@ -79,6 +79,7 @@ Then on the client side you can simply run:
 ```bash
 ssh-copy-id username@server-ip
 ```
+This copies SSH key settings to the host, if security settings allow it.
 
 </div>
 <div class="col-md-6">
@@ -105,7 +106,7 @@ sudo apt update
 sudo apt install wireguard resolvconf
 ```
 
-Once that is done, generate WireGuard keys (these are different than SSH keys - the former are needed to access the WireGuard server at all for configuration):
+Once that is done, generate WireGuard keys (these are different than SSH keys - the former are needed to access the WireGuard server for configuration):
 
 ```bash
 cd /etc/wireguard
@@ -193,7 +194,7 @@ Edit the home configuration using:
 sudo vim /etc/wireguard/wg0-home.conf
 ```
 
-The only change you need to make below is to AllowedIPs: `your-local-ip` (e.g. 192.168.1.0/24) is critical here, as you want the initial `192.168.1,*` to match the home network IPs your router issues. Also, don't forget to adjust `Address` if needed.
+The only change you need to make below is to AllowedIPs: `your-local-ip` (e.g. 192.168.1.0/24) is critical here, as you want the initial `192.168.1.*` to match the home network IPs your router issues. Also, don't forget to adjust `Address` if needed.
 ```
 [Interface]
 PrivateKey = # Your laptop's private key.
