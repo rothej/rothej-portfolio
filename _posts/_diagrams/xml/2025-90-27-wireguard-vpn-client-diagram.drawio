@@ -1,0 +1,103 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Linux x86_64; rv:142.0) Gecko/20100101 Firefox/142.0" version="28.2.5">
+  <diagram name="Page-1" id="LTKtjNd7oVnomZAc0bWe">
+    <mxGraphModel dx="1449" dy="1031" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="YnPZVCn4HuS7yzIZKi7v-16" value="WireGuard VPN Tunnel (10.0.0.0/24)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fillStyle=auto;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="320" y="160" width="240" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="YnPZVCn4HuS7yzIZKi7v-1" value="Home Network (192.168.1.0/24)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fillStyle=auto;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="40" y="80" width="240" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="YnPZVCn4HuS7yzIZKi7v-10" value="" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;" edge="1" parent="1" source="YnPZVCn4HuS7yzIZKi7v-3" target="YnPZVCn4HuS7yzIZKi7v-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="YnPZVCn4HuS7yzIZKi7v-3" value="&lt;div&gt;WireGuard Server&lt;/div&gt;&lt;div&gt;192.168.1.yyy&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1ba1e2;strokeColor=#006EAF;fillStyle=auto;verticalAlign=top;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="63" y="190" width="80" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="YnPZVCn4HuS7yzIZKi7v-11" value="" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;" edge="1" parent="1" source="YnPZVCn4HuS7yzIZKi7v-5" target="YnPZVCn4HuS7yzIZKi7v-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="YnPZVCn4HuS7yzIZKi7v-5" value="&lt;div&gt;PiHole&lt;/div&gt;&lt;div&gt;192.168.1.zzz&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1ba1e2;strokeColor=#006EAF;fillStyle=auto;verticalAlign=top;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="63" y="280" width="80" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="YnPZVCn4HuS7yzIZKi7v-9" value="" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;" edge="1" parent="1" source="YnPZVCn4HuS7yzIZKi7v-6" target="YnPZVCn4HuS7yzIZKi7v-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="YnPZVCn4HuS7yzIZKi7v-6" value="&lt;div&gt;Client (Home)&lt;/div&gt;&lt;div&gt;192.168.1.x&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1ba1e2;strokeColor=#006EAF;fillStyle=auto;verticalAlign=top;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="63" y="120" width="80" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="YnPZVCn4HuS7yzIZKi7v-7" value="&lt;div&gt;Router&lt;/div&gt;&lt;div&gt;192.168.1.1&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1ba1e2;strokeColor=#006EAF;fillStyle=auto;verticalAlign=middle;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="180" y="120" width="80" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="YnPZVCn4HuS7yzIZKi7v-8" value="Home Config: AllowedIPs = 192.168.1.0/24" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="40" y="330" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="YnPZVCn4HuS7yzIZKi7v-12" value="External Network (192.168.1.0/24)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fillStyle=auto;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="600" y="80" width="240" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="YnPZVCn4HuS7yzIZKi7v-13" value="Away Config: AllowedIPs = 0.0.0.0/0" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="600" y="330" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="YnPZVCn4HuS7yzIZKi7v-21" value="" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;" edge="1" parent="1" source="YnPZVCn4HuS7yzIZKi7v-14" target="YnPZVCn4HuS7yzIZKi7v-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="YnPZVCn4HuS7yzIZKi7v-14" value="&lt;div&gt;Public WiFi&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0a30a;strokeColor=#BD7000;fillStyle=auto;verticalAlign=middle;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="620" y="190" width="80" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="YnPZVCn4HuS7yzIZKi7v-22" value="" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;" edge="1" parent="1" source="YnPZVCn4HuS7yzIZKi7v-15" target="YnPZVCn4HuS7yzIZKi7v-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="YnPZVCn4HuS7yzIZKi7v-15" value="Client (Away)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0a30a;strokeColor=#BD7000;fillStyle=auto;verticalAlign=middle;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="740" y="190" width="80" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="YnPZVCn4HuS7yzIZKi7v-20" value="" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;" edge="1" parent="1" source="YnPZVCn4HuS7yzIZKi7v-17" target="YnPZVCn4HuS7yzIZKi7v-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="YnPZVCn4HuS7yzIZKi7v-17" value="&lt;div&gt;VPN Server&lt;/div&gt;&lt;div&gt;10.0.0.1&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#60a917;strokeColor=#2D7600;fillStyle=auto;verticalAlign=middle;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="340" y="190" width="80" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="YnPZVCn4HuS7yzIZKi7v-19" value="" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;" edge="1" parent="1" source="YnPZVCn4HuS7yzIZKi7v-18" target="YnPZVCn4HuS7yzIZKi7v-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="YnPZVCn4HuS7yzIZKi7v-18" value="&lt;div&gt;VPN Client&lt;/div&gt;&lt;div&gt;10.0.0.x&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#60a917;strokeColor=#2D7600;fillStyle=auto;verticalAlign=middle;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="460" y="190" width="80" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="YnPZVCn4HuS7yzIZKi7v-23" value="Network Detection Logic" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="300" y="400" width="280" height="360" as="geometry" />
+        </mxCell>
+        <mxCell id="YnPZVCn4HuS7yzIZKi7v-26" value="" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;" edge="1" parent="1" source="YnPZVCn4HuS7yzIZKi7v-24" target="YnPZVCn4HuS7yzIZKi7v-25">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="YnPZVCn4HuS7yzIZKi7v-24" value="Network Change Detected" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="325" y="565" width="90" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="YnPZVCn4HuS7yzIZKi7v-31" value="" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;" edge="1" parent="1" source="YnPZVCn4HuS7yzIZKi7v-25" target="YnPZVCn4HuS7yzIZKi7v-27">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="YnPZVCn4HuS7yzIZKi7v-34" value="" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;" edge="1" parent="1" source="YnPZVCn4HuS7yzIZKi7v-25" target="YnPZVCn4HuS7yzIZKi7v-29">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="YnPZVCn4HuS7yzIZKi7v-25" value="Ping Home Network?" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="455" y="540" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="YnPZVCn4HuS7yzIZKi7v-27" value="wg0_away config loaded" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="460" y="430" width="90" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="YnPZVCn4HuS7yzIZKi7v-29" value="wg0_home config loaded" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="460" y="690" width="90" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="YnPZVCn4HuS7yzIZKi7v-32" value="No" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="495" y="520" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="YnPZVCn4HuS7yzIZKi7v-33" value="Yes" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="495" y="630" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="YnPZVCn4HuS7yzIZKi7v-36" value="&lt;font&gt;WireGuard Network Switching Logic Diagram&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=23;" vertex="1" parent="1">
+          <mxGeometry x="40" y="10" width="800" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
