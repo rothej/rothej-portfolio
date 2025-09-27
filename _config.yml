@@ -7,7 +7,7 @@ first_name: Joshua
 middle_name: A.
 last_name: Rothe
 contact_note: >
-  © 2025 Joshua Rothe
+  
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
   Senior engineer at Lockheed Martin with M.S. in Electrical Engineering from Johns Hopkins University. 
   Specializes in FPGA firmware design with experience in electrical and mechanical hardware as well 
