@@ -8,7 +8,7 @@ authors:
     url: "https://portfolio.rothellc.com"
 excerpt: "Setting up a Wireguard VPN for privacy and security involves setting up both server and client side systems. This guide explains how to set up a client side Linux system - with or without [Pi-hole DNS filtering](https://pi-hole.net/) on the home network - and then configure the system so that Wireguard settings will switch depending on if the client system is on the home network or not. This is necessary because the Wireguard client will break your network connection if you are on your home network, and there is no need to manually switch your VPN on and off when automation exists."
 date: 2025-09-27
-description: Guide for configuring a client-side Linux (debian) system for WireGuard VPN, automating network settings on both home and away networks.
+description: Guide for configuring a client-side Linux (Debian) system for WireGuard VPN, automating network settings on both home and away networks.
 tags: [linux, vpn, wireguard, pihole, devops]
 categories: [linux, devops]
 toc:
@@ -21,7 +21,7 @@ toc:
 
 Setting up a WireGuard VPN for privacy and security involves setting up both server and client side systems. This guide explains how to set up a client side Linux system - with or without [Pi-hole DNS filtering](https://pi-hole.net/) on the home network - and then configure the system so that WireGuard settings will switch depending on if the client system is on the home network or not. This is necessary because the WireGuard client will break your network connection if you are on your home network, and there is no need to manually switch your VPN client on and off when automation exists.
 
-This guide assumes a [WireGuard VPN server](https://www.wireguard.com/quickstart/) is set up, and port forwarding is configured on the home router. This guide is also written for Linux Mint - while this should also work for most Debian systems, you may need to modify some filepaths depending on your distro.
+This guide assumes a [WireGuard VPN server](https://www.wireguard.com/quickstart/) is set up, and port forwarding is configured on the home router. This guide is also written for Linux Mint - while this should also work for most Debian systems, you may need to modify some file paths depending on your distro.
 
 ---
 
@@ -130,7 +130,7 @@ Next, create the WireGuard config file on your client using:
 sudo vim /etc/wireguard/wg0.conf
 ```
 
-And insert the following text to create your client's WireGuard network configuration file. This facilites the key handshake your client system will do with the server:
+And insert the following text to create your client's WireGuard network configuration file. This facilitates the key handshake your client system will do with the server:
 ```bash
 [Interface]
 PrivateKey = # Paste the contents of /etc/wireguard/privatekey here
@@ -191,7 +191,7 @@ Three items to check, above. Make sure the `Address` on your client side matches
 
 ---
 
-### Dual Wireguard Configurations
+### Dual WireGuard Configurations
 
 If you start WireGuard on your home network now, it will fail. You need to configure something that will turn it off when you are on your home network. Fortunately, we have good tools for this.
 
