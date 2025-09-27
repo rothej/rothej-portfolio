@@ -6,7 +6,7 @@ giscus_comments: true
 authors:
   - name: Joshua Rothe
     url: "https://portfolio.rothellc.com"
-excerpt: "Setting up a Wireguard VPN for privacy and security involves setting up both server and client side systems. This guide explains how to set up a client side Linux system - with or without [Pi-hole DNS filtering](https://pi-hole.net/) on the home network - and then configure the system so that Wireguard settings will switch depending on if the client system is on the home network or not. This is necessary because the Wireguard client will ruin your network connection if you are on your home network, and there is no need to manually switch your VPN on and off when automation exists."
+excerpt: "Setting up a Wireguard VPN for privacy and security involves setting up both server and client side systems. This guide explains how to set up a client side Linux system - with or without [Pi-hole DNS filtering](https://pi-hole.net/) on the home network - and then configure the system so that Wireguard settings will switch depending on if the client system is on the home network or not. This is necessary because the Wireguard client will break your network connection if you are on your home network, and there is no need to manually switch your VPN on and off when automation exists."
 date: 2025-09-26
 description: guide for configuring a client-side linux (debian) system for wireguard vpn, automating network settings on both home and away networks
 tags: [linux, vpn, wireguard, pihole, devops]
@@ -14,9 +14,11 @@ categories: [linux, devops]
 toc:
   sidebar: left
 ---
-Setting up a WireGuard VPN for privacy and security involves setting up both server and client side systems. This guide explains how to set up a client side Linux system - with or without [Pi-hole DNS filtering](https://pi-hole.net/) on the home network - and then configure the system so that WireGuard settings will switch depending on if the client system is on the home network or not. This is necessary because the WireGuard client will ruin your network connection if you are on your home network, and there is no need to manually switch your VPN client on and off when automation exists.
+Setting up a WireGuard VPN for privacy and security involves setting up both server and client side systems. This guide explains how to set up a client side Linux system - with or without [Pi-hole DNS filtering](https://pi-hole.net/) on the home network - and then configure the system so that WireGuard settings will switch depending on if the client system is on the home network or not. This is necessary because the WireGuard client will break your network connection if you are on your home network, and there is no need to manually switch your VPN client on and off when automation exists.
 
 This guide assumes a [WireGuard VPN server](https://www.wireguard.com/quickstart/) is set up, and port forwarding is configured on the home router. This guide is also written for Linux Mint - while this should also work for most Debian systems, you may need to modify some filepaths depending on your distro.
+
+---
 
 ## Background
 
@@ -39,11 +41,15 @@ VPNs are a great tool for security and privacy, with key benefits being:
 
 If you do not have a WireGuard VPN server set up and find this interesting, I've worked through the [official WireGuard documentation](https://www.wireguard.com/quickstart/) and found it more than sufficient. Make sure this is complete before setting up clients! Windows and MacOS have [dedicated programs](https://www.wireguard.com/install/) for clients, but Linux is a bit more complicated; hence this guide.
 
+---
+
 ## Prerequisites
 
 - WireGuard server, configured with port forwarding on your home router.
 - Linux client with `sudo` access (tested here on Mint/Debian).
 - Basic command line familiarity.
+
+---
 
 ## Client Setup
 
@@ -119,8 +125,8 @@ Next, create the WireGuard config file on your client using:
 sudo vim /etc/wireguard/wg0.conf
 ```
 
-And insert the following text:
-```
+And insert the following text to create your client's WireGuard network configuration file. This facilites the key handshake your client system will do with the server:
+```bash
 [Interface]
 PrivateKey = # Paste the contents of /etc/wireguard/privatekey here
 Address = 10.0.0.2/24
@@ -150,12 +156,12 @@ sudo vim /etc/wireguard/wg0.conf
 ```
 
 Append the following to the file:
-```
+```bash
 [Peer]
 PublicKey = # Paste your client's public key here.
-AllowedIPs = 10.0.0.2/32
+AllowedIPs = 10.0.0.x/32
 ```
-For `AllowedIPs`, you will need to increment the 2. For my setup, the server was .1, and I had two previous clients taking up .2 and .3, so I appended it as .4.
+For `AllowedIPs`, you will need to replace the `x`. For my setup, the server was .1, and I had two previous clients taking up .2 and .3, so I used .4. These are the IPs the WireGuard server uses to identify the peers on its network.
 
 Back on the client, edit the client's WireGuard config using:
 ```bash
@@ -163,7 +169,7 @@ sudo vim /etc/wireguard/wg0.conf
 ```
 
 Remember how we didn't have the server's public key last time? Fix that now:
-```
+```bash
 [Interface]
 PrivateKey = # Paste(d) the contents of /etc/wireguard/privatekey here
 Address = 10.0.0.2/24
@@ -178,12 +184,14 @@ PersistentKeepalive = 25
 
 Three items to check, above. Make sure the `Address` on your client side matches `AllowedIps` on the server side.
 
+---
+
 ### Dual Wireguard Configurations
 
 If you start WireGuard on your home network now, it will fail. You need to configure something that will turn it off when you are on your home network. Fortunately, we have good tools for this.
 
 On your client side, run:
-```
+```bash
 sudo cp /etc/wireguard/wg0.conf /etc/wireguard/wg0-away.conf
 sudo cp /etc/wireguard/wg0.conf /etc/wireguard/wg0-home.conf
 ```
@@ -195,7 +203,7 @@ sudo vim /etc/wireguard/wg0-home.conf
 ```
 
 The only change you need to make below is to AllowedIPs: `your-local-ip` (e.g. 192.168.1.0/24) is critical here, as you want the initial `192.168.1.*` to match the home network IPs your router issues. Also, don't forget to adjust `Address` if needed.
-```
+```bash
 [Interface]
 PrivateKey = # Your laptop's private key.
 Address = 10.0.0.2/24
@@ -214,7 +222,7 @@ sudo vim /etc/wireguard/wg0-away.conf
 ```
 
 And should contain:
-```
+```bash
 [Interface]
 PrivateKey = # Your laptop's private key.
 Address = 10.0.0.2/24
@@ -226,9 +234,11 @@ Endpoint = your-server-external-ip:51820
 AllowedIPs = 0.0.0.0/0
 PersistentKeepalive = 25
 ```
-Note for above, you need your server's external IP. This will be your home router's IP, port forwarded to your VPN server. This was likely set up when the WIreGuard server was set up, and you only need a service like [this](https://whatismyip.com) to check your external IP.
+Note for above, you need your server's external IP. This will be your home router's IP, port forwarded to your VPN server. This was likely set up when the WireGuard server was set up, and you only need a service like [this](https://whatismyip.com) to check your external IP.
 
 As a reminder, these two `wg0-*` scripts will replace wg0.conf dynamically depending on what network the client is on. This will be triggered by the detection script, which we will now build.
+
+---
 
 ### Detection Script
 
@@ -377,7 +387,7 @@ sudo vim /etc/NetworkManager/dispatcher.d/99-wireguard-dns.sh
 ```
 
 Add:
-```
+```bash
 #!/bin/bash
 
 INTERFACE=$1
@@ -418,6 +428,8 @@ sudo resolvectl default-route wlp4s0 false
 sudo systemctl restart wg-quick@wg0
 ```
 This restarts WireGuard and fixes the initial VPN prioritization issue. Some Linux queries might go through your ISP's DNS instead of the proper tunnel due to how systemd-resolve handles queries.
+
+---
 
 ### Troubleshooting
 
@@ -466,6 +478,8 @@ View logs:
 sudo tail -f /var/log/wireguard-auto.log
 ```
 
+---
+
 ## Conclusion
 
-That should get you a working VPN client! If you notice any issues with this guide, please feel free to reach out to the author.
+That should get you a working VPN client! If you notice any issues with this guide, please feel free to reach out or leave a comment.
