@@ -1,8 +1,8 @@
 ---
 layout: page
-title: projects
+title: Projects
 permalink: /projects/
-description: showcase of technical projects
+description: Showcase of technical projects.
 nav: true
 nav_order: 4
 display_categories: [grad work, undergrad work]

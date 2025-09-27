@@ -1,8 +1,8 @@
 ---
 layout: page
 permalink: /repositories/
-title: repositories
-description: git profile and repository showcase
+title: Repositories
+description: Git profile and repository showcase.
 nav: true
 nav_order: 5
 ---
