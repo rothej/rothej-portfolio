@@ -23,7 +23,7 @@
       "name": "Lockheed Martin Space",
       "position": "Software Engineer Sr",
       "url": "https://www.lockheedmartin.com/en-us/index.html",
-      "startDate": "2023-08-01",
+      "startDate": "August 2023",
       "endDate": "",
       "summary": "Current role, working as an FPGA design engineer supporting a software simulation group.",
       "highlights": ["Designed and simulated FPGA firmware using SystemVerilog and VHDL. Simulated using UVM and self-checking test benches. Wrote software test scripts and documentation as part of integration.", "Acted as lead for R&D efforts. Coordinated progress, schedule, and equipment cost with stakeholders and managers.", "Designed circuitry using Cadence OrCAD and simulated in PSPICE to verify functionality. Prototyped and tested circuits by both breadboarding and soldering components onto protoboards.", "Implemented a low-footprint Microk8s experiment (using Python) onto the LINUSS satellite to demonstrate functionality in a hardware-constrained environment. Automated deployment using YAML and bash scripts.", "Technical POC/Functional Owner of RTOS lab test environment, responsible for hardware and software configuration as well as cybersecurity (STIG) compliance. Acted as property coordinator for lab team.", "Lab hardware support, including wire harness design and hardware debugging/deployment."]
@@ -32,8 +32,8 @@
       "name": "Kratos Defense and Security Solutions, Inc.",
       "position": "Firmware Engineer III",
       "url": "https://www.kratosdefense.com/",
-      "startDate": "2022-05-01",
-      "endDate": "2023-07-01",
+      "startDate": "May 2022",
+      "endDate": "July 2023",
       "summary": "Worked as an FPGA firmware engineer in support of DSP efforts.",
       "highlights": ["Developed FPGA firmware for Xilinx MPSoCs, tested with software (Python, C++) scripts on no-OS and PetaLinux builds. Debugged firmware using Vitis and JTAG connections as well as using software scripts on the board’s processor (for MPSoCs).", "Implemented and tested C++/Python software and FPGA firmware on ICE FPGA cards using NeXT Midas."]
     },
@@ -41,8 +41,8 @@
       "name": "Lockheed Martin Skunkworks/ADP",
       "position": "Software Engineer",
       "url": "https://www.lockheedmartin.com/en-us/index.html",
-      "startDate": "2018-11-01",
-      "endDate": "2022-04-01",
+      "startDate": "Nov 2018",
+      "endDate": "Apr 2022",
       "summary": "Supported IRAD and other efforts with both design and ground/flight test support activities.",
       "highlights": ["Wrote SystemVerilog FPGA code for Xilinx MPSoC FPGAs in avionics systems, and Tcl scripts for automation.", "Documented lab equipment assembly and generated drawings using Catia V5 and Solidworks.", "Managed lab hardware procurement and inventory, up to $1.2 mil annually. Dealt directly with vendors.", "Supported testbed operations (flight test, truck test) including building and troubleshooting test setups."]
     }
@@ -72,28 +72,28 @@
   "certificates": [
     {
       "name": "Advanced Kubernetes Deployment Strategies and Networking",
-      "date": "April 3, 2025",
+      "date": "Apr 2025",
       "issuer": "Coursera",
       "url": "https://www.coursera.org/account/accomplishments/verify/8KX5LZPZSADJ",
       "icon": "fa-solid fa-hashtag"
     },
     {
       "name": "UVM for Verification Part 3: Register Abstraction Layer (RAL)",
-      "date": "2024-01-01",
+      "date": "Jan 2024",
       "issuer": "Udemy",
       "url": "http://ude.my/UC-87e5d4ce-2709-4240-9af4-fc0bb45ad64e",
       "icon": "fa-solid fa-hashtag"
     },
     {
       "name": "UVM for Verification Part 2: Projects",
-      "date": "2023-11-01",
+      "date": "Nov 2023",
       "issuer": "Udemy",
       "url": "https://ude.my/UC-58580020-b333-430d-bc68-7e707a3ff5c3",
       "icon": "fa-solid fa-hashtag"
     },
     {
       "name": "UVM for Verification Part 1: Fundamentals",
-      "date": "2023-10-01",
+      "date": "Oct 2023",
       "issuer": "Udemy",
       "url": "https://ude.my/UC-45360e86-eb70-47bf-a510-cd3d4ba38bb3",
       "icon": "fa-solid fa-hashtag"
