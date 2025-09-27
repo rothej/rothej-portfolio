@@ -48,7 +48,7 @@ ninja.data = [{
         
           title: "Setting Up a WireGuard VPN Client on Linux",
         
-        description: "Guide for configuring a client-side Linux (debian) system for WireGuard VPN, automating network settings on both home and away networks.",
+        description: "Guide for configuring a client-side Linux (Debian) system for WireGuard VPN, automating network settings on both home and away networks.",
         section: "Posts",
         handler: () => {
           
