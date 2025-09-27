@@ -5,7 +5,7 @@ permalink: /projects/
 description: Showcase of technical projects.
 nav: true
 nav_order: 4
-display_categories: [grad work, undergrad work]
+display_categories: [Grad, Undergrad]
 horizontal: false
 ---
 
