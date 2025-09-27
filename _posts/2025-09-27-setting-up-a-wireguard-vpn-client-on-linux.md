@@ -444,8 +444,9 @@ With Pi-Hole it should return `0.0.0.0`.
 
 Check if Pi-hole is reachable:
 ```bash
-ping 192.168.1.223
+ping 192.168.1.xxx
 ```
+(Change x's as needed).
 
 Verify the DNS script ran:
 ```bash
