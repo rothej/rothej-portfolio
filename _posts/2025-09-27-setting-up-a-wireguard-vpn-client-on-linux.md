@@ -24,7 +24,7 @@ Setting up a WireGuard VPN for privacy and security involves setting up both ser
 
 This guide assumes a [WireGuard VPN server](https://www.wireguard.com/quickstart/) is set up, and port forwarding is configured on the home router (UDP, port 51820 should be forwarding to your WireGuard server). This guide is also written for Linux Mint - while this should also work for most Debian systems, you may need to modify some file paths depending on your distro.
 
-Note: This post was updated Oct 18 2025 that fixes critical issues with the original approach - it would break upon switching network types while the client was shut down, and did not check if the WireGuard server itself was reachable when on an external network. This improved method fixes these issues and keeps the WireGuard client disabled until the following is verified:
+Note: This post was updated Oct 18 2025 to fix two critical issues with the original approach: the WireGuard client would break upon switching network types while the client was shut down, and it did not check if the WireGuard server itself was reachable when on an external network prior to enabling. This improved method fixes these issues and keeps the WireGuard client disabled until the following is verified:
 
 1. The client is not on the home network.
 2. The WireGuard server is reachable.
