@@ -151,19 +151,19 @@ Follow these instructions to connect to a remote hardware server:
 
 - First, ssh into the server that the FPGA board is connected to via a USB-to-JTAG connection. Ensure the board's switches are configured to allow for JTAG programming (which varies by board). So the connection stays awake even without user input, run the following command to ssh into the server (with appropriate username and IP):
 
-```
+```bash
 ssh -X -o ServerAliveInterval=30 username@SERVER.IP.GOES.HERE
 ```
 
 - Next, enter the following command to enable the Vivado hardware server:
 
-```
+```bash
 hw_server
 ```
 
 - Back within Vivado, type the following in the GUI's XSCT console to connect to the remote hardware server (with the appropriate IP):
 
-```
+```bash
 connect_hw_server -url SERVER.IP.GOES.HERE
 ```
 
@@ -174,11 +174,11 @@ connect_hw_server -url SERVER.IP.GOES.HERE
 
 Note: Failing to properly close hw_server on the remote machine can cause issues with trying to start a new instance of hw_server. If you get the error `Cannot create listening port: Socket bind error. Address already in use`, do the following to kill the process on the remote machine (assuming Linux), replacing 9085 here with the PID value returned with `pidof`:
 
-```
+```bash
 pidof hw_server
 ```
 
-```
+```bash
 kill -9 9085 # Replace 9085 with the correct PID value.
 ```
 
@@ -207,13 +207,13 @@ In Vitis, the memory window on the left side can be used to view memory addresse
 
 Example read command (can use -force flag if the register is protected):
 
-```
+```tcl
 mrd 0x50000000
 ```
 
 Example write command (writes a hex value of 1 to addr 5000_0000):
 
-```
+```tcl
 mwr 0x50000000 0x00000001
 ```
 
@@ -241,7 +241,7 @@ For a system controlled by AXI interfaces, the FPGA will map these interfaces to
 
 **Without an OS (Vitis)**
 
-```
+```c
 void axi_write_phase(u32 writeValue){
                 Xil_Out32(AXI_SDR_ADDR, writeValue);
 }
@@ -269,7 +269,7 @@ Code for writing to registers on Linux is shown below for reference. From this p
 
 **With an OS (Running C/C++ Code on a Linux OS on the Zynq Processor)**
 
-```
+```c
 void axi_write_phase(uint32_t writeValue){
                 /* Map the memory */
                 int fd = open("/dev/mem", O_RDWR|O_SYNC); // Need to close this when finished to avoid memory issues.
@@ -281,7 +281,7 @@ void axi_write_phase(uint32_t writeValue){
 ```
 
 Note: For the above, you will eventually need something to close the file descriptor, such as:
-```
+```c
 munmap(mm_sdr, 4096);
 close(fd);
 ```
