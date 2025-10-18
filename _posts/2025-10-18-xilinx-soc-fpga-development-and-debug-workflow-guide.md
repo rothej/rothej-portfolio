@@ -35,8 +35,8 @@ Newer FPGAs also have DSP slices, which are dedicated logic blocks for adders, m
 
 When an FPGA is programmed, code such as SystemVerilog (syntactically similar to C) directs the synthesizer to connect or disconnect these slices, filling the lookup tables appropriately to achieve the coded performance on hardware. Understanding how the code synthesizes onto the FPGA is very important for the designer to know for several reasons.
 
-1. Since you are programming hardware, some code is not synthesizable since it makes no sense to the compiler to put it on hardware. Examples include "wait" statements, or the "real" datatype. It is also important to be mindful that everything happens in parallel on hardware unless otherwise specified (e.g. a clock is added), so race conditions must be avoided and typical hardware design concerns such as set up time and hold time must be considered (this is referred to as timing closure in FPGA design, and is beyond the scope of this guide).
-2. You will want your code to utilize the resources on the FPGA as well as hardware resources on the board, and will need to design appropriately for your device. Instead of creating a large array of registers (which will not synthesize into BRAM), you will need to instantiate a Xilinx IP for the BRAM component on the board in order to utilize it. This is also very notably true for instantiating clock signals, and not letting your device try to infer one on firmware.
+1. Since you are programming hardware, some code is not synthesizable as it makes no sense to the compiler to put it on hardware. Examples include "wait" statements, or the "real" datatype. It is also important to be mindful that everything happens in parallel on hardware unless otherwise specified (e.g. a clock is added), so race conditions must be avoided and typical hardware design concerns such as set up time and hold time must be considered (this is referred to as timing closure in FPGA design, and is beyond the scope of this guide).
+2. You will want your code to utilize the resources on the FPGA as well as hardware resources on the board, and will need to design appropriately for your device. Instead of creating a large array of registers (which will not always properly synthesize into BRAM), you generally will want to instantiate a Xilinx IP for the BRAM component on the board in order to utilize it reliably. Clock signals, rather than being generated with regular FPGA fabric logic (e.g. counters or clock dividers), should be generated from dedicated clocking primitives (PLLs, MMCMs) to avoid poor timing and other issues.
 3. The processor(s), if used, need to be instantiated and connected to the design. How the design will be controlled from software must be considered, and those components must also be linked and created.
 4. How hardware components such as DDR3/4, DACs/ADCs, and I/O peripherals need to be controlled properly, which may include both firmware instantiation of controllers as well as proper register manipulation from software.
 5. Building off of the previous two items, the `component.xml` file is hardware specific and must define the coded signals to the correct chip pins. Some proprietary FPGA synthesizers have a pre-configured setup, which also needs to be understood by the designer since that generally cannot be changed.
@@ -101,7 +101,7 @@ After implementation, review the following:
 
 ## Debugging Workflow over JTAG
 
-This instruction is intended for reference when revising an IP that exists (or will exist) within a larger block diagram. This allows for debugging using the XSCT console in Vitis as well as the Vivado ILA (Integrated Logic Analyzer). Overall goal is to verify functionality of an FPGA build by reading/manipulating registers and viewing the waveform outputs prior to adding the complexity of an OS (and related software code) to the design. This instruction assumes a Zynq processor or similar is on the chip, and we have a software layer of some sort, which applies to most modern FPGAs. This instruction also assumes all of the simulation work has been completed, which is beyond the scope of this guide.
+This instruction is intended for reference when revising an IP that exists (or will exist) within a larger block diagram. This allows for debugging using the XSCT console in Vitis as well as the Vivado ILA (Integrated Logic Analyzer). Overall goal is to verify functionality of an FPGA build by reading/manipulating registers and viewing the waveform outputs prior to adding the complexity of an OS (and related software code) to the design. This instruction assumes a Zynq processor or similar is on the chip, and there is/will be a software layer of some sort on that processor, which applies to most modern FPGAs. This instruction also assumes all of the simulation work has been completed, which is beyond the scope of this guide.
 
 ---
 
@@ -280,6 +280,12 @@ void axi_write_phase(uint32_t writeValue){
 }
 ```
 
+Note: For the above, you will eventually need something to close the file descriptor, such as:
+```
+munmap(mm_sdr, 4096);
+close(fd);
+```
+
 --- 
 
 ## Conclusion
@@ -294,6 +300,8 @@ That summarizes the general implementation and debug workflow from post-synthesi
 - RPU: Real-Time Processing Unit
 - RTL: Register Transfer Level
 - HLS: High Level Synthesis
+- PLL: Phase-Locked Loop
+- MMCM: Mixed-Mode Clock Manager
 - RAM: Random Access Memory
 - DMA: Direct Memory Access
 - ADC: Analog to Digital Converter
