@@ -6,7 +6,7 @@ giscus_comments: true
 authors:
   - name: Joshua Rothe
     url: "https://portfolio.rothellc.com"
-excerpt: "Verification of an FPGA design post-synthesis involves several steps, which can be incrementally worked through as the design matures. The following guide provides a decent outline to carry a design from post-simulation all the way to implementation alongside a SoC processor that can control and read the FPGA from software. I originally wrote this guide in school, and revised it into a checklist as I found myself doing the same workflows. In situations where one missed step could require you to endlessly debug a phantom issue, it is helpful to have a repeatable process. While this guide is not all-encompassing, it functions as an excellent base framework for an FPGA designer to work from."
+excerpt: "Verification of an FPGA design post-synthesis involves several steps, which can be incrementally worked through as the design matures. The following guide provides a decent outline to carry a design from post-simulation all the way to implementation alongside a SoC processor that can control and read the FPGA from software. I originally wrote this guide in school, and revised it into a checklist as I found myself doing the same workflows. In situations where one missed step could require you to endlessly debug a phantom issue, it is helpful to have a repeatable process. While this guide is not all-encompassing, it functions as an excellent base framework for a junior FPGA designer to work from."
 date: 2025-10-18
 description: Guide that walks through a build and debug workflow for Xilinx/AMD SoC FPGAs, utilizing the Zynq processor on the board.
 tags: [fpga, xilinx, amd, vivado]
@@ -21,11 +21,11 @@ citation: true
 
 ---
 
-Verification of an FPGA design post-synthesis involves several steps, which can be incrementally worked through as the design matures. The following guide provides a decent outline to carry a design from post-simulation all the way to implementation alongside a SoC processor that can control and read the FPGA from software. I originally wrote this guide in school, and revised it into a checklist as I found myself doing the same workflows. In situations where one missed step could require you to endlessly debug a phantom issue, it is helpful to have a repeatable process. While this guide is not all-encompassing (and some of it is designer's choice rather than law), it functions as an excellent base framework for an FPGA designer to work from.
+Verification of an FPGA design post-synthesis involves several steps, which can be incrementally worked through as the design matures. The following guide provides a decent outline to carry a design from post-simulation all the way to implementation alongside a SoC processor that can control and read the FPGA from software. I originally wrote this guide in school, and revised it into a checklist as I found myself doing the same workflows. In situations where one missed step could require you to endlessly debug a phantom issue, it is helpful to have a repeatable process. While this guide is not all-encompassing, it functions as an excellent base framework for a junior FPGA designer to work from.
 
 ---
 
-## FPGA Overview (for Non-FPGA Developers)
+## FPGA Overview (Written for Non-FPGA Developers)
 
 FPGAs are programmable hardware devices that are made up of a grid of repeating programmable logic blocks called "slices" and various other interlinked components, which have rapidly increased in complexity and performance in recent years. A modern Zynq Ultrascale+ MPSoC has two processors (APU and RPU), a GPU, various on-chip memory types (RAM, block RAM, distributed RAM), DMA controllers, serial transceivers, and dedicated I/O interfaces. On the boards they are mounted on, you will also often see additional memory types (DDR3/4), ADC and DACs, I/O peripherals, and more.
 
@@ -41,13 +41,17 @@ When an FPGA is programmed, code such as SystemVerilog (syntactically similar to
 4. How hardware components such as DDR3/4, DACs/ADCs, and I/O peripherals need to be controlled properly, which may include both firmware instantiation of controllers as well as proper register manipulation from software.
 5. Building off of the previous two items, the `component.xml` file is hardware specific and must define the coded signals to the correct chip pins. Some proprietary FPGA synthesizers have a pre-configured setup, which also needs to be understood by the designer since that generally cannot be changed.
 
+For Xilinx FPGA design, the options are High Level Synthesis (HLS) coding in Vitis or Register Transfer Level (RTL) code in Vivado. RTL is typically preferred by electrical and FPGA engineers who need more control over hardware resources and timing, whereas HLS appeals more to software and embedded developers who can leverage C/C++ familiarity for rapid prototyping. This guide focuses on Vivado and RTL specifically, though Vitis is used in the debugging process as well.
+
+The following sections provide a step-by-step workflow for project creation through hardware debugging, assuming the reader has RTL source files ready for implementation.
+
 ---
 
 ## Building a Project
 
-Manually create a project in Xilinx Vivado with no sources, selecting only the applicable part type. Source files are then added to the project, and sim files are added separately (as they will be considered sim-only and not for synthesis). This project build can later be automated with .tcl scripts, including the creation of a block diagram, once these source files are added and (if applicable) a block diagram is created.
+Manually create a project in Xilinx Vivado with no sources, selecting only the applicable part type. Source files are then added to the project, and sim files are added separately (as they will be considered sim-only and not for synthesis). This project build can later be automated with .tcl scripts, including the creation of a block diagram, once these source files are added and (if applicable) a block diagram is created. The actual construction of these source files is beyond the scope of this guide, but it assumes `.sv`, `.v`, or `.vhd` files.
 
-It is recommended to keep the source files linked, so that as they are modified the source files outside of the project will continuously update and can be re-added when a project is rebuilt.
+It is recommended to keep the source files linked, so that as they are modified the source files outside of the project will continuously update and can be re-added when a project is rebuilt. This may not always be desired behavior, especially if you have an automated `.tcl` build workflow that manages source file versions independently.
 
 Typically, Vivado projects themselves are not saved, as rebuilding Vivado projects is a common way to fix many errors. The project files should be added to `.gitignore` in most cases.
 
@@ -148,7 +152,7 @@ Follow these instructions to connect to a remote hardware server:
 - First, ssh into the server that the FPGA board is connected to via a USB-to-JTAG connection. Ensure the board's switches are configured to allow for JTAG programming (which varies by board). So the connection stays awake even without user input, run the following command to ssh into the server (with appropriate username and IP):
 
 ```
-ssh -X -o ServerAliveInterval=30 username@8.8.8.8
+ssh -X -o ServerAliveInterval=30 username@SERVER.IP.GOES.HERE
 ```
 
 - Next, enter the following command to enable the Vivado hardware server:
@@ -160,7 +164,7 @@ hw_server
 - Back within Vivado, type the following in the GUI's XSCT console to connect to the remote hardware server (with the appropriate IP):
 
 ```
-connect_hw_server -url 8.8.8.8
+connect_hw_server -url SERVER.IP.GOES.HERE
 ```
 
 - Once connected, you should be in the **Hardware Manager**. Open it if not, then right click the board and select **Open Target**. The board should be visible in **Hardware** under the connected IP value.
@@ -186,11 +190,11 @@ kill -9 9085
 - Click **File > New > New Application Project**. Go to the **Create a new platform from hardware (XSA)** tab and load in the exported `.xsa` hardware file. Load the Hello World template and click **Finish**.
 - In the bottom left **Explorer** panel, right click the `<app_project_name>_system` entry (should be second from the top) and click **Build Project**. This generates the necessary build files.
 - Click the arrow next to the bug icon ("debug") and select **Debug Configurations**. Double click **Single Application Debug** to create a custom debug application.
-- In the **Main** tab, choose the appropriate conection. You may need to create a **New** one if the board is not local. The connection will save its variables even if you clear the workspace, but *this needs to be selected each time*.
+- In the **Main** tab, choose the appropriate connection. You may need to create a **New** one if the board is not local. The connection will save its variables even if you clear the workspace, but *this needs to be selected each time*.
 - In the **Target Setup** tab, make sure all of the reset, program and run checkboxes are enabled (not Skip Revision Check) and then also **Enable Cross Triggering**. Modify this by clicking the **...** button.
 - For **Cross Trigger Breakpoints**, create two. First, select **CPU-0 > CPU0 DBGACK** in the left tab, and the entirety of **FTM** on the right.
 - For the second breakpoint, select **CPU-0 > CPU0 debug request** on the right, and the entirety of **FTM** on the left.
-- Now click **Debug** to close out of the Debug Configurations** window.
+- Now click **Debug** to close the **Debug Configurations** window.
 - At the arrow next to the bug icon again, click **Debug As** and select the configuration that was just generated. The FPGA should program, restart, and run.
 
 ---
@@ -221,7 +225,7 @@ While debugging with the ILA, pay attention to set up and hold time violations a
 
 Create a **New Application Project** in Vitis as before, but set it as a blank C++ application and not Hello World. Add your software code in Vitis and build. The debugging tools are similar to the Eclipse IDE in that you can set breakpoints and view the machine code in Disassembly view.
 
-Assuming the hardware is connected via remote hw_server, you will need to open up a second terminal into that server. Set up minicom and connect to the board via UART (you will need a UART-to-USB connection in addition to the JTAG-to-USB connection) over 115200 baud, 8N1 and clear out modem settings A through H. This will typically be over `/dev/ttyUSB0` or some increment thereof. Any print outputs triggered by the C++ code in Vitis will be displayed over this terminal. Continue to modify code, rebuild the Application Project, and run as needed.
+Assuming the hardware is connected via remote hw_server, you will need to open up a second terminal into that server. Set up minicom and connect to the board via UART (you will need a UART-to-USB connection in addition to the JTAG-to-USB connection) over 115200 baud, 8N1 and clear out modem settings A through H. This is typically `/dev/ttyUSB0` or some increment thereof. Any print outputs triggered by the C++ code in Vitis will be displayed over this terminal. Continue to modify code, rebuild the Application Project, and run as needed.
 
 ---
 
@@ -231,7 +235,7 @@ The following is listed here as a quick reference for creating register manipula
 
 #### AXI-4 Interface Protocol
 
-For Xilinx devices, the AXI-4 interface is a common data transfer method between FPGA modules. The AXI-4 Lite protocol (most common) will typically load a correct series of values on the master side, and set valid to high when done. The slave side will through ready high, and this handshake will allow a single burst of (typically 32-bit) data to transfer. The full AXI functionality adds burst and data protection (prot) and is outside the scope of the below snippet, but below will work on both AXI-4 and AXI-4 Lite.
+For Xilinx devices, the AXI-4 interface is a common data transfer method between FPGA modules. The AXI-4 Lite protocol (most common) will typically load a correct series of values on the master side, and set `valid` to high when done. The slave side will set `ready` high, and this handshake will allow a single burst of (typically 32-bit) data to transfer. The full AXI functionality adds burst and data protection (prot) and is outside the scope of the below snippet, but below will work on both AXI-4 and AXI-4 Lite.
 
 For a system controlled by AXI interfaces, the FPGA will map these interfaces to registers. For example, 0x8000_0000 and 0x8001_0000 may be automatically mapped to two AXI registers, and the registers can both be written to directly from software by using commands such as what is shown below. The system automatically handles all of the handshakes required, so the programmer only has to worry about mapping the register and then reading or writing to it.
 
@@ -249,7 +253,7 @@ void axi_write_phase(u32 writeValue){
 
 When adding and removing debug cores, the design can end up getting buggy. Some notes on fixing:
 
-- When adding nets, it is easy to mark them in netlist view (Right click > **Mark for Debug**) and add them this way. When needing to debug a different set of nets, clear out the target constraints file of all synthesis-aded parameters (these will be appended to the file and were for the debug cores). Then close the project and delete the `<project_name>.hw` and `<project_name>.runs` folders. This forces the project to do a clean synthesis, at which point you can add new debug cores. Then build as normal.
+- When adding nets, it is easy to mark them in netlist view (Right click > **Mark for Debug**) and add them this way. When needing to debug a different set of nets, clear out the target constraints file of all synthesis-added parameters (these will be appended to the file and were for the debug cores). Then close the project and delete the `<project_name>.hw` and `<project_name>.runs` folders. This forces the project to do a clean synthesis, at which point you can add new debug cores. Then build as normal.
 
 ---
 
@@ -259,9 +263,9 @@ Once the JTAG debug process has been proven functional, and the design is intend
 
 (Note: Creating and setting up a bootable OS is beyond the scope of this guide).
 
-Once the necessary files are loaded onto the SD card, ensure the boot select pins on the board are set to SD rather than JTAG, and power up the board. You can use minicom over USB to log in initially, and once SSH is set up, use SSH to enter the board and copy the necessary files over. QPSI-flash will need to be set up to allow persistence after boot. Software files should be built on the board itself and ran.
+Once the necessary files are loaded onto the SD card, ensure the boot select pins on the board are set to SD rather than JTAG, and power up the board. You can use minicom over USB to log in initially, and once SSH is set up, use SSH to enter the board and copy the necessary files over. QPSI-flash (Quad SPI) will need to be set up to allow persistence after boot. Software files should be built on the board itself, and then ran.
 
-Code for writing to registers on linux is shown below for reference. From this point on, a designer will likely be manipulating registers from software and possibly setting up logging functionality to run on the processor.
+Code for writing to registers on Linux is shown below for reference. From this point on, a designer will likely be manipulating registers from software and possibly setting up logging functionality to run on the processor.
 
 **With an OS (Running C/C++ Code on a Linux OS on the Zynq Processor)**
 
@@ -288,6 +292,8 @@ That summarizes the general implementation and debug workflow from post-synthesi
 
 - APU: Application Processing Unit
 - RPU: Real-Time Processing Unit
+- RTL: Register Transfer Level
+- HLS: High Level Synthesis
 - RAM: Random Access Memory
 - DMA: Direct Memory Access
 - ADC: Analog to Digital Converter
