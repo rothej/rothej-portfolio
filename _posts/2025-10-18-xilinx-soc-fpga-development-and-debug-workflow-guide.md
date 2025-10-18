@@ -237,7 +237,7 @@ The following is listed here as a quick reference for creating register manipula
 
 For Xilinx devices, the AXI-4 interface is a common data transfer method between FPGA modules. The AXI-4 Lite protocol (most common) will typically load a correct series of values on the master side, and set `valid` to high when done. The slave side will set `ready` high, and this handshake will allow a single burst of (typically 32-bit) data to transfer. The full AXI functionality adds burst and data protection (prot) and is outside the scope of the below snippet, but below will work on both AXI-4 and AXI-4 Lite.
 
-For a system controlled by AXI interfaces, the FPGA will map these interfaces to registers. For example, 0x8000_0000 and 0x8001_0000 may be automatically mapped to two AXI registers, and the registers can both be written to directly from software by using commands such as what is shown below. The system automatically handles all of the handshakes required, so the programmer only has to worry about mapping the register and then reading or writing to it.
+For a system controlled by AXI interfaces, the FPGA will map these interfaces to registers. For example, 0x8000_0000 and 0x8001_0000 may be mapped as the base addresses to two AXI registers, and the registers can both be written to directly from software by using commands such as what is shown below. The system automatically handles all of the handshakes required, so the programmer only has to worry about mapping the register and then reading or writing to it.
 
 **Without an OS (Vitis)**
 
