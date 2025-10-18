@@ -21,7 +21,7 @@ citation: true
 
 ---
 
-Verification of an FPGA design post-synthesis involves several steps, which can be incrementally worked through as the design matures. The following guide provides a decent outline to carry a design from post-simulation all the way to implementation alongside a SoC processor that can control and read the FPGA from software. I originally wrote this guide in school, and revised it into a checklist as I found myself doing the same workflows. In situations where one missed step could require you to endlessly debug a phantom issue, it is helpful to have a repeatable process. While this guide is not all-encompassing, it functions as an excellent base framework for a junior FPGA designer to work from.
+Verification of an FPGA design post-synthesis involves several steps, which can be incrementally worked through as the design matures. The following guide provides a decent outline to carry a design from post-simulation all the way to implementation alongside a SoC processor that can control and read the FPGA from software. I originally wrote this guide while working on my Master's degree, and revised it into a checklist as I found myself doing the same workflows. In situations where one missed step could require you to endlessly debug a phantom issue, it is helpful to have a repeatable process. While this guide is not all-encompassing, it functions as an excellent base framework for a junior FPGA designer to work from.
 
 ---
 
@@ -49,9 +49,9 @@ The following sections provide a step-by-step workflow for project creation thro
 
 ## Building a Project
 
-Manually create a project in Xilinx Vivado with no sources, selecting only the applicable part type. Source files are then added to the project, and sim files are added separately (as they will be considered sim-only and not for synthesis). This project build can later be automated with .tcl scripts, including the creation of a block diagram, once these source files are added and (if applicable) a block diagram is created. The actual construction of these source files is beyond the scope of this guide, but it assumes `.sv`, `.v`, or `.vhd` files.
+Manually create a project in Xilinx Vivado with no sources, selecting only the applicable part type. Source files are then added to the project, and sim files are added separately (as they will be considered sim-only and not for synthesis). This project build can later be automated with `.tcl` scripts, including the creation of a block diagram, once these source files are added and (if applicable) a block diagram is created. The actual construction of these source files is beyond the scope of this guide, but it assumes `.sv`, `.v`, or `.vhd` files.
 
-It is recommended to keep the source files linked, so that as they are modified the source files outside of the project will continuously update and can be re-added when a project is rebuilt. This may not always be desired behavior, especially if you have an automated `.tcl` build workflow that manages source file versions independently.
+It is recommended to keep the source files linked, so that as they are modified the source files outside of the project will continuously update and can be re-added when a project is rebuilt. This may not always be desired behavior, however; especially if you have an automated `.tcl` build workflow that manages source file versions independently.
 
 Typically, Vivado projects themselves are not saved, as rebuilding Vivado projects is a common way to fix many errors. The project files should be added to `.gitignore` in most cases.
 
@@ -94,14 +94,14 @@ Above definitions will be required for Vivado to provide an accurate timing anal
 After implementation, review the following:
 
 - Timing Summary: All timing constraints should be met. No negative slack. Failure to meet timing requires redesign, possibly adding latches between long datapaths (beyond the scope of this guide).
-- Utilization Report: Aim for at most 80%, much less if this design shares space with other modules. LUTs, FFs, BRAMs, and DSPs should be carefully monitored. DSP resources are usually much more valuable on an FPGA and should be used sparingly.
-- Power Consumption: Verify it is within board capabilities.
+- Utilization Report: Aim for at most 80%, though many designers typically shoot for 60%-70%. You can run `report_qor_assessment` to get exact thresholds (defined by Xilinx/AMD) for utilization targets; staying below these values gives the best QoR (quality of results) and easier timing closure. As utilization approaches 100%, the place and route tools have to work much harder to meet timing; this can also result in longer build times.
+- Power Consumption: Verify it is within board capabilities. The system that you are integrating into likely has additional restrictions for power utilization that will need to be followed.
 
 ---
 
 ## Debugging Workflow over JTAG
 
-This instruction is intended for reference when revising an IP that exists (or can exist) within a larger block diagram. This allows for debugging using the XSCT console in Vitis as well as the Vivado ILA (Integrated Logic Analyzer). Overall goal is to verify functionality of an FPGA build by reading/manipulating registers and viewing the waveform outputs prior to adding the complexity of an OS (and related software code) to the design. This instruction assumes a Zynq processor or similar is on the chip, and we have a software layer of some sort, which applies to most modern FPGAs. This instruction also assumes all of the simulation work has been completed, which is beyond the scope of this guide.
+This instruction is intended for reference when revising an IP that exists (or will exist) within a larger block diagram. This allows for debugging using the XSCT console in Vitis as well as the Vivado ILA (Integrated Logic Analyzer). Overall goal is to verify functionality of an FPGA build by reading/manipulating registers and viewing the waveform outputs prior to adding the complexity of an OS (and related software code) to the design. This instruction assumes a Zynq processor or similar is on the chip, and we have a software layer of some sort, which applies to most modern FPGAs. This instruction also assumes all of the simulation work has been completed, which is beyond the scope of this guide.
 
 ---
 
@@ -172,14 +172,14 @@ connect_hw_server -url SERVER.IP.GOES.HERE
 - If all debug probes look good, go to **File > Export > Export Hardware**. Export a **Fixed Platform**, and **Include Bitstream**.
 - Now, go to **Tools > Launch Vitis IDE**. Leave Vivado and its Synthesis/Debug view open.
 
-*Note: Failing to properly close hw_server on the remote machine can cause issues with trying to start a new instance of hw_server. If you get the error `Cannot create listening port: Socket bind error. Address already in use`, do the following to kill the process on the remote machine (assuming Linux), replacing 9085 here with the PID value returned with `pidof`:
+Note: Failing to properly close hw_server on the remote machine can cause issues with trying to start a new instance of hw_server. If you get the error `Cannot create listening port: Socket bind error. Address already in use`, do the following to kill the process on the remote machine (assuming Linux), replacing 9085 here with the PID value returned with `pidof`:
 
 ```
 pidof hw_server
 ```
 
 ```
-kill -9 9085
+kill -9 9085 # Replace 9085 with the correct PID value.
 ```
 
 ---
@@ -302,3 +302,4 @@ That summarizes the general implementation and debug workflow from post-synthesi
 - MPSoC: Multi Processor System on Chip
 - DDR: Double Data Rate
 - SoM: System On Module
+- QoR: Quality of Results
