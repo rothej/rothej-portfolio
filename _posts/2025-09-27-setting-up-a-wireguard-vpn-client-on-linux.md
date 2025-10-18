@@ -22,7 +22,14 @@ citation: true
 
 Setting up a WireGuard VPN for privacy and security involves setting up both server and client side systems. This guide explains how to set up a client side Linux system - with or without [Pi-hole DNS filtering](https://pi-hole.net/) on the home network - and then configure the system so that WireGuard settings will switch depending on if the client system is on the home network or not. This is necessary because the WireGuard client will break your network connection if you are on your home network, and there is no need to manually switch your VPN client on and off when automation exists.
 
-This guide assumes a [WireGuard VPN server](https://www.wireguard.com/quickstart/) is set up, and port forwarding is configured on the home router. This guide is also written for Linux Mint - while this should also work for most Debian systems, you may need to modify some file paths depending on your distro.
+This guide assumes a [WireGuard VPN server](https://www.wireguard.com/quickstart/) is set up, and port forwarding is configured on the home router (UDP, port 51820 should be forwarding to your WireGuard server). This guide is also written for Linux Mint - while this should also work for most Debian systems, you may need to modify some file paths depending on your distro.
+
+Note: This post was updated Oct 18 2025 that fixes critical issues with the original approach - it would break upon switching network types while the client was shut down, and did not check if the WireGuard server itself was reachable when on an external network. This improved method fixes these issues and keeps the WireGuard client disabled until the following is verified:
+
+1. The client is not on the home network.
+2. The WireGuard server is reachable.
+
+The old method is kept in the Appendix for historical purposes, but is depreciated.
 
 ---
 
@@ -192,9 +199,305 @@ Three items to check, above. Make sure the `Address` on your client side matches
 
 ---
 
-### Dual WireGuard Configurations
+## Automated VPN Management
 
-If you start WireGuard on your home network now, it will fail. You need to configure something that will turn it off when you are on your home network. Fortunately, we have good tools for this.
+Run this first to set the WireGuard client as disabled by default:
+```bash
+sudo systemctl disable wg-quick@wg0
+sudo systemctl stop wg-quick@wg0
+```
+
+Run:
+```bash
+sudo vim /etc/NetworkManager/dispatcher.d/99-wireguard-auto
+```
+
+Replace the script text with the following, adjusting the `HOME_*` values as needed:
+```sh
+#!/bin/bash
+
+INTERFACE=$1
+ACTION=$2
+
+# Configuration. Change these as needed.
+HOME_NETWORK_GATEWAY="192.168.1.1" # Router's IP.
+HOME_WIREGUARD_SERVER="192.168.1.114" # WireGuard server IP.
+WIREGUARD_PORT="51820"
+HOME_EXTERNAL_IP="YOUR.EXTERNAL.IP" # Your external home network IP.
+LOG_FILE="/var/log/wireguard-auto.log"
+
+PING_TIMEOUT=5
+NC_TIMEOUT=10
+
+log_message() {
+    echo "$(date): [$INTERFACE/$ACTION] $1" | tee -a "$LOG_FILE"
+}
+
+is_wireguard_server_reachable() {
+    local server_ip="$1"
+    local port="$2"
+    
+    if command -v nc >/dev/null 2>&1; then
+        if nc -u -z -w 5 "$server_ip" "$port" >/dev/null 2>&1; then
+            log_message "Server $server_ip is reachable and responding"
+            return 0
+        else
+            log_message "WireGuard port $port on $server_ip is not responding"
+            return 1
+        fi
+    else
+        # Fallback if nc is not available.
+        log_message "Error: nc not available"
+        return 1
+    fi
+}
+
+is_home_network() {
+    if ping -c 3 -W "$PING_TIMEOUT" "$HOME_NETWORK_GATEWAY" >/dev/null 2>&1; then
+        if ping -c 3 -W "$PING_TIMEOUT" "$HOME_WIREGUARD_SERVER" >/dev/null 2>&1; then
+            local_ip=$(ip route get 8.8.8.8 2>/dev/null | awk '{print $7; exit}')
+            if [[ "$local_ip" =~ ^192\.168\.1\. ]]; then
+                return 0
+            fi
+        fi
+    fi
+    return 1
+}
+
+enable_wireguard() {
+    if ! systemctl is-active --quiet wg-quick@wg0; then
+        log_message "Enabling WireGuard"
+        systemctl enable wg-quick@wg0
+        systemctl start wg-quick@wg0
+    fi
+}
+
+disable_wireguard() {
+    if systemctl is-active --quiet wg-quick@wg0; then
+        log_message "Disabling WireGuard"
+        systemctl disable wg-quick@wg0
+        systemctl stop wg-quick@wg0
+    fi
+}
+
+# Only act on interface up events.
+if [ "$2" != "up" ]; then
+    exit 0
+fi
+
+log_message "Network change detected on $1"
+
+sleep 10
+
+if is_home_network; then
+    log_message "Home network confirmed - ensuring WireGuard is disabled"
+    disable_wireguard
+else
+    log_message "External network confirmed - testing VPN server"
+    if is_wireguard_server_reachable "$HOME_EXTERNAL_IP" "$WIREGUARD_PORT"; then
+        log_message "VPN server reachable - enabling WireGuard"
+        enable_wireguard
+    else
+        log_message "VPN server unreachable - WireGuard remains disabled"
+        disable_wireguard
+    fi
+fi
+```
+
+Next, run `sudo vim /etc/systemd/system/wireguard-boot-check.service` and add:
+```sh
+[Unit]
+Description=WireGuard Boot Config
+After=network-online.target
+Wants=network-online.target
+Before=wg-quick@wg0.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/wireguard-boot-check.sh
+RemainAfterExit=yes
+TimeoutStartSec=150
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Then run `sudo vim /usr/local/bin/wireguard-boot-check.sh` and add the following adjusting variables as needed:
+```sh
+#!/bin/bash
+
+# Configuration - adjust these to match your setup.
+HOME_NETWORK_GATEWAY="192.168.1.1"
+HOME_WIREGUARD_SERVER="192.168.1.114"
+HOME_EXTERNAL_IP="YOUR.EXTERNAL.IP.HERE"
+WIREGUARD_PORT="51820"
+LOG_FILE="/var/log/wireguard-boot-check.log"
+
+# Timeout after 2 min.
+NETWORK_WAIT_TIMEOUT=120
+PING_TIMEOUT=5
+NC_TIMEOUT=10
+
+log_message() {
+    echo "$(date): $1" | tee -a "$LOG_FILE"
+}
+
+is_wireguard_server_reachable() {
+    local server_ip="$1"
+    local port="$2"
+
+    # Give network time to settle on boot.
+    sleep 10
+    check_timeout
+    
+    if command -v nc >/dev/null 2>&1; then
+        if nc -u -z -w 5 "$server_ip" "$port" >/dev/null 2>&1; then
+            log_message "Server $server_ip is reachable and responding"
+            return 0
+        else
+            log_message "WireGuard port $port on $server_ip is not responding"
+            return 1
+        fi
+    else
+        # Fallback if nc is not available.
+        log_message "Error: nc not available"
+        return 1
+    fi
+}
+
+is_home_network() {
+    # Check if home gateway is reachable.
+    if ping -c 3 -W "$PING_TIMEOUT" "$HOME_NETWORK_GATEWAY" >/dev/null 2>&1; then
+        # Second check by pinging WireGuard server directly.
+        if ping -c 3 -W "$PING_TIMEOUT" "$HOME_WIREGUARD_SERVER" >/dev/null 2>&1; then
+            # Third check by seeing if client IP is in the home range.
+            local_ip=$(ip route get 8.8.8.8 2>/dev/null | awk '{print $7; exit}')
+            if [[ "$local_ip" =~ ^192\.168\.1\. ]]; then
+                log_message "Confirmed home network (gateway: $HOME_NETWORK_GATEWAY, server: $HOME_WIREGUARD_SERVER, local IP: $local_ip)"
+                return 0
+            fi
+        fi
+    fi
+    log_message "Not on home network"
+    return 1
+}
+
+enable_wireguard() {
+    log_message "Enabling WireGuard"
+    systemctl enable wg-quick@wg0
+    systemctl start wg-quick@wg0
+}
+
+log_message "Boot check: Starting (WireGuard disabled by default)"
+
+# Wait for stable network connectivity.
+elapsed=0
+while [ $elapsed -lt $NETWORK_WAIT_TIMEOUT ]; do
+    if ping -c 2 -W 3 8.8.8.8 >/dev/null 2>&1; then
+        log_message "Network connectivity established after ${elapsed}s"
+        break
+    fi
+    log_message "Waiting for network connectivity... (${elapsed}s)"
+    sleep 10
+    elapsed=$((elapsed + 10))
+done
+
+# If still no connectivity, exit.
+if ! ping -c 2 -W 3 8.8.8.8 >/dev/null 2>&1; then
+    log_message "No network connectivity after ${elapsed}s - WireGuard remains disabled"
+    exit 0
+fi
+
+log_message "Allowing network to settle..."
+sleep 15
+
+# Network location detection.
+if is_home_network; then
+    log_message "Home network confirmed - WireGuard remains disabled"
+else
+    log_message "External network confirmed - testing VPN server accessibility"
+    if is_wireguard_server_reachable "$HOME_EXTERNAL_IP" "$WIREGUARD_PORT"; then
+        log_message "VPN server confirmed reachable - enabling WireGuard"
+        enable_wireguard
+    else
+        log_message "VPN server not accessible - WireGuard remains disabled"
+    fi
+fi
+
+log_message "Boot check: WireGuard configuration complete"
+```
+
+Make the script executable and enable it.
+```bash
+sudo chmod +x /usr/local/bin/wireguard-boot-check.sh
+sudo systemctl enable wireguard-boot-check.service
+```
+
+Lastly, run:
+
+```bash
+sudo vim /etc/wireguard/wg0.conf
+```
+
+And add this to the file:
+```sh
+[Interface]
+PrivateKey = # Your laptop's private key.
+Address = 10.0.0.2/24
+DNS = 1.1.1.1 # Or 192.168.1.xxx for Pi-Hole.
+
+[Peer]
+PublicKey = # Your server's public key.
+Endpoint = your-server-external-ip:51820
+AllowedIPs = 0.0.0.0/0
+PersistentKeepalive = 25
+```
+Note for Endpoint above, you need your server's external IP. This will be your home router's IP, port forwarded to your VPN server.
+
+---
+
+### Verification
+
+After setup is complete, verify your VPN is working correctly.
+
+On an 'away' network, run:
+```bash
+sudo wg show
+sudo systemctl status wg-quick@wg0
+ip addr show wg0
+```
+
+You should see your WireGuard client configuration in the output.
+
+You should also see your home external IP displayed when you try to view your client's public IP. Verify this using:
+```bash
+curl -s ifconfig.me
+```
+
+Verify DNS resolution using:
+```bash
+nslookup google.com
+```
+
+The logs should also populate as your client switches networks or reboots. This can be viewed using:
+```bash
+sudo tail -f /var/log/wireguard-auto.log
+sudo tail -f /var/log/wireguard-boot-check.log
+```
+
+---
+
+## Conclusion
+
+That should get you a working VPN client! If you notice any issues with this guide, please feel free to reach out or leave a comment.
+
+---
+
+## Appendix
+
+### Dual WireGuard Configurations - Old Method
+
+The following method is depreciated and is kept for historical purposes only.
 
 On your client side, run:
 ```bash
@@ -246,14 +549,14 @@ As a reminder, these two `wg0-*` scripts will replace wg0.conf dynamically depen
 
 ---
 
-### Detection Script
+#### Detection Script
 
 Run:
 ```bash
 sudo vim /etc/NetworkManager/dispatcher.d/99-wireguard-auto
 ```
 
-Add the following, adjusting the `HOME_*` values as needed (note: this post has been updated with a better script, scroll to the end for the updated version):
+Add the following, adjusting the `HOME_*` values as needed:
 ```sh
 #!/bin/bash
 
@@ -434,390 +737,3 @@ sudo resolvectl default-route wlp4s0 false
 sudo systemctl restart wg-quick@wg0
 ```
 This restarts WireGuard and fixes the initial VPN prioritization issue. Some Linux queries might go through your ISP's DNS instead of the proper tunnel due to how systemd-resolve handles queries.
-
----
-
-### Troubleshooting
-
-Check that everything is running properly. If Pi-Hole is running, execute the following to verify that it is blocking ad servers (skip if no Pi-Hole is involved):
-```bash
-nslookup doubleclick.net
-nslookup googleadservices.com
-```
-With Pi-Hole it should return `0.0.0.0`.
-
-#### If DNS is not working with Pi-Hole
-
-Check if Pi-hole is reachable:
-```bash
-ping 192.168.1.xxx
-```
-(Change x's as needed).
-
-Verify the DNS script ran:
-```bash
-journalctl -u NetworkManager -f
-```
-
-Restart systemd-resolved:
-```bash
-sudo systemctl restart systemd-resolved
-```
-
-#### VPN connects, but no internet
-
-Check routing:
-```bash
-ip route show
-```
-
-#### Script not triggering on network changes
-
-This might be an open-ended issue to debug, but here are some common items to try.
-
-Check if NetworkManager is running:
-```bash
-sudo systemctl status NetworkManager
-```
-
-View logs:
-```bash
-sudo tail -f /var/log/wireguard-auto.log
-```
-
----
-
-## Conclusion
-
-That should get you a working VPN client! If you notice any issues with this guide, please feel free to reach out or leave a comment.
-
----
-
-## Update 16 October 2025
-
-The above post creates an auto-switching WireGuard configuration that breaks in two situations. One, upon reboot when switching network types while the client is down. Two, when the WireGuard server itself is down. The below script adjustments fix both issues and make this auto-switching solution much more robust:
-
-Run:
-```bash
-sudo vim /etc/NetworkManager/dispatcher.d/99-wireguard-auto
-```
-
-Replace the script text with the following, adjusting the `HOME_*` values as needed:
-```sh
-#!/bin/bash
-
-INTERFACE=$1
-ACTION=$2
-
-# Configuration. Change these as needed.
-HOME_NETWORK_GATEWAY="192.168.1.1" # Router's IP.
-HOME_WIREGUARD_SERVER="192.168.1.114" # WireGuard server IP.
-WIREGUARD_PORT="51820"
-HOME_EXTERNAL_IP="YOUR.EXTERNAL.IP" # Your external home network IP.
-LOG_FILE="/var/log/wireguard-auto.log"
-
-# Filter out interfaces we don't care about (loopback, virtual bridges, docker).
-case "$INTERFACE" in
-    lo|virbr*|docker*|br-*)
-        exit 0
-        ;;
-esac
-
-log_message() {
-    echo "$(date): [$INTERFACE/$ACTION] $1" | tee -a "$LOG_FILE"
-}
-
-# Only act on interface up/down events for primary connections.
-if [ "$ACTION" != "up" ] && [ "$ACTION" != "down" ]; then
-    exit 0
-fi
-
-# Skip if this is the WireGuard interface itself.
-if [ "$INTERFACE" = "wg0" ]; then
-    exit 0
-fi
-
-log_message "Network change detected on $INTERFACE"
-
-# Let network settle.
-sleep 2
-
-is_home_network() {
-    # Check if home gateway is reachable.
-    if ping -c 1 -W 3 "$HOME_NETWORK_GATEWAY" >/dev/null 2>&1; then
-        # Second check by pinging WireGuard server directly.
-        if ping -c 1 -W 3 "$HOME_WIREGUARD_SERVER" >/dev/null 2>&1; then
-            # Third check by seeing if our IP is in the home range.
-            local_ip=$(ip route get 8.8.8.8 2>/dev/null | awk '{print $7; exit}')
-            if [[ "$local_ip" =~ ^192\.168\.1\. ]]; then
-                return 0 # Home.
-            fi
-        fi
-    fi
-    return 1 # Away.
-}
-
-is_wireguard_server_reachable() {
-    local server_ip="$1"
-    local port="$2"
-    
-    # Check basic connectivity with ping.
-    if ! ping -c 3 -W 5 "$server_ip" >/dev/null 2>&1; then
-        log_message "Server $server_ip is not reachable via ping"
-        return 1
-    fi
-    
-    # Check if WireGuard port is responding (using nc).
-    if command -v nc >/dev/null 2>&1; then
-        if ! timeout 5 nc -u -z "$server_ip" "$port" 2>/dev/null; then
-            log_message "WireGuard port $port on $server_ip is not responding"
-            return 1
-        fi
-    fi
-    
-    log_message "Server $server_ip is reachable"
-    return 0
-}
-
-get_wg_status() {
-    if systemctl is-active --quiet wg-quick@wg0; then
-        echo "active"
-    else
-        echo "inactive"
-    fi
-}
-
-copy_config() {
-    local source="$1"
-    if [ -f "$source" ]; then
-        cp "$source" /etc/wireguard/wg0.conf
-        log_message "Copied $source to wg0.conf"
-        return 0
-    else
-        log_message "ERROR: $source not found!"
-        return 1
-    fi
-}
-
-start_wireguard() {
-    local config_file="$1"
-    local server_ip="$2"
-    local config_type="$3"
-    
-    if is_wireguard_server_reachable "$server_ip" "$WIREGUARD_PORT"; then
-        log_message "Starting $config_type VPN config - server is reachable"
-        if copy_config "$config_file"; then
-            systemctl start wg-quick@wg0
-            return 0
-        fi
-    else
-        log_message "WireGuard server $server_ip is unreachable - staying on direct connection"
-        return 1
-    fi
-}
-
-restart_wireguard() {
-    local config_file="$1"
-    local server_ip="$2"
-    local config_type="$3"
-    
-    if is_wireguard_server_reachable "$server_ip" "$WIREGUARD_PORT"; then
-        log_message "Switching to $config_type VPN config - server is reachable"
-        systemctl stop wg-quick@wg0
-        if copy_config "$config_file"; then
-            systemctl start wg-quick@wg0
-            return 0
-        fi
-    else
-        log_message "WireGuard server $server_ip is unreachable - stopping VPN"
-        systemctl stop wg-quick@wg0
-        return 1
-    fi
-}
-
-# Only proceed if network connection is present.
-if [ "$ACTION" = "up" ]; then
-    if is_home_network; then
-        log_message "Detected home network."
-        current_status=$(get_wg_status)
-        
-        if [ "$current_status" = "active" ]; then
-            # Check if using away config (away config has AllowedIPs = 0.0.0.0/0).
-            if grep -q "AllowedIPs = 0.0.0.0/0" /etc/wireguard/wg0.conf 2>/dev/null; then
-                restart_wireguard "/etc/wireguard/wg0-home.conf" "$HOME_WIREGUARD_SERVER" "home"
-            else
-                log_message "Already using home VPN config."
-            fi
-        else
-            start_wireguard "/etc/wireguard/wg0-home.conf" "$HOME_WIREGUARD_SERVER" "home"
-        fi
-    else
-        log_message "Detected external network."
-        current_status=$(get_wg_status)
-        
-        if [ "$current_status" = "active" ]; then
-            # Check if we're using the home config (home config has restricted AllowedIPs).
-            if grep -q "AllowedIPs = 192.168.1.0/24" /etc/wireguard/wg0.conf 2>/dev/null; then
-                restart_wireguard "/etc/wireguard/wg0-away.conf" "$HOME_EXTERNAL_IP" "away"
-            else
-                log_message "Already using away VPN config."
-            fi
-        else
-            start_wireguard "/etc/wireguard/wg0-away.conf" "$HOME_EXTERNAL_IP" "away"
-        fi
-    fi
-elif [ "$ACTION" = "down" ]; then
-    log_message "Network disconnected."
-fi
-
-exit 0
-```
-
-Next, run `sudo vim /etc/systemd/system/wireguard-boot-check.service` and add:
-```sh
-[Unit]
-Description=WireGuard Boot Config
-After=network-online.target
-Wants=network-online.target
-Before=wg-quick@wg0.service
-
-[Service]
-Type=oneshot
-ExecStart=/usr/local/bin/wireguard-boot-check.sh
-RemainAfterExit=yes
-TimeoutStartSec=150
-
-[Install]
-WantedBy=multi-user.target
-```
-
-Then run `sudo vim /usr/local/bin/wireguard-boot-check.sh` and add the following adjusting variables as needed:
-```sh
-#!/bin/bash
-
-# Configuration - adjust these to match your setup.
-HOME_NETWORK_GATEWAY="192.168.1.1"
-HOME_WIREGUARD_SERVER="192.168.1.114"
-HOME_EXTERNAL_IP="YOUR.EXTERNAL.IP.HERE"
-WIREGUARD_PORT="51820"
-LOG_FILE="/var/log/wireguard-boot-check.log"
-
-# Timeout after 2 min.
-TIMEOUT_SECONDS=120
-START_TIME=$(date +%s)
-
-log_message() {
-    echo "$(date): $1" | tee -a "$LOG_FILE"
-}
-
-check_timeout() {
-    local current_time=$(date +%s)
-    local elapsed=$((current_time - START_TIME))
-    if [ $elapsed -gt $TIMEOUT_SECONDS ]; then
-        log_message "Boot check: Timeout reached (${elapsed}s), disabling VPN and exiting"
-        systemctl disable wg-quick@wg0
-        systemctl stop wg-quick@wg0
-        exit 0
-    fi
-}
-
-is_wireguard_server_reachable() {
-    local server_ip="$1"
-    local port="$2"
-    
-    # Give network time to settle on boot.
-    sleep 10
-    check_timeout
-    
-    # Check basic connectivity with ping.
-    if ! ping -c 3 -W 5 "$server_ip" >/dev/null 2>&1; then
-        log_message "Boot check: Server $server_ip is not reachable via ping"
-        return 1
-    fi
-    
-    check_timeout
-    
-    # Check if WireGuard port is responding (using nc).
-    if command -v nc >/dev/null 2>&1; then
-        if ! timeout 5 nc -u -z "$server_ip" "$port" 2>/dev/null; then
-            log_message "Boot check: WireGuard port $port on $server_ip is not responding"
-            return 1
-        fi
-    fi
-    
-    log_message "Boot check: Server $server_ip is reachable"
-    return 0
-}
-
-is_home_network() {
-    check_timeout
-    
-    # Check if home gateway is reachable.
-    if ping -c 1 -W 3 "$HOME_NETWORK_GATEWAY" >/dev/null 2>&1; then
-        # Second check by pinging WireGuard server directly.
-        if ping -c 1 -W 3 "$HOME_WIREGUARD_SERVER" >/dev/null 2>&1; then
-            # Third check by seeing if client IP is in the home range.
-            local_ip=$(ip route get 8.8.8.8 2>/dev/null | awk '{print $7; exit}')
-            if [[ "$local_ip" =~ ^192\.168\.1\. ]]; then
-                return 0 # Home.
-            fi
-        fi
-    fi
-    return 1 # Away.
-}
-
-copy_config() {
-    local source="$1"
-    if [ -f "$source" ]; then
-        cp "$source" /etc/wireguard/wg0.conf
-        log_message "Boot check: Copied $source to wg0.conf"
-        return 0
-    else
-        log_message "Boot check: ERROR - $source not found!"
-        return 1
-    fi
-}
-
-log_message "Boot check: Starting WireGuard configuration check"
-
-# Wait for network to be available.
-while ! ping -c 1 8.8.8.8 >/dev/null 2>&1; do
-    check_timeout
-    log_message "Boot check: Waiting for network connectivity..."
-    sleep 5
-done
-
-if is_home_network; then
-    log_message "Boot check: Detected home network"
-    if is_wireguard_server_reachable "$HOME_WIREGUARD_SERVER" "$WIREGUARD_PORT"; then
-        log_message "Boot check: Configuring home VPN setup"
-        copy_config "/etc/wireguard/wg0-home.conf"
-        systemctl enable wg-quick@wg0
-    else
-        log_message "Boot check: Home WireGuard server unreachable, disabling VPN"
-        systemctl disable wg-quick@wg0
-        systemctl stop wg-quick@wg0
-    fi
-else
-    log_message "Boot check: Detected external network"
-    if is_wireguard_server_reachable "$HOME_EXTERNAL_IP" "$WIREGUARD_PORT"; then
-        log_message "Boot check: Configuring away VPN setup"
-        copy_config "/etc/wireguard/wg0-away.conf"
-        systemctl enable wg-quick@wg0
-    else
-        log_message "Boot check: External WireGuard server unreachable, disabling VPN"
-        systemctl disable wg-quick@wg0
-        systemctl stop wg-quick@wg0
-    fi
-fi
-
-log_message "Boot check: WireGuard configuration complete"
-```
-
-Finally, make the script executable and enable it.
-```bash
-sudo chmod +x /usr/local/bin/wireguard-boot-check.sh
-sudo systemctl enable wireguard-boot-check.service
-```
-
-This should avoid the previously mentioned issues.
