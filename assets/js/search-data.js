@@ -44,7 +44,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/repositories/";
           },
-        },{id: "post-setting-up-a-wireguard-vpn-client-on-linux",
+        },{id: "post-xilinx-amd-vivado-soc-fpga-development-and-debug-workflow",
+        
+          title: "Xilinx/AMD Vivado SoC FPGA Development and Debug Workflow",
+        
+        description: "Guide that walks through a build and debug workflow for Xilinx/AMD SoC FPGAs, utilizing the Zynq processor on the board.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/xilinx-soc-fpga-development-and-debug-workflow-guide/";
+          
+        },
+      },{id: "post-setting-up-a-wireguard-vpn-client-on-linux",
         
           title: "Setting Up a WireGuard VPN Client on Linux",
         
