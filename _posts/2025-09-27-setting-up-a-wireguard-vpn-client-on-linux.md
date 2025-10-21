@@ -33,7 +33,7 @@ The old method is kept in the Appendix for historical purposes, but is depreciat
 
 ---
 
-## Background
+# Background
 
 VPNs are a great tool for security and privacy, with key benefits being: 
 
@@ -56,7 +56,7 @@ If you do not have a WireGuard VPN server set up and find this interesting, I've
 
 ---
 
-## Prerequisites
+# Prerequisites
 
 - WireGuard server, configured with port forwarding on your home router.
 - Linux client with `sudo` access (tested here on Mint/Debian).
@@ -64,9 +64,9 @@ If you do not have a WireGuard VPN server set up and find this interesting, I've
 
 ---
 
-## Client Setup
+# Client Setup
 
-### SSH Key Generation
+## SSH Key Generation
 
 This process should be familiar (for general server access, not WireGuard-specific handshakes), but direction is provided below just in case. On the client, run:
 
@@ -85,7 +85,7 @@ There are two ways to copy your key to the server, the **Easy Way** and the **Mo
 <div class="row">
 <div class="col-md-6">
 
-#### The Easy Way:
+### The Easy Way:
 
 The easy way only works if your client can access the server. Since we are generating keys, you should probably have password authentication enabled for SSH. In case you forgot, you modify these lines in `/etc/ssh/sshd_config`:
 ```sh
@@ -103,7 +103,7 @@ This copies SSH key settings to the host, if security settings allow it.
 </div>
 <div class="col-md-6">
 
-#### The More Likely Way:
+### The More Likely Way:
 
 Run this on the client:
 ```bash
@@ -117,7 +117,7 @@ Get this clipboard item to the server however you like, probably using another s
 
 ---
 
-### Installation
+## Installation
 
 Run on the client to install necessary dependencies:
 ```bash
@@ -199,7 +199,7 @@ Three items to check, above. Make sure the `Address` on your client side matches
 
 ---
 
-## Automated VPN Management
+# Automated VPN Management
 
 Run this first to set the WireGuard client as disabled by default:
 ```bash
@@ -456,7 +456,7 @@ Note for Endpoint above, you need your server's external IP. This will be your h
 
 ---
 
-### Verification
+## Verification
 
 After setup is complete, verify your VPN is working correctly.
 
@@ -487,15 +487,15 @@ sudo tail -f /var/log/wireguard-boot-check.log
 
 ---
 
-## Conclusion
+# Conclusion
 
 That should get you a working VPN client! If you notice any issues with this guide, please feel free to reach out or leave a comment.
 
 ---
 
-## Appendix
+# Appendix
 
-### Dual WireGuard Configurations - Old Method
+## Dual WireGuard Configurations - Old Method
 
 The following method is depreciated and is kept for historical purposes only.
 
@@ -549,7 +549,7 @@ As a reminder, these two `wg0-*` scripts will replace wg0.conf dynamically depen
 
 ---
 
-#### Detection Script
+### Detection Script
 
 Run:
 ```bash

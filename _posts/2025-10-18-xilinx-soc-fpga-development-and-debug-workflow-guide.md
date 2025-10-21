@@ -25,7 +25,7 @@ Verification of an FPGA design post-synthesis involves several steps, which can 
 
 ---
 
-## FPGA Overview (Written for Non-FPGA Developers)
+# FPGA Overview (Written for Non-FPGA Developers)
 
 FPGAs are programmable hardware devices that are made up of a grid of repeating programmable logic blocks called "slices" and various other interlinked components, which have rapidly increased in complexity and performance in recent years. A modern Zynq Ultrascale+ MPSoC has two processors (APU and RPU), a GPU, various on-chip memory types (RAM, block RAM, distributed RAM), DMA controllers, serial transceivers, and dedicated I/O interfaces. On the boards they are mounted on, you will also often see additional memory types (DDR3/4), ADC and DACs, I/O peripherals, and more.
 
@@ -47,7 +47,7 @@ The following sections provide a step-by-step workflow for project creation thro
 
 ---
 
-## Building a Project
+# Building a Project
 
 Manually create a project in Xilinx Vivado with no sources, selecting only the applicable part type. Source files are then added to the project, and sim files are added separately (as they will be considered sim-only and not for synthesis). This project build can later be automated with `.tcl` scripts, including the creation of a block diagram, once these source files are added and (if applicable) a block diagram is created. The actual construction of these source files is beyond the scope of this guide, but it assumes `.sv`, `.v`, or `.vhd` files.
 
@@ -57,7 +57,7 @@ Typically, Vivado projects themselves are not saved, as rebuilding Vivado projec
 
 ---
 
-## Timing Constraints and Synthesis/Implementation Analysis
+# Timing Constraints and Synthesis/Implementation Analysis
 
 Before proceeding to hardware debugging, proper timing constraints need to be defined in the constraints `.xdc` file. All clocks should be defined by `create_clock` entries, and `set_clock_groups` should define all clock domain crossings. Input or output delays relative to external devices should also be defined using `set_input_delay` and `set_output_delay`, respectively. An example is shown below, which can be added to the top-level project's constraints file.
 
@@ -99,13 +99,13 @@ After implementation, review the following:
 
 ---
 
-## Debugging Workflow over JTAG
+# Debugging Workflow over JTAG
 
 This instruction is intended for reference when revising an IP that exists (or will exist) within a larger block diagram. This allows for debugging using the XSCT console in Vitis as well as the Vivado ILA (Integrated Logic Analyzer). Overall goal is to verify functionality of an FPGA build by reading/manipulating registers and viewing the waveform outputs prior to adding the complexity of an OS (and related software code) to the design. This instruction assumes a Zynq processor or similar is on the chip, and there is/will be a software layer of some sort on that processor, which applies to most modern FPGAs. This instruction also assumes all of the simulation work has been completed, which is beyond the scope of this guide.
 
 ---
 
-### IP Creation
+## IP Creation
 
 In Vivado, design and simulate the RTL code for the IP. Once this is satisfactory, select **Implementation > Run Implementation** from the Flow Navigator (left panel in Vivado GUI).
 
@@ -117,7 +117,7 @@ Once implementation is complete, go to **Tools > Package New IP**. Click through
 
 ---
 
-### Block Diagram Implementation
+## Block Diagram Implementation
 
 Please note that block diagrams can also be implemented within a top-level RTL. The constraints will need to be set up accordingly for whichever the top level design is.
 
@@ -141,7 +141,7 @@ For subsequent implementations:
 
 ---
 
-### Connecting to Hardware and Programming
+## Connecting to Hardware and Programming
 
 If the target is local, you can simply **Connect to the Local Target**. This applies only when the FPGA board is connected directly to the computer running Vivado via a JTAG cable (note: newer Xilinx development boards have built-in JTAG functionality and this cable is now simply a USB-type cable).
 
@@ -184,7 +184,7 @@ kill -9 9085 # Replace 9085 with the correct PID value.
 
 ---
 
-### Configuring Vitis for Hardware/ILA Debug
+## Configuring Vitis for Hardware/ILA Debug
 
 - The cleanest way to do this is open a new workspace each time, since this avoids (and even fixes) numerous errors and snags that can occur. Typical method is to use the same folder but delete all contents prior to opening - you can also choose a new workspace each time if preferred. Once the workspace folder is selected, click **Launch**.
 - Click **File > New > New Application Project**. Go to the **Create a new platform from hardware (XSA)** tab and load in the exported `.xsa` hardware file. Load the Hello World template and click **Finish**.
@@ -199,7 +199,7 @@ kill -9 9085 # Replace 9085 with the correct PID value.
 
 ---
 
-### Debugging the Hardware with ILA and Register Read/Write
+## Debugging the Hardware with ILA and Register Read/Write
 
 Back in Vivado, click **Window > Debug Probes**. The play button can be used to set up triggers that will configure it to read the waveform when the conditions are met (typically, you can set a valid signal low-to-high (R) to trigger for AXI signals). The double arrow symbol can be used to immediately show the waveform at the current moment regardless of triggers.
 
@@ -221,7 +221,7 @@ While debugging with the ILA, pay attention to set up and hold time violations a
 
 ---
 
-### Debugging the Software with Vitis and the Integrated Logic Analyzer (ILA)
+## Debugging the Software with Vitis and the Integrated Logic Analyzer (ILA)
 
 Create a **New Application Project** in Vitis as before, but set it as a blank C++ application and not Hello World. Add your software code in Vitis and build. The debugging tools are similar to the Eclipse IDE in that you can set breakpoints and view the machine code in Disassembly view.
 
@@ -229,17 +229,17 @@ Assuming the hardware is connected via remote hw_server, you will need to open u
 
 ---
 
-### Code Examples
+## Code Examples
 
 The following is listed here as a quick reference for creating register manipulation debug code.
 
-#### AXI-4 Interface Protocol
+### AXI-4 Interface Protocol
 
 For Xilinx devices, the AXI-4 interface is a common data transfer method between FPGA modules. The AXI-4 Lite protocol (most common) will typically load a correct series of values on the master side, and set `valid` to high when done. The slave side will set `ready` high, and this handshake will allow a single burst of (typically 32-bit) data to transfer. The full AXI functionality adds burst and data protection (prot) and is outside the scope of the below snippet, but below will work on both AXI-4 and AXI-4 Lite.
 
 For a system controlled by AXI interfaces, the FPGA will map these interfaces to registers. For example, 0x8000_0000 and 0x8001_0000 may be mapped as the base addresses to two AXI registers, and the registers can both be written to directly from software by using commands such as what is shown below. The system automatically handles all of the handshakes required, so the programmer only has to worry about mapping the register and then reading or writing to it.
 
-**Without an OS (Vitis)**
+#### Without an OS (Vitis)
 
 ```c
 void axi_write_phase(u32 writeValue){
@@ -249,7 +249,7 @@ void axi_write_phase(u32 writeValue){
 
 ---
 
-### Re-Configuring the Integrated Logic Analyzer
+## Re-Configuring the Integrated Logic Analyzer
 
 When adding and removing debug cores, the design can end up getting buggy. Some notes on fixing:
 
@@ -257,7 +257,7 @@ When adding and removing debug cores, the design can end up getting buggy. Some 
 
 ---
 
-## Debugging Workflow on OS
+# Debugging Workflow on OS
 
 Once the JTAG debug process has been proven functional, and the design is intended to run with an OS on the SoM, the next step is to build the software code on the OS and run it. To do this, the FPGA will need to be booted from an SD card containing both the firmware and the OS. Previously, it has been booting from JTAG.
 
@@ -267,7 +267,7 @@ Once the necessary files are loaded onto the SD card, ensure the boot select pin
 
 Code for writing to registers on Linux is shown below for reference. From this point on, a designer will likely be manipulating registers from software and possibly setting up logging functionality to run on the processor.
 
-**With an OS (Running C/C++ Code on a Linux OS on the Zynq Processor)**
+#### With an OS (Running C/C++ Code on a Linux OS on the Zynq Processor)
 
 ```c
 void axi_write_phase(uint32_t writeValue){
@@ -288,13 +288,13 @@ close(fd);
 
 --- 
 
-## Conclusion
+# Conclusion
 
 That summarizes the general implementation and debug workflow from post-synthesis to on-hardware implementation. Please feel free to reach out if you find any mistakes or inaccuracies in this guide.
 
 ---
 
-## Acronyms
+# Acronyms
 
 - APU: Application Processing Unit
 - RPU: Real-Time Processing Unit
