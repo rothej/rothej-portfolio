@@ -35,6 +35,42 @@ nav_order: 5
 {% endif %}
 {% endif %}
 
+{% if site.data.repositories.external_contributions %}
+
+## Open Source Contributions
+
+{% for contrib in site.data.repositories.external_contributions %}
+<div class="card mt-3">
+  <div class="card-body">
+    <h3 class="card-title">
+      <a href="{{ contrib.repo_url }}" target="_blank">
+        <i class="fab fa-github"></i> {{ contrib.repo }}
+      </a>
+    </h3>
+    <p class="card-text">{{ contrib.description }}</p>
+    <ul class="list-unstyled">
+      {% for pr in contrib.contributions %}
+      <li class="mb-2">
+        <a href="{{ pr.pr_url }}" target="_blank"><strong>PR #{{ pr.pr }}</strong></a>: {{ pr.title }}
+        {% if pr.status == 'merged' %}
+        <span class="badge badge-success">{{ pr.status }}</span>
+        {% elsif pr.status == 'open' %}
+        <span class="badge badge-primary">{{ pr.status }}</span>
+        {% else %}
+        <span class="badge badge-secondary">{{ pr.status }}</span>
+        {% endif %}
+        <small class="text-muted">· {{ pr.date }}</small>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endfor %}
+
+---
+
+{% endif %}
+
 {% if site.data.repositories.github_repos %}
 
 ## GitHub Repositories
