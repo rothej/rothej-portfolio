@@ -8,5 +8,6 @@ github_repos:
   - rothej/jh_ml_covid_detect
 
 external_contributions:
-  - repo: Xilinx/finn
+  - repo: Xilinx/FINN
     repo_url: https://github.com/Xilinx/finn
+    description: Framework for building fast FPGA accelerators for quantized neural networks

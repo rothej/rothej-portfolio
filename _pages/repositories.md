@@ -48,21 +48,12 @@ nav_order: 5
       </a>
     </h3>
     <p class="card-text">{{ contrib.description }}</p>
-    <ul class="list-unstyled">
-      {% for pr in contrib.contributions %}
-      <li class="mb-2">
-        <a href="{{ pr.pr_url }}" target="_blank"><strong>PR #{{ pr.pr }}</strong></a>: {{ pr.title }}
-        {% if pr.status == 'merged' %}
-        <span class="badge badge-success">{{ pr.status }}</span>
-        {% elsif pr.status == 'open' %}
-        <span class="badge badge-primary">{{ pr.status }}</span>
-        {% else %}
-        <span class="badge badge-secondary">{{ pr.status }}</span>
-        {% endif %}
-        <small class="text-muted">· {{ pr.date }}</small>
-      </li>
-      {% endfor %}
-    </ul>
+    
+    <a href="https://github.com/{{ contrib.repo }}/pulls?q=is%3Apr+author%3Arothej" 
+       target="_blank" 
+       class="btn btn-primary mt-3">
+      <i class="fas fa-code-branch"></i> View My Pull Requests
+    </a>
   </div>
 </div>
 {% endfor %}
