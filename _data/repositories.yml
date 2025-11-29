@@ -6,3 +6,7 @@ repo_description_lines_max: 2
 github_repos:
   - rothej/jh_facial_recog_lock
   - rothej/jh_ml_covid_detect
+
+external_contributions:
+  - repo: Xilinx/finn
+    repo_url: https://github.com/Xilinx/finn
