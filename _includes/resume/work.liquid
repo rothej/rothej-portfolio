@@ -1,5 +1,5 @@
 <ul class="card-text font-weight-light list-group list-group-flush">
-  {% assign work = data[1] | sort: 'startDate' | reverse %}
+  {% assign work = data[1] %}
   {% for content in work %}
     <li class="list-group-item">
       <div class="row">
@@ -16,7 +16,7 @@
             <tbody>
               <tr>
                 <td>
-                  <span class="badge font-weight-bold danger-color-dark text-uppercase align-middle" style="min-width: 75px"> {{ date }} </span>
+                  <span class="badge font-weight-bold danger-color-dark text-uppercase align-middle"> {{ date }} </span>
                 </td>
               </tr>
               {% if content.location %}
