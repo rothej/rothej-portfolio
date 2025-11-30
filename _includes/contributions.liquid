@@ -1,0 +1,50 @@
+<div class="contributions">
+  {% if site.data.github_prs.items %}
+    {% assign prs = site.data.github_prs.items %}
+    {% assign prs_size = prs | size %}
+    <div
+      class="table-responsive"
+      {% if include.limit and page.contributions.scrollable and prs_size > 3 %}
+        style="max-height: 60vw"
+      {% endif %}
+    >
+      <table class="table table-sm table-borderless">
+        {% if include.limit and page.contributions.limit %}
+          {% assign prs_limit = page.contributions.limit %}
+        {% else %}
+          {% assign prs_limit = prs_size %}
+        {% endif %}
+        {% for pr in prs limit: prs_limit %}
+          {% assign repo_parts = pr.repository_url | split: '/' %}
+          {% assign repo_owner = repo_parts[4] %}
+          {% assign repo_name = repo_parts[5] %}
+          {% assign repo_full = repo_owner | append: '/' | append: repo_name %}
+          <tr>
+            <th scope="row" style="width: 15%">
+              {% assign pr_date = pr.created_at | date: "%b %d, %Y" %}
+              {{ pr_date }}
+            </th>
+            <td>
+              <a class="contribution-title" href="{{ pr.html_url }}" target="_blank" rel="noopener noreferrer">
+                {{ pr.title }}
+              </a>
+              <span class="contribution-repo">
+                <i class="fab fa-github"></i>
+                {{ repo_full }}
+              </span>
+              {% if pr.state == 'open' %}
+                <span class="badge badge-pill badge-success">Open</span>
+              {% elsif pr.pull_request.merged_at %}
+                <span class="badge badge-pill badge-primary">Merged</span>
+              {% else %}
+                <span class="badge badge-pill badge-secondary">Closed</span>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
+  {% else %}
+    <p>Loading contributions from GitHub...</p>
+  {% endif %}
+</div>

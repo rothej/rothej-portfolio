@@ -54,6 +54,14 @@ layout: default
       </div>
     </div>
 
+    <!-- Open Source Contributions (full width below) -->
+    {% if page.contributions and page.contributions.enabled %}
+      <h2>
+        <a href="{{ '/repositories/' | relative_url }}" style="color: inherit">Open Source Contributions</a>
+      </h2>
+      {% include contributions.liquid limit=true %}
+    {% endif %}
+
     <!-- News (full width below) -->
     {% if page.announcements and page.announcements.enabled %}
       <h2>

@@ -1423,3 +1423,62 @@ figure.cover {
     color: #23212d !important;
   }
 }
+
+// Contributions
+.contributions {
+  th {
+    color: var(--global-text-color-light);
+    font-size: 0.875rem;
+    vertical-align: top;
+    padding-top: 0.5rem;
+  }
+
+  td {
+    padding-bottom: 1rem;
+  }
+
+  .contribution-title {
+    color: var(--global-text-color);
+    text-decoration: none;
+    font-weight: 500;
+    display: block;
+    margin-bottom: 0.25rem;
+
+    &:hover {
+      color: var(--global-theme-color);
+      text-decoration: none;
+    }
+  }
+
+  .contribution-repo {
+    color: var(--global-text-color-light);
+    font-size: 0.875rem;
+    margin-right: 0.5rem;
+
+    i {
+      margin-right: 0.25rem;
+    }
+  }
+
+  .badge {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    margin-left: 0.25rem;
+    vertical-align: middle;
+  }
+
+  .badge-success {
+    background-color: #28a745;
+    color: white;
+  }
+
+  .badge-primary {
+    background-color: #6f42c1;
+    color: white;
+  }
+
+  .badge-secondary {
+    background-color: #6c757d;
+    color: white;
+  }
+}

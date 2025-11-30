@@ -43,17 +43,32 @@ nav_order: 5
 <div class="card mt-3">
   <div class="card-body">
     <h3 class="card-title">
-      <a href="{{ contrib.repo_url }}" target="_blank">
+      <a href="{{ contrib.repo_url }}" target="_blank" rel="noopener noreferrer">
         <i class="fab fa-github"></i> {{ contrib.repo }}
       </a>
     </h3>
     <p class="card-text">{{ contrib.description }}</p>
     
-    <a href="https://github.com/{{ contrib.repo }}/pulls?q=is%3Apr+author%3Arothej" 
-       target="_blank" 
-       class="btn btn-primary mt-3">
-      <i class="fas fa-code-branch"></i> View My Pull Requests
-    </a>
+    <div class="mt-3">
+      <a href="https://github.com/{{ contrib.repo }}/pulls?q=is%3Apr+author%3A{{ site.data.repositories.github_users[0] }}" 
+         target="_blank" 
+         rel="noopener noreferrer"
+         class="btn btn-outline-primary">
+        <i class="fas fa-code-branch"></i> Pull Requests
+      </a>
+      <a href="https://github.com/{{ contrib.repo }}/commits?author={{ site.data.repositories.github_users[0] }}" 
+         target="_blank" 
+         rel="noopener noreferrer"
+         class="btn btn-outline-primary ml-2">
+        <i class="fas fa-code-commit"></i> Commits
+      </a>
+      <a href="https://github.com/{{ contrib.repo }}/issues?q=is%3Aissue+author%3A{{ site.data.repositories.github_users[0] }}" 
+         target="_blank" 
+         rel="noopener noreferrer"
+         class="btn btn-outline-primary ml-2">
+        <i class="fas fa-circle-exclamation"></i> Issues
+      </a>
+    </div>
   </div>
 </div>
 {% endfor %}

@@ -11,3 +11,6 @@ external_contributions:
   - repo: Xilinx/FINN
     repo_url: https://github.com/Xilinx/finn
     description: Framework for building fast FPGA accelerators for quantized neural networks
+  - repo: onnx/onnx
+    repo_url: https://github.com/onnx/onnx
+    description: Open standard for machine learning interoperability
