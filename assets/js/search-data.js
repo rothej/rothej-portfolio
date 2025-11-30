@@ -66,12 +66,7 @@ ninja.data = [{
             window.location.href = "/blog/2025/setting-up-a-wireguard-vpn-client-on-linux/";
           
         },
-      },{id: "projects-project-5",
-          title: 'project 5',
-          description: "a project with a background image",
-          section: "Projects",handler: () => {
-              window.location.href = "/projects/5_project/";
-            },},{id: "projects-project-6",
+      },{id: "projects-project-6",
           title: 'project 6',
           description: "a project with no image",
           section: "Projects",handler: () => {
@@ -96,6 +91,11 @@ ninja.data = [{
           description: "Using machine learning algorithms to detect COVID-19 and other respiratory illness using radiographic images.",
           section: "Projects",handler: () => {
               window.location.href = "/projects/detecting_covid-19_from_chest_x-rays/";
+            },},{id: "projects-gui2dance",
+          title: 'Gui2dance',
+          description: "(TypeScript) Interactive 2-D solar system simulation. Deployed using Vercel. Uses real data from NASA and JPL for orbital bodies. Just for fun, ongoing WIP.",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/gui2dance/";
             },},{id: "projects-implementing-ddr2-cache-memory",
           title: 'Implementing DDR2 Cache Memory',
           description: "Implementing DDR2 Cache Memory using Xilinx Memory Interface Generator in Pipeline MIPS.",
