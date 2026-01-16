@@ -10,7 +10,10 @@ github_repos:
 external_contributions:
   - repo: Xilinx/FINN
     repo_url: https://github.com/Xilinx/finn
-    description: Framework for building fast FPGA accelerators for quantized neural networks
+    description: Dataflow compiler for QNN inference on FPGAs 
   - repo: onnx/onnx
     repo_url: https://github.com/onnx/onnx
     description: Open standard for machine learning interoperability
+  - repo: godotengine/godot
+    repo_url: https://github.com/godotengine/godot/
+    description: Godot Engine – Multi-platform 2D and 3D game engine

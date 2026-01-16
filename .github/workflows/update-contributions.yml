@@ -2,7 +2,7 @@ name: Update GitHub Contributions Feed
 
 on:
   schedule:
-    # Run daily at 6:00 AM EST (11:00 AM UTC)
+    # Run daily at 4:00 AM MST
     - cron: "0 11 * * *"
   workflow_dispatch: # Allow manual trigger from GitHub UI
 
@@ -20,14 +20,40 @@ jobs:
         with:
           ref: main
       
-      - name: Clear Jekyll cache to force PR data refresh
-        run: |
-          rm -rf .jekyll-cache
-          echo "Jekyll cache cleared - PR data will be refreshed on next build"
+      - name: Create _data directory if it doesn't exist
+        run: mkdir -p _data
       
-      - name: Create empty commit to trigger rebuild
+      - name: Fetch GitHub Pull Request Data
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "Fetching GitHub PR data..."
+          
+          # Fetch pull requests created by you across all repositories
+          curl -H "Authorization: token $GITHUB_TOKEN" \
+               -H "Accept: application/vnd.github.v3+json" \
+               "https://api.github.com/search/issues?q=author:${{ github.actor }}+type:pr&sort=created&order=desc&per_page=100" \
+               > _data/github_prs.json
+          
+          echo "GitHub PR data fetched successfully"
+          cat _data/github_prs.json | head -20  # Show first 20 lines for debugging
+      
+      - name: Clear Jekyll cache
+        run: rm -rf .jekyll-cache
+      
+      - name: Commit updated data
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git commit --allow-empty -m "Update contributions feed [automated]"
-          git push
+          
+          # Add the data files
+          git add _data/github_prs.json
+          
+          # Only commit if there are changes
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Update GitHub PR data [automated]"
+            git push
+            echo "Updated GitHub PR data committed and pushed"
+          fi

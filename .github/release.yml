@@ -3,12 +3,12 @@ changelog:
     labels:
       - ignore-for-release
   categories:
-    - title: new features 🚀
+    - title: new features
       labels:
         - enhancement
-    - title: bug fixes and improvements ✨
+    - title: bug fixes and improvements
       labels:
         - bug-fix
-    - title: other changes 🛠️
+    - title: other changes
       labels:
         - "*"
