@@ -1,42 +1,8 @@
-<div class="repo p-2 text-center">
-  <a href="https://github.com/ryo-ma/github-profile-trophy">
-    <span class="d-none d-sm-none d-md-block">
-      <img
-        class="only-light"
-        alt="{{ include.username }}"
-        src="https://github-profile-trophy-liard-delta.vercel.app/?username={{ include.username }}&theme={{ site.repo_trophies.theme_light }}&locale={{ site.lang }}&margin-w=15&margin-h=15&no-bg=true&rank=-C&column=6"
-      >
-      <img
-        class="only-dark"
-        alt="{{ include.username }}"
-        src="https://github-profile-trophy-liard-delta.vercel.app/?username={{ include.username }}&theme={{ site.repo_trophies.theme_dark }}&locale={{ site.lang }}&margin-w=15&margin-h=15&no-bg=true&rank=-C&column=6"
-      >
-    </span>
-
-    <span class="d-none d-sm-block d-md-none">
-      <img
-        class="only-light"
-        alt="{{ include.username }}"
-        src="https://github-profile-trophy-liard-delta.vercel.app/?username={{ include.username }}&theme={{ site.repo_trophies.theme_light }}&locale={{ site.lang }}&margin-w=15&margin-h=15&no-bg=true&rank=-C&column=4"
-      >
-      <img
-        class="only-dark"
-        alt="{{ include.username }}"
-        src="https://github-profile-trophy-liard-delta.vercel.app/?username={{ include.username }}&theme={{ site.repo_trophies.theme_dark }}&locale={{ site.lang }}&margin-w=15&margin-h=15&no-bg=true&rank=-C&column=4"
-      >
-    </span>
-
-    <span class="d-block d-sm-none">
-      <img
-        class="only-light"
-        alt="{{ include.username }}"
-        src="https://github-profile-trophy-liard-delta.vercel.app/?username={{ include.username }}&theme={{ site.repo_trophies.theme_light }}&locale={{ site.lang }}&margin-w=15&margin-h=15&no-bg=true&rank=-C&column=3"
-      >
-      <img
-        class="only-dark"
-        alt="{{ include.username }}"
-        src="https://github-profile-trophy-liard-delta.vercel.app/?username={{ include.username }}&theme={{ site.repo_trophies.theme_dark }}&locale={{ site.lang }}&margin-w=15&margin-h=15&no-bg=true&rank=-C&column=3"
-      >
-    </span>
-  </a>
+<div class="repositories d-flex flex-wrap flex-md-row flex-column justify-content-between align-items-center">
+  <div class="repo p-2 text-center">
+    <img src="https://github-readme-streak-stats.herokuapp.com/?user={{ include.username }}&theme=transparent&hide_border=true" alt="GitHub Streak">
+  </div>
+  <div class="repo p-2 text-center">
+    <img src="https://github-readme-stats.vercel.app/api/top-langs/?username={{ include.username }}&layout=compact&theme=transparent&hide_border=true&langs_count=8" alt="Top Languages">
+  </div>
 </div>

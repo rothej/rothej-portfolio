@@ -14,6 +14,9 @@ external_contributions:
   - repo: onnx/onnx
     repo_url: https://github.com/onnx/onnx
     description: Open standard for machine learning interoperability
+  - repo: fastmachinelearning/qonnx
+    repo_url: https://github.com/fastmachinelearning/qonnx
+    description: Arbitrary-Precision Quantized Neural Networks in ONNX
   - repo: godotengine/godot
     repo_url: https://github.com/godotengine/godot/
     description: Godot Engine – Multi-platform 2D and 3D game engine
