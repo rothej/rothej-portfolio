@@ -62,8 +62,8 @@
       "body": "This fix adds the following helper methods in ModelWrapper:\r\n\r\nglobal_in = model.get_global_in()\r\nglobal_out = model.get_global_out()\r\n\r\nThis is meant to handle the following FINN issue: https://github.com/Xilinx/finn/pull/1494\r\n\r\nOnce this PR is approved, can use the new commit hash in the FINN fix and remove the duplicate definitions from my FINN fix.",
       "reactions": {
         "url": "https://api.github.com/repos/fastmachinelearning/qonnx/issues/225/reactions",
-        "total_count": 0,
-        "+1": 0,
+        "total_count": 1,
+        "+1": 1,
         "-1": 0,
         "laugh": 0,
         "hooray": 0,
@@ -192,11 +192,11 @@
           "user_view_type": "public",
           "site_admin": false
         },
-        "open_issues": 111,
+        "open_issues": 115,
         "closed_issues": 0,
         "state": "open",
         "created_at": "2025-11-27T20:29:18Z",
-        "updated_at": "2026-01-18T11:09:23Z",
+        "updated_at": "2026-01-19T10:01:48Z",
         "due_on": null,
         "closed_at": null
       },
