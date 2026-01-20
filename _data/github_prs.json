@@ -192,11 +192,11 @@
           "user_view_type": "public",
           "site_admin": false
         },
-        "open_issues": 115,
+        "open_issues": 131,
         "closed_issues": 0,
         "state": "open",
         "created_at": "2025-11-27T20:29:18Z",
-        "updated_at": "2026-01-19T10:01:48Z",
+        "updated_at": "2026-01-20T10:29:13Z",
         "due_on": null,
         "closed_at": null
       },
