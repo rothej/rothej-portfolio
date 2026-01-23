@@ -1,7 +1,7 @@
 ---
 layout: page
-title: Sample Interactive Anodize/Chemfilm Drawing in Solidworks
-description: Creating an interactive, color coded .pdf of a mechanical part in Solidworks to clarify surfaces to perform outside processing on.
+title: Sample Interactive Drawing in Solidworks
+description: Creating an interactive, color coded .pdf of a mechanical part in Solidworks to clarify surfaces to perform outside processing (e.g. anodize, chemfilm) on.
 img: assets/img/anodize.png
 importance: 1
 category: Undergrad

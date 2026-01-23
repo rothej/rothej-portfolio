@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Sample Manufacturing Drawing in Solidworks
-description: Modeled and generated drawings for manufacturing clarity
+description: Modeled and generated drawings for clarity to reduce errors when machining parts.
 img: assets/img/mfg_part.png
 importance: 2
 category: Undergrad

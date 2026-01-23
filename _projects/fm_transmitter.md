@@ -1,9 +1,9 @@
 ---
 layout: page
 title: FM Transmitter
-description: Designing an FM Transmitter circuit for Senior Design
+description: Designed and built an FM Transmitter circuit for Senior Design.
 img: assets/img/fmt_circuit.png
-importance: 5
+importance: 3
 category: Undergrad
 ---
 
