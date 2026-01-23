@@ -59,16 +59,16 @@ ninja.data = [{
             window.location.href = "/blog/2025/setting-up-a-wireguard-vpn-client-on-linux/";
           
         },
-      },{id: "projects-fm-transmitter",
-          title: 'FM Transmitter',
-          description: "Designing an FM Transmitter circuit for Senior Design",
-          section: "Projects",handler: () => {
-              window.location.href = "/projects/9_project/";
-            },},{id: "projects-detecting-covid-19-from-chest-x-rays",
+      },{id: "projects-detecting-covid-19-from-chest-x-rays",
           title: 'Detecting COVID-19 from Chest X-Rays',
           description: "Using machine learning algorithms to detect COVID-19 and other respiratory illness using radiographic images.",
           section: "Projects",handler: () => {
               window.location.href = "/projects/detecting_covid-19_from_chest_x-rays/";
+            },},{id: "projects-fm-transmitter",
+          title: 'FM Transmitter',
+          description: "Designed and built an FM Transmitter circuit for Senior Design.",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/fm_transmitter/";
             },},{id: "projects-gui2dance",
           title: 'Gui2dance',
           description: "(TypeScript) Interactive 2-D solar system simulation. Deployed using Vercel. Uses real data from NASA and JPL for orbital bodies. Just for fun, ongoing WIP.",
@@ -84,19 +84,14 @@ ninja.data = [{
           description: "(OpenCV/Python) System with SMS alerts and server logging for unauthorized entry attempts.",
           section: "Projects",handler: () => {
               window.location.href = "/projects/opencv_facial_recognition_lock/";
-            },},{id: "projects-programming-an-lcd-display-for-an-lpc2148-using-assembly",
-          title: 'Programming an LCD Display for an LPC2148 using Assembly',
-          description: "Using assembly code to manipulate LCD outputs using an ARM processor",
-          section: "Projects",handler: () => {
-              window.location.href = "/projects/programming_lcd_display_for_lpc2148_using_assembly/";
-            },},{id: "projects-sample-interactive-anodize-chemfilm-drawing-in-solidworks",
-          title: 'Sample Interactive Anodize/Chemfilm Drawing in Solidworks',
-          description: "Creating an interactive, color coded .pdf of a mechanical part in Solidworks to clarify surfaces to perform outside processing on.",
+            },},{id: "projects-sample-interactive-drawing-in-solidworks",
+          title: 'Sample Interactive Drawing in Solidworks',
+          description: "Creating an interactive, color coded .pdf of a mechanical part in Solidworks to clarify surfaces to perform outside processing (e.g. anodize, chemfilm) on.",
           section: "Projects",handler: () => {
               window.location.href = "/projects/sample_interactive_anodize_chjemfilm_drawing_in_solidworks/";
             },},{id: "projects-sample-manufacturing-drawing-in-solidworks",
           title: 'Sample Manufacturing Drawing in Solidworks',
-          description: "Modeled and generated drawings for manufacturing clarity",
+          description: "Modeled and generated drawings for clarity to reduce errors when machining parts.",
           section: "Projects",handler: () => {
               window.location.href = "/projects/sample_manufacturing_dwg_in_solidworks/";
             },},{
