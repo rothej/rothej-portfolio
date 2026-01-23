@@ -1,80 +1,19 @@
 ---
 layout: page
-title: project 9
-description: another project with an image 🎉
-img: assets/img/6.jpg
-importance: 4
-category: fun
+title: FM Transmitter
+description: Designing an FM Transmitter circuit for Senior Design
+img: assets/img/fmt_circuit.png
+importance: 5
+category: Undergrad
 ---
 
-Every project has a beautiful feature showcase page.
-It's easy to include images in a flexible 3-column grid format.
-Make your photos 1/3, 2/3, or full width.
+For my group senior project, we were tasked with designing and building an FM transmitter. Link to full report below.
 
-To give your project a background in the portfolio page, just add the img tag to the front matter like so:
+Abstract – The goal of this project is to develop a working FM transmitter that meets certain design specifications and functions well as a final, built product. Frequency modulation of a signal encodes information in a carrier wave by varying the instantaneous frequency of the wave. This project culminates in the successful construction of a working FM transmitter made from circuit components such as inductors, capacitors, resistors and transistors. The transmitter consists of an audio input in the form of an AUX cable, an oscillator circuit to generate the radio frequency signal, an amplifier stage to amplify the signal, and a radio frequency stage to modulate the signal to the correct FM band, and a varactor diode to match the impedance of the transmitter to the impedance of the antenna to efficiently transfer power and prevent the circuit from overheating. The finished transmitter’s success demonstrates the students’ proficiency in the subject matter which covers both circuit design and frequency modulation. The design of this transmitter within specific working characteristics mimics real-world requirements of electrical engineers where designs have certain goals and restrictions for the purpose they are intended for. Simulation, calculation, and real-world testing were all essential to the success of this project. Common design choices were made for a number of components in the design, but for others, calculation and simulation was essential in the selection of components to create a working final product.
 
-    ---
-    layout: page
-    title: project
-    description: a project with a background image
-    img: /assets/img/12.jpg
-    ---
-
-<div class="row">
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/1.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/3.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/5.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
+<div class="pdf-container" style="height: 600px;">
+  <embed src="{{ '/assets/pdf/fm-transmitter-report.pdf' | relative_url }}" 
+         type="application/pdf" 
+         width="100%" 
+         height="100%">
 </div>
-<div class="caption">
-    Caption photos easily. On the left, a road goes through a tunnel. Middle, leaves artistically fall in a hipster photoshoot. Right, in another hipster photoshoot, a lumberjack grasps a handful of pine needles.
-</div>
-<div class="row">
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/5.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-<div class="caption">
-    This image can also have a caption. It's like magic.
-</div>
-
-You can also put regular text between your rows of images.
-Say you wanted to write a little bit about your project before you posted the rest of the images.
-You describe how you toiled, sweated, _bled_ for your project, and then... you reveal its glory in the next row of images.
-
-<div class="row justify-content-sm-center">
-    <div class="col-sm-8 mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/6.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm-4 mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/11.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-<div class="caption">
-    You can also have artistically styled 2/3 + 1/3 images, like these.
-</div>
-
-The code is simple.
-Just wrap your images with `<div class="col-sm">` and place them inside `<div class="row">` (read more about the <a href="https://getbootstrap.com/docs/4.4/layout/grid/">Bootstrap Grid</a> system).
-To make images responsive, add `img-fluid` class to each; for rounded corners and shadows use `rounded` and `z-depth-1` classes.
-Here's the code for the last row of images above:
-
-{% raw %}
-
-```html
-<div class="row justify-content-sm-center">
-  <div class="col-sm-8 mt-3 mt-md-0">
-    {% include figure.liquid path="assets/img/6.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-  </div>
-  <div class="col-sm-4 mt-3 mt-md-0">
-    {% include figure.liquid path="assets/img/11.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-  </div>
-</div>
-```
-
-{% endraw %}
