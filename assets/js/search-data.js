@@ -59,24 +59,9 @@ ninja.data = [{
             window.location.href = "/blog/2025/setting-up-a-wireguard-vpn-client-on-linux/";
           
         },
-      },{id: "projects-project-6",
-          title: 'project 6',
-          description: "a project with no image",
-          section: "Projects",handler: () => {
-              window.location.href = "/projects/6_project/";
-            },},{id: "projects-project-7",
-          title: 'project 7',
-          description: "with background image",
-          section: "Projects",handler: () => {
-              window.location.href = "/projects/7_project/";
-            },},{id: "projects-project-8",
-          title: 'project 8',
-          description: "an other project with a background image and giscus comments",
-          section: "Projects",handler: () => {
-              window.location.href = "/projects/8_project/";
-            },},{id: "projects-project-9",
-          title: 'project 9',
-          description: "another project with an image 🎉",
+      },{id: "projects-fm-transmitter",
+          title: 'FM Transmitter',
+          description: "Designing an FM Transmitter circuit for Senior Design",
           section: "Projects",handler: () => {
               window.location.href = "/projects/9_project/";
             },},{id: "projects-detecting-covid-19-from-chest-x-rays",
@@ -99,6 +84,21 @@ ninja.data = [{
           description: "(OpenCV/Python) System with SMS alerts and server logging for unauthorized entry attempts.",
           section: "Projects",handler: () => {
               window.location.href = "/projects/opencv_facial_recognition_lock/";
+            },},{id: "projects-programming-an-lcd-display-for-an-lpc2148-using-assembly",
+          title: 'Programming an LCD Display for an LPC2148 using Assembly',
+          description: "Using assembly code to manipulate LCD outputs using an ARM processor",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/programming_lcd_display_for_lpc2148_using_assembly/";
+            },},{id: "projects-sample-interactive-anodize-chemfilm-drawing-in-solidworks",
+          title: 'Sample Interactive Anodize/Chemfilm Drawing in Solidworks',
+          description: "Creating an interactive, color coded .pdf of a mechanical part in Solidworks to clarify surfaces to perform outside processing on.",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/sample_interactive_anodize_chjemfilm_drawing_in_solidworks/";
+            },},{id: "projects-sample-manufacturing-drawing-in-solidworks",
+          title: 'Sample Manufacturing Drawing in Solidworks',
+          description: "Modeled and generated drawings for manufacturing clarity",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/sample_manufacturing_dwg_in_solidworks/";
             },},{
         id: 'social-email',
         title: 'email',
