@@ -127,9 +127,9 @@
 
       ],
       "milestone": null,
-      "comments": 2,
+      "comments": 3,
       "created_at": "2026-01-17T21:24:56Z",
-      "updated_at": "2026-01-20T12:40:25Z",
+      "updated_at": "2026-01-23T20:32:10Z",
       "closed_at": null,
       "author_association": "NONE",
       "type": null,
@@ -275,11 +275,11 @@
           "user_view_type": "public",
           "site_admin": false
         },
-        "open_issues": 166,
+        "open_issues": 181,
         "closed_issues": 0,
         "state": "open",
         "created_at": "2025-11-27T20:29:18Z",
-        "updated_at": "2026-01-23T10:12:00Z",
+        "updated_at": "2026-01-24T10:20:15Z",
         "due_on": null,
         "closed_at": null
       },
