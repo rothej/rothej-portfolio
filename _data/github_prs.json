@@ -1,7 +1,82 @@
 {
-  "total_count": 23,
+  "total_count": 24,
   "incomplete_results": false,
   "items": [
+    {
+      "url": "https://api.github.com/repos/Xilinx/finn/issues/1510",
+      "repository_url": "https://api.github.com/repos/Xilinx/finn",
+      "labels_url": "https://api.github.com/repos/Xilinx/finn/issues/1510/labels{/name}",
+      "comments_url": "https://api.github.com/repos/Xilinx/finn/issues/1510/comments",
+      "events_url": "https://api.github.com/repos/Xilinx/finn/issues/1510/events",
+      "html_url": "https://github.com/Xilinx/finn/pull/1510",
+      "id": 3852644337,
+      "node_id": "PR_kwDOCEuLFs6_M9Lf",
+      "number": 1510,
+      "title": "Adding mypy type checking to finn.util scripts",
+      "user": {
+        "login": "rothej",
+        "id": 21348884,
+        "node_id": "MDQ6VXNlcjIxMzQ4ODg0",
+        "avatar_url": "https://avatars.githubusercontent.com/u/21348884?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/rothej",
+        "html_url": "https://github.com/rothej",
+        "followers_url": "https://api.github.com/users/rothej/followers",
+        "following_url": "https://api.github.com/users/rothej/following{/other_user}",
+        "gists_url": "https://api.github.com/users/rothej/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/rothej/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/rothej/subscriptions",
+        "organizations_url": "https://api.github.com/users/rothej/orgs",
+        "repos_url": "https://api.github.com/users/rothej/repos",
+        "events_url": "https://api.github.com/users/rothej/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/rothej/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "labels": [
+
+      ],
+      "state": "open",
+      "locked": false,
+      "assignee": null,
+      "assignees": [
+
+      ],
+      "milestone": null,
+      "comments": 0,
+      "created_at": "2026-01-25T05:54:40Z",
+      "updated_at": "2026-01-25T05:54:40Z",
+      "closed_at": null,
+      "author_association": "NONE",
+      "type": null,
+      "active_lock_reason": null,
+      "draft": false,
+      "pull_request": {
+        "url": "https://api.github.com/repos/Xilinx/finn/pulls/1510",
+        "html_url": "https://github.com/Xilinx/finn/pull/1510",
+        "diff_url": "https://github.com/Xilinx/finn/pull/1510.diff",
+        "patch_url": "https://github.com/Xilinx/finn/pull/1510.patch",
+        "merged_at": null
+      },
+      "body": "# Overview\r\n\r\nThis PR begins addressing issue #1146 by adding mypy config settings, pre-commit settings, and type annotations. Starting with just scripts in /src/finn/utils/ for now, since this is a lot of work (and a lot of potential checking by reviewers) I'm thinking tackling this in stages will be best. For now, config is set to only look at utils/ and ignore all else for mypy checks.\r\n\r\n# Motivation\r\n\r\nCopied and pasted from the Issue: \r\n\r\nPersonally I found that when developing in FINN, it was immensely helpful to have type hints added. This makes the projects structure very clear and helps especially newcomers to understand how components play together much quicker. Additionally, when having long iteration cycles due to for example synthesis times, having a static type checker such as mypy can prevent some of the errors before the run has even started, potentially saving quite some time.\r\n\r\n# Workflow\r\n\r\nWhat I've done here for each file is:\r\n- Select a target file to fix.\r\n- Run e.g. `mypy --strict src/finn/util/config.py` to see issues.\r\n- Run a search to see where these functions are called to verify proper annotations to use.\r\n- Make fixes so that mypy --strict passes.\r\n\r\nAt the end, ran pre-commit to verify it handles mypy correctly.\r\n\r\nNote: mypy is added to requirements.txt but this is only really necessary for devs, as pre-commit runs it's own VM with a mirror of mypy in it. It runs ignoring missing args (and not strict) for all files. This can be changed in the future adding the following to .pre-commit-config.yaml:\r\n```\r\n    hooks:\r\n    -   id: mypy\r\n        args: [--strict, --ignore-missing-imports]\r\n```\r\nbut I think it is okay to leave out for now mid-migration, so nothing is broken.\r\n\r\n# Migration Plan\r\n\r\nmypy.ini allows existing code to pass without checking, only the utils/ scripts are checked for now. This file will continue to be updated as needed as mypy types are added. My goal if this PR is accepted/merged is to continue this process.",
+      "reactions": {
+        "url": "https://api.github.com/repos/Xilinx/finn/issues/1510/reactions",
+        "total_count": 0,
+        "+1": 0,
+        "-1": 0,
+        "laugh": 0,
+        "hooray": 0,
+        "confused": 0,
+        "heart": 0,
+        "rocket": 0,
+        "eyes": 0
+      },
+      "timeline_url": "https://api.github.com/repos/Xilinx/finn/issues/1510/timeline",
+      "performed_via_github_app": null,
+      "state_reason": null,
+      "score": 1.0
+    },
     {
       "url": "https://api.github.com/repos/onnx/onnx/issues/7597",
       "repository_url": "https://api.github.com/repos/onnx/onnx",
@@ -275,11 +350,11 @@
           "user_view_type": "public",
           "site_admin": false
         },
-        "open_issues": 181,
-        "closed_issues": 0,
+        "open_issues": 183,
+        "closed_issues": 1,
         "state": "open",
         "created_at": "2025-11-27T20:29:18Z",
-        "updated_at": "2026-01-24T10:20:15Z",
+        "updated_at": "2026-01-25T09:51:00Z",
         "due_on": null,
         "closed_at": null
       },
