@@ -387,11 +387,11 @@
           "user_view_type": "public",
           "site_admin": false
         },
-        "open_issues": 164,
-        "closed_issues": 76,
+        "open_issues": 146,
+        "closed_issues": 123,
         "state": "open",
         "created_at": "2025-11-27T20:29:18Z",
-        "updated_at": "2026-01-27T11:12:24Z",
+        "updated_at": "2026-01-28T10:17:30Z",
         "due_on": null,
         "closed_at": null
       },
