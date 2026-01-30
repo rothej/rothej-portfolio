@@ -195,7 +195,7 @@
       "labels": [
 
       ],
-      "state": "open",
+      "state": "closed",
       "locked": false,
       "assignee": null,
       "assignees": [
@@ -231,19 +231,19 @@
           "user_view_type": "public",
           "site_admin": false
         },
-        "open_issues": 12,
-        "closed_issues": 4,
+        "open_issues": 8,
+        "closed_issues": 8,
         "state": "open",
         "created_at": "2025-12-30T00:58:10Z",
-        "updated_at": "2026-01-27T09:33:36Z",
+        "updated_at": "2026-01-29T16:52:06Z",
         "due_on": "2026-01-16T00:00:00Z",
         "closed_at": null
       },
       "comments": 5,
       "created_at": "2026-01-17T21:24:56Z",
-      "updated_at": "2026-01-27T09:33:36Z",
-      "closed_at": null,
-      "author_association": "NONE",
+      "updated_at": "2026-01-29T16:52:07Z",
+      "closed_at": "2026-01-29T16:52:06Z",
+      "author_association": "CONTRIBUTOR",
       "type": null,
       "active_lock_reason": null,
       "draft": false,
@@ -252,7 +252,7 @@
         "html_url": "https://github.com/fastmachinelearning/qonnx/pull/225",
         "diff_url": "https://github.com/fastmachinelearning/qonnx/pull/225.diff",
         "patch_url": "https://github.com/fastmachinelearning/qonnx/pull/225.patch",
-        "merged_at": null
+        "merged_at": "2026-01-29T16:52:06Z"
       },
       "body": "This fix adds the following helper methods in ModelWrapper:\r\n\r\nglobal_in = model.get_first_global_in()\r\nglobal_out = model.get_first_global_out()\r\n\r\nThis is meant to handle the following FINN issue: https://github.com/Xilinx/finn/pull/1494\r\n\r\nOnce this PR is approved, can use the new commit hash in the FINN fix and remove the duplicate definitions from my FINN fix.",
       "reactions": {
@@ -387,11 +387,11 @@
           "user_view_type": "public",
           "site_admin": false
         },
-        "open_issues": 135,
-        "closed_issues": 175,
+        "open_issues": 168,
+        "closed_issues": 191,
         "state": "open",
         "created_at": "2025-11-27T20:29:18Z",
-        "updated_at": "2026-01-29T11:11:15Z",
+        "updated_at": "2026-01-30T11:01:38Z",
         "due_on": null,
         "closed_at": null
       },
