@@ -5,11 +5,11 @@ description: Using machine learning algorithms to detect COVID-19 and other resp
 img: assets/img/covid_xray_learn.png
 importance: 3
 category: Grad
-github: https://github.com/rothej/jh_ml_covid_detect/
+github: https://github.com/rothej/jh-ml-covid-detect/
 ---
 
 <div class="d-flex justify-content-center mb-4">
-  <a href="https://github.com/rothej/jh_ml_covid_detect/" class="btn btn-outline-primary" target="_blank">
+  <a href="https://github.com/rothej/jh-ml-covid-detect/" class="btn btn-outline-primary" target="_blank">
     <i class="fab fa-github"></i> View Code
   </a>
 </div>

@@ -4,8 +4,8 @@ github_users:
 repo_description_lines_max: 2
 
 github_repos:
-  - rothej/jh_facial_recog_lock
-  - rothej/jh_ml_covid_detect
+  - rothej/jh-facial-recog-lock
+  - rothej/jh-ml-covid-detect
 
 external_contributions:
   - repo: Xilinx/FINN
