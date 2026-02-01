@@ -4,6 +4,7 @@ github_users:
 repo_description_lines_max: 2
 
 github_repos:
+  - rothej/optical-flow-fpga
   - rothej/jh-facial-recog-lock
   - rothej/jh-ml-covid-detect
 
