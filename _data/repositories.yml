@@ -4,7 +4,6 @@ github_users:
 repo_description_lines_max: 2
 
 github_repos:
-  - rothej/sigqnn
   - rothej/optical-flow-fpga
 
 external_contributions:
