@@ -606,11 +606,11 @@
           "user_view_type": "public",
           "site_admin": false
         },
-        "open_issues": 202,
-        "closed_issues": 438,
+        "open_issues": 213,
+        "closed_issues": 444,
         "state": "open",
         "created_at": "2025-11-27T20:29:18Z",
-        "updated_at": "2026-02-12T10:09:07Z",
+        "updated_at": "2026-02-13T10:36:28Z",
         "due_on": null,
         "closed_at": null
       },
@@ -772,9 +772,9 @@
 
       ],
       "milestone": null,
-      "comments": 7,
+      "comments": 9,
       "created_at": "2025-11-29T03:51:32Z",
-      "updated_at": "2026-02-12T03:23:56Z",
+      "updated_at": "2026-02-12T17:52:49Z",
       "closed_at": null,
       "author_association": "NONE",
       "type": null,
