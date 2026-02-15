@@ -1,0 +1,42 @@
+name: Daily Commit
+
+on:
+  schedule:
+    # Run daily at 4:00 AM MST (11:00 UTC)
+    - cron: "0 11 * * *"
+  workflow_dispatch: # Allow manual trigger
+
+permissions:
+  contents: write
+
+jobs:
+  update-date:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+      
+      - name: Update date file
+        run: |
+          # Format: 15FEB26
+          date +"%d%b%y" | tr '[:lower:]' '[:upper:]' > .update
+          
+          echo "Updated .update to: $(cat .update)"
+      
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          git add .update
+          
+          # Only commit if there are changes
+          if git diff --staged --quiet; then
+            echo "No changes to commit (file already up to date)"
+          else
+            git commit -m "chore: update date"
+            git push
+            echo "Date updated and pushed - site rebuild triggered"
+          fi
