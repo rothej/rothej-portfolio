@@ -2,7 +2,7 @@
 layout: about
 title: About
 permalink: /
-subtitle: Software/FPGA Engineer at Lockheed Martin | Johns Hopkins alumnus.
+subtitle: Software/FPGA Engineer at Lockheed Martin. Johns Hopkins alumnus.
 
 profile:
   align: right
