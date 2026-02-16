@@ -23,7 +23,7 @@ function determineGiscusTheme() {
     "data-category": "Comments",
     "data-category-id": "DIC_kwDOP1umMc4Cv50z",
     "data-mapping": "pathname",
-    "data-strict": "1",
+    "data-strict": "0",
     "data-reactions-enabled": "1",
     "data-emit-metadata": "0",
     "data-input-position": "bottom",
