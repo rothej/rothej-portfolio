@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Xilinx/AMD Vivado SoC FPGA Development and Debug Workflow
-featured: true
+featured: false
 giscus_comments: true
 authors:
   - name: Joshua Rothe
