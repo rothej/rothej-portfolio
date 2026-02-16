@@ -21,10 +21,10 @@ announcements:
 contributions:
   enabled: true # includes a list of open source contributions
   scrollable: true # adds a vertical scroll bar if there are more than 3 contribution items
-  limit: 5 # leave blank to include all contributions
+  limit: 6 # leave blank to include all contributions
 
 latest_posts:
   enabled: true
   scrollable: true # adds a vertical scroll bar if there are more than 3 new posts items
-  limit: 3 # leave blank to include all the blog posts
+  limit: 4 # leave blank to include all the blog posts
 ---
