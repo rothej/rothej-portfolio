@@ -58,6 +58,7 @@ Thus, this guide settles on Vaultwarden. Vaultwarden is a lightweight re-write o
 
 - WireGuard VPN, configured to handle local address traffic.
 - Linux server (Debian, can be the same machine hosting the WireGuard VPN).
+- Basic command line familiarity.
 
 # Initial Setup
 
@@ -132,7 +133,7 @@ Next, configure it for your self-hosted server when logging in by selecting 'sel
 
 # Automated Start/Restart of Server
 
-The last step here is to ensure Vaultwarden starts back up if the server reboots or has a power failure. This is also very simple to set up:
+The last step here is to ensure Vaultwarden starts back up if the server reboots or has a power failure. This is also very simple to set up by running the following:
 
 ```bash
 systemctl --user enable podman.service
@@ -151,7 +152,7 @@ systemctl --user status container-vaultwarden.service
 podman ps
 ```
 
-The above code sets up auto-start configuration and generates a `systemd` file for the vaultwarden service, then brings the Vaultwarden container down to switch over from `podman-compose` management to `systemd` management. The last two lines check status - if these look good, you are done.
+The above code sets up auto-start configuration and generates a `systemd` file for the vaultwarden service, then brings the Vaultwarden container down to switch over from `podman-compose` management to `systemd` management. The last two lines check status; if these look good, you are done.
 
 # Conclusion
 
