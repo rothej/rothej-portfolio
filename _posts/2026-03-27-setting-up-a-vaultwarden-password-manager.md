@@ -39,7 +39,7 @@ A password vault (or password manager) is a secure, encrypted digital storage sy
 {: .text-center}
 ![xkcd: Password Strength](../../../assets/img/posts/2026-03-27-self-hosting-a-vaultwarden-password-manager/password_strength.png){: .img-fluid .dark-mode-invert}
 
-*Source: [xkcd 936](https://xkcd.com/936/)*
+*Source: [xkcd 936](https://xkcd.com/936/) (adapted for light/dark mode)*
 {: .text-center}
 
 <style>
