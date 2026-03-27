@@ -37,18 +37,7 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/projects/";
           },
-        },{id: "post-",
-        
-          title: "",
-        
-        description: "",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2026/2029-03-28-setting-up-a-vaultwarden-password-manager-on-a-debian-server/";
-          
-        },
-      },{id: "post-xilinx-amd-vivado-soc-fpga-development-and-debug-workflow",
+        },{id: "post-xilinx-amd-vivado-soc-fpga-development-and-debug-workflow",
         
           title: "Xilinx/AMD Vivado SoC FPGA Development and Debug Workflow",
         
