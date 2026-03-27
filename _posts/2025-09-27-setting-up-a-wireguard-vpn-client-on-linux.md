@@ -5,7 +5,7 @@ featured: false
 giscus_comments: true
 authors:
   - name: Joshua Rothe
-    url: "https://portfolio.rothellc.com"
+    url: "https://joshrothe.us"
 excerpt: "Setting up a Wireguard VPN for privacy and security involves setting up both server and client side systems. This guide explains how to set up a client side Linux system - with or without [Pi-hole DNS filtering](https://pi-hole.net/) on the home network - and then configure the system so that Wireguard settings will switch depending on if the client system is on the home network or not. This is necessary because the Wireguard client will break your network connection if you are on your home network, and there is no need to manually switch your VPN on and off when automation exists."
 date: 2025-09-27
 description: Guide for configuring a client-side Linux (Debian) system for WireGuard VPN, automating network settings on both home and away networks.
@@ -31,8 +31,6 @@ Note: This post was updated Oct 18 2025 to fix two critical issues with the orig
 
 The old method is kept in the Appendix for historical purposes, but is depreciated.
 
----
-
 # Background
 
 VPNs are a great tool for security and privacy, with key benefits being: 
@@ -54,15 +52,11 @@ VPNs are a great tool for security and privacy, with key benefits being:
 
 If you do not have a WireGuard VPN server set up and find this interesting, I've worked through the [official WireGuard documentation](https://www.wireguard.com/quickstart/) and found it more than sufficient. Make sure this is complete before setting up clients! Windows and MacOS have [dedicated programs](https://www.wireguard.com/install/) for clients, but Linux is a bit more complicated; hence this guide.
 
----
-
 # Prerequisites
 
 - WireGuard server, configured with port forwarding on your home router.
 - Linux client with `sudo` access (tested here on Mint/Debian).
 - Basic command line familiarity.
-
----
 
 # Client Setup
 
@@ -114,8 +108,6 @@ Get this clipboard item to the server however you like, probably using another s
 
 </div>
 </div>
-
----
 
 ## Installation
 
@@ -196,8 +188,6 @@ PersistentKeepalive = 25
 ```
 
 Three items to check, above. Make sure the `Address` on your client side matches `AllowedIps` on the server side.
-
----
 
 # Automated VPN Management
 
@@ -454,8 +444,6 @@ PersistentKeepalive = 25
 ```
 Note for Endpoint above, you need your server's external IP. This will be your home router's IP, port forwarded to your VPN server.
 
----
-
 ## Verification
 
 After setup is complete, verify your VPN is working correctly.
@@ -485,13 +473,9 @@ sudo tail -f /var/log/wireguard-auto.log
 sudo tail -f /var/log/wireguard-boot-check.log
 ```
 
----
-
 # Conclusion
 
 That should get you a working VPN client! If you notice any issues with this guide, please feel free to reach out or leave a comment.
-
----
 
 # Appendix
 

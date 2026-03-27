@@ -5,7 +5,7 @@ featured: false
 giscus_comments: true
 authors:
   - name: Joshua Rothe
-    url: "https://portfolio.rothellc.com"
+    url: "https://joshrothe.us"
 excerpt: "Verification of an FPGA design post-synthesis involves several steps, which can be incrementally worked through as the design matures. The following guide provides a decent outline to carry a design from post-simulation all the way to implementation alongside a SoC processor that can control and read the FPGA from software. I originally wrote this guide in school, and revised it into a checklist as I found myself doing the same workflows. In situations where one missed step could require you to endlessly debug a phantom issue, it is helpful to have a repeatable process. While this guide is not all-encompassing, it functions as an excellent base framework for a junior FPGA designer to work from."
 date: 2025-10-18
 description: Guide that walks through a build and debug workflow for Xilinx/AMD SoC FPGAs, utilizing the Zynq processor on the board.
@@ -22,8 +22,6 @@ citation: true
 ---
 
 Verification of an FPGA design post-synthesis involves several steps, which can be incrementally worked through as the design matures. The following guide provides a decent outline to carry a design from post-simulation all the way to implementation alongside a SoC processor that can control and read the FPGA from software. I originally wrote this guide while working on my Master's degree, and revised it into a checklist as I found myself doing the same workflows. In situations where one missed step could require you to endlessly debug a phantom issue, it is helpful to have a repeatable process. While this guide is not all-encompassing, it functions as an excellent base framework for a junior FPGA designer to work from.
-
----
 
 # FPGA Overview (Written for Non-FPGA Developers)
 
@@ -45,8 +43,6 @@ For Xilinx FPGA design, the options are High Level Synthesis (HLS) coding in Vit
 
 The following sections provide a step-by-step workflow for project creation through hardware debugging, assuming the reader has RTL source files ready for implementation.
 
----
-
 # Building a Project
 
 Manually create a project in Xilinx Vivado with no sources, selecting only the applicable part type. Source files are then added to the project, and sim files are added separately (as they will be considered sim-only and not for synthesis). This project build can later be automated with `.tcl` scripts, including the creation of a block diagram, once these source files are added and (if applicable) a block diagram is created. The actual construction of these source files is beyond the scope of this guide, but it assumes `.sv`, `.v`, or `.vhd` files.
@@ -54,8 +50,6 @@ Manually create a project in Xilinx Vivado with no sources, selecting only the a
 It is recommended to keep the source files linked, so that as they are modified the source files outside of the project will continuously update and can be re-added when a project is rebuilt. This may not always be desired behavior, however; especially if you have an automated `.tcl` build workflow that manages source file versions independently.
 
 Typically, Vivado projects themselves are not saved, as rebuilding Vivado projects is a common way to fix many errors. The project files should be added to `.gitignore` in most cases.
-
----
 
 # Timing Constraints and Synthesis/Implementation Analysis
 
@@ -97,13 +91,9 @@ After implementation, review the following:
 - Utilization Report: Aim for at most 80%, though many designers typically shoot for 60%-70%. You can run `report_qor_assessment` to get exact thresholds (defined by Xilinx/AMD) for utilization targets; staying below these values gives the best QoR (quality of results) and easier timing closure. As utilization approaches 100%, the place and route tools have to work much harder to meet timing; this can also result in longer build times.
 - Power Consumption: Verify it is within board capabilities. The system that you are integrating into likely has additional restrictions for power utilization that will need to be followed.
 
----
-
 # Debugging Workflow over JTAG
 
 This instruction is intended for reference when revising an IP that exists (or will exist) within a larger block diagram. This allows for debugging using the XSCT console in Vitis as well as the Vivado ILA (Integrated Logic Analyzer). Overall goal is to verify functionality of an FPGA build by reading/manipulating registers and viewing the waveform outputs prior to adding the complexity of an OS (and related software code) to the design. This instruction assumes a Zynq processor or similar is on the chip, and there is/will be a software layer of some sort on that processor, which applies to most modern FPGAs. This instruction also assumes all of the simulation work has been completed, which is beyond the scope of this guide.
-
----
 
 ## IP Creation
 
@@ -114,8 +104,6 @@ Once implementation is complete, go to **Tools > Package New IP**. Click through
 - Select **Packaging Options > Package your current project** on the second page.
 - On the third page, choose an IP location that your overall block diagram project can pull from (here, `src/ip/`), and create a sub-folder specifically for this IP, named appropriately. Select this folder as the location. *If rebuilding an existing IP, it is important to overwrite the same folder so that the block diagram automatically updates*.
 - Once the Package IP tab comes up, take care of any issues. The **Addressing and Memory** tab will allow for registers to be mapped out (select the proper size for the register in question if needed, so it is not taking up too much address space). After this, the File Groups tab allows you to merge changes from the wizard. Finally, go to the **Review and Package** tab and select **Re-package IP**. The temporary IP project will close.
-
----
 
 ## Block Diagram Implementation
 
@@ -138,8 +126,6 @@ Debug Core Setup:
 For subsequent implementations:
 
 - Vivado will detect the IP was upgraded and will prompt you to go to **Report IP Status**, then **Upgrade the IP**. Edits to the block diagram and ILA nets may be needed for some changes (reference the above italics).
-
----
 
 ## Connecting to Hardware and Programming
 
@@ -182,8 +168,6 @@ pidof hw_server
 kill -9 9085 # Replace 9085 with the correct PID value.
 ```
 
----
-
 ## Configuring Vitis for Hardware/ILA Debug
 
 - The cleanest way to do this is open a new workspace each time, since this avoids (and even fixes) numerous errors and snags that can occur. Typical method is to use the same folder but delete all contents prior to opening - you can also choose a new workspace each time if preferred. Once the workspace folder is selected, click **Launch**.
@@ -196,8 +180,6 @@ kill -9 9085 # Replace 9085 with the correct PID value.
 - For the second breakpoint, select **CPU-0 > CPU0 debug request** on the right, and the entirety of **FTM** on the left.
 - Now click **Debug** to close the **Debug Configurations** window.
 - At the arrow next to the bug icon again, click **Debug As** and select the configuration that was just generated. The FPGA should program, restart, and run.
-
----
 
 ## Debugging the Hardware with ILA and Register Read/Write
 
@@ -219,15 +201,11 @@ mwr 0x50000000 0x00000001
 
 While debugging with the ILA, pay attention to set up and hold time violations as well as clock domain crossing issues. Both are beyond the scope of this guide.
 
----
-
 ## Debugging the Software with Vitis and the Integrated Logic Analyzer (ILA)
 
 Create a **New Application Project** in Vitis as before, but set it as a blank C++ application and not Hello World. Add your software code in Vitis and build. The debugging tools are similar to the Eclipse IDE in that you can set breakpoints and view the machine code in Disassembly view.
 
 Assuming the hardware is connected via remote hw_server, you will need to open up a second terminal into that server. Set up minicom and connect to the board via UART (you will need a UART-to-USB connection in addition to the JTAG-to-USB connection) over 115200 baud, 8N1 and clear out modem settings A through H. This is typically `/dev/ttyUSB0` or some increment thereof. Any print outputs triggered by the C++ code in Vitis will be displayed over this terminal. Continue to modify code, rebuild the Application Project, and run as needed.
-
----
 
 ## Code Examples
 
@@ -247,15 +225,11 @@ void axi_write_phase(u32 writeValue){
 }
 ```
 
----
-
 ## Re-Configuring the Integrated Logic Analyzer
 
 When adding and removing debug cores, the design can end up getting buggy. Some notes on fixing:
 
 - When adding nets, it is easy to mark them in netlist view (Right click > **Mark for Debug**) and add them this way. When needing to debug a different set of nets, clear out the target constraints file of all synthesis-added parameters (these will be appended to the file and were for the debug cores). Then close the project and delete the `<project_name>.hw` and `<project_name>.runs` folders. This forces the project to do a clean synthesis, at which point you can add new debug cores. Then build as normal.
-
----
 
 # Debugging Workflow on OS
 
@@ -286,13 +260,9 @@ munmap(mm_sdr, 4096);
 close(fd);
 ```
 
---- 
-
 # Conclusion
 
 That summarizes the general implementation and debug workflow from post-synthesis to on-hardware implementation. Please feel free to reach out if you find any mistakes or inaccuracies in this guide.
-
----
 
 # Acronyms
 

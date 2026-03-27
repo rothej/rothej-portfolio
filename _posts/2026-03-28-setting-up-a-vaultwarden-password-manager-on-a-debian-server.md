@@ -1,11 +1,11 @@
 ---
 layout: post
 title: Timing Closure on FPGAs Part 1: Implementing Pyramidal Lucas-Kanade Architecture for Computer Vision Applications
-featured: true
+featured: false
 giscus_comments: true
 authors:
   - name: Joshua Rothe
-    url: "https://portfolio.rothellc.com"
+    url: "https://joshrothe.us"
 excerpt: "Timing closure is a critical part of FPGA design, and verifying your firmware does not violate timing is mandatory if you want your implementation to perform as designed. Electrons move at a specific speed, and transistor switching speed is based on physical dimensions as well as internal capacitance. When you write RTL code you are designing hardware, flipping switches and filling Look-Up Tables (LUTs), and even environmental considerations such as temperature and humidity can affect the performance of programmable circuits. This guide goes over several methods for achieving timing closure on FPGA designs. Tradeoffs are discussed for each method, and design concerns are presented in a way that helps decide the best approach for the situation."
 date: 2027-02-17
 description: Guide that outlines various methods and approaches for timing closure on Xilinx/AMD FPGAs, using a Pyramidal Lucas-Kanade implementation to demonstrate timing closure techniques. In this two-part blog series, part 1 covers timin pitfalls in an unoptimized design.
