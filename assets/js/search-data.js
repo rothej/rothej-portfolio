@@ -45,7 +45,7 @@ ninja.data = [{
         section: "Posts",
         handler: () => {
           
-            window.location.href = "/blog/2026/2026-03-28-setting-up-a-vaultwarden-password-manager-on-a-debian-server/";
+            window.location.href = "/blog/2026/2029-03-28-setting-up-a-vaultwarden-password-manager-on-a-debian-server/";
           
         },
       },{id: "post-xilinx-amd-vivado-soc-fpga-development-and-debug-workflow",
