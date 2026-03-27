@@ -127,7 +127,7 @@ You should see the `docker.io/vaultwarden/server:latest` container running.
 
 # Account Setup
 
-Access the admin console by typing `https://192.168.1.100:8443` (replace the IP address) into a browser. You will be prompted to create the username and password, and then download the bitwarden password manager addon. It works perfectly with Vaultwarden and auto-fills your passwords, so this is highly recommended.
+Access the admin console by typing `https://192.168.1.100:8443` (replace the IP address) into a browser. You will be prompted to create the username and password, and then download the bitwarden password manager addon. It works perfectly with Vaultwarden and autofills your passwords, so this is highly recommended.
 
 Next, configure it for your self-hosted server when logging in by selecting 'self-hosted' at login rather than 'bitwarden.com'. Use the admin console URL/port again, and log in using the login created earlier.
 
