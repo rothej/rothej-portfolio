@@ -136,14 +136,17 @@ And insert the following text to create your client's WireGuard network configur
 PrivateKey = # Paste the contents of /etc/wireguard/privatekey here
 Address = 10.0.0.2/24
 DNS = 1.1.1.1
+MTU = 1200
 
 [Peer]
 PublicKey = # Your server's public key goes here.
 Endpoint = your-server-ip:51820
-AllowedIPs = 0.0.0.0/0
+AllowedIPs = 192.168.1.0/24, 10.0.0.0/24
 PersistentKeepalive = 25
 ```
 Note that you have three items to fill in above. You will need the PublicKey from the server, not from what you have here on the client. So hold off on that for now.
+
+MTU is optional, but I found that on Xfinity's public network it is necessary. A niche problem I spent a while debugging before [finding the solution](https://arnesonium.com/2024/11/using-wireguard-over-xfinitywifi). The split tunneling at AllowedIPs only routes home traffic through your home network, so you can access cameras and local infrastructure. All other traffic will not route through the VPN - this is much faster and best practice. If slow speed is OK or all traffic needs to route through the VPN for some other reason, `AllowedIPs` can be `0.0.0.0/0`.
 
 The private key on the client can be acquired using:
 ```bash
@@ -179,11 +182,12 @@ Remember how we didn't have the server's public key last time? Fix that now:
 PrivateKey = # Paste(d) the contents of /etc/wireguard/privatekey here
 Address = 10.0.0.2/24
 DNS = 1.1.1.1
+MTU = 1200
 
 [Peer]
 PublicKey = # Your server's public key goes here.
 Endpoint = your-server-ip:51820
-AllowedIPs = 0.0.0.0/0
+AllowedIPs = 192.168.1.0/24, 10.0.0.0/24
 PersistentKeepalive = 25
 ```
 
