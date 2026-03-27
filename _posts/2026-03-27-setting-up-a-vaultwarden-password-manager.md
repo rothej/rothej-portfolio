@@ -64,7 +64,7 @@ Thus, this guide settles on Vaultwarden. Vaultwarden is a lightweight re-write o
 
 On the server meant to host the Vaultwarden instance, you will need to install `podman` and set up the necessary folder structure in your home directory. You will also need to set up a self-signing certificate (acceptable since we are on a VPN). Note that docker is also an option and most guides reference it; I prefer podman since [it is more secure](https://www.anantacloud.com/post/why-red-hat-podman-is-good-alternate-of-docker) by not requiring root access and not having a single point of failure (`dockerd`).
 
-First, find your server's IP address. You will need to replace `192.168.1.100` below with your server's IP address. With the correct IP used, run the following to handle the install, folder structure, and certificate generation:
+First, find your server's IP address. You will need to replace `192.168.1.100` below with your server's IP address. With the correct IP, run the following to execute the podman install, folder structure creation, and certificate generation:
 
 ```bash
 sudo apt update && sudo apt upgrade -y
