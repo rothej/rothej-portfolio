@@ -66,7 +66,6 @@ On the server meant to host the Vaultwarden instance, install `podman` and set u
 
 First, find your server's IP address. You will need to replace `192.168.1.100` below with your server's IP address. With the correct IP used, run:
 
-
 ```bash
 sudo apt update && sudo apt upgrade -y
 sudo apt install podman podman-compose git -y
