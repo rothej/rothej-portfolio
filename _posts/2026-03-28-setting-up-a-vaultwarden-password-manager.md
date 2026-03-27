@@ -38,7 +38,7 @@ A password vault (or password manager) is a secure, encrypted digital storage sy
 
 There are several password managers to choose from; Bitwarden is a strong contender in the space, and I highly recommend it for the average person or enterprise. It is open source and has [weathered security audits](https://bitwarden.com/blog/security-through-transparency-eth-zurich-audits-bitwarden-cryptography/), and you can even self-host it. While I personally dislike hosting anything on the cloud, I really can't find an issue wrong with their model; your data is encrypted locally before it's even sent to their servers, so even Bitwarden themselves could not access your information.
 
-Some downsides exist, though; it's a resource hog when hosted locally, and resources matter when you keep stacking services on your home Debian device. The average user does not need the scalability and infrastructure that it provides. Additionally, some services such as autofilling passwords require you pay a subscription.
+Some downsides exist, though; it's a resource hog when hosted locally, and resources matter when you keep stacking services on your home Debian device. The average user does not need the scalability and infrastructure that it provides. Additionally, some services such as autofilling passwords require a paid subscription, even when self-hosting Bitwarden.
 
 Thus, this guide settles on Vaultwarden. Vaultwarden is a lightweight re-write of Bitwarden in Rust. It uses much less CPU and RAM (~50MB to Bitwarden's ~1-2GB), and as a bonus it is easier to set up. The process is explained below; the length of this write-up should speak to its simplicity.
 
