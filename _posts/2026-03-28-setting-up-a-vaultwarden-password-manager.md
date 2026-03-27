@@ -36,7 +36,7 @@ A password vault (or password manager) is a secure, encrypted digital storage sy
 ![xkcd: Password Strength](../../../assets/img/posts/2026-03-28-self-hosting-a-vaultwarden-password-manager/password_strength.png){: .img-fluid}
 *Source: [xkcd 936](https://xkcd.com/936/)*
 
-There are several password managers to choose from; Bitwarden is a strong contender in the space, and I highly recommend it for the average person or enterprise. It is open source and has [weathered security audits](https://bitwarden.com/blog/security-through-transparency-eth-zurich-audits-bitwarden-cryptography/), and you can even self-host it. While I personally dislike hosting anything on the cloud, I really can't find an issue wrong with their model; your data is encrypted locally before it's even sent to their servers, so even Bitwarden themselves could not access your information.
+There are several password managers to choose from; Bitwarden is a strong contender in the space, and I highly recommend it for the average person or enterprise. It is open source and has [weathered security audits](https://bitwarden.com/blog/security-through-transparency-eth-zurich-audits-bitwarden-cryptography/), and you can even self-host it. While I personally dislike hosting anything on the cloud, I don't have an issue with their model from a security perspective; your data is encrypted locally before it's even sent to their servers, so even Bitwarden themselves could not access your information.
 
 Some downsides exist, though; it's a resource hog when hosted locally, and resources matter when you keep stacking services on your home Debian device. The average user does not need the scalability and infrastructure that it provides. Additionally, some services such as autofilling passwords require a paid subscription, even when self-hosting Bitwarden.
 
@@ -143,4 +143,4 @@ The above code sets up auto-start configuration and generates a `systemd` file f
 
 # Conclusion
 
-You should now be able to use Vaultwarden in the browser of your choice. It should (when logged in) prompt you with the option to save passwords, and autopopulate them as needed. I hope this was helpful; and if you happen to notice any issues with this guide or process, please feel free to reach out or leave a comment.
+You should now be able to use Vaultwarden in the browser of your choice. It should (when logged in) prompt you with the option to save passwords, and autopopulate them as needed. I hope this was helpful; if you notice any issues with this guide or process, please feel free to reach out or leave a comment.
