@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Setting Up a Vaultwarden Password Manager
+title: Self-Hosting a Vaultwarden Password Manager 
 featured: false
 giscus_comments: true
 authors:
@@ -18,7 +18,7 @@ toc:
 citation: true
 ---
 
-![Vaultwarden Logo](../../../assets/img/posts/2026-03-28-setting-up-a-vaultwarden-password-manager/vaultwarden_logo_auto.svg){: .img-fluid}
+![Vaultwarden Logo](../../../assets/img/posts/2026-03-28-self-hosting-a-vaultwarden-password-manager/vaultwarden_logo_auto.svg){: .img-fluid}
 *Source: [Vaultwarden Github](https://github.com/dani-garcia/vaultwarden/tree/main)*
 
 ---
@@ -33,7 +33,7 @@ This guide walks through setting up a lightweight, locally-hosted password manag
 
 A password vault (or password manager) is a secure, encrypted digital storage system for username and password combinations. Remembering one password is much simpler than having to remember multiple. Why NIST took so long to come to this conclusion is of course out of scope for this guide, but feel free to [enjoy others' discourse](https://www.hivesystems.com/blog/nists-updated-password-security-guidance) on the topic.
 
-![xkcd: Password Strength](../../../assets/img/posts/2026-03-28-setting-up-a-vaultwarden-password-manager/password_strength.png){: .img-fluid}
+![xkcd: Password Strength](../../../assets/img/posts/2026-03-28-self-hosting-a-vaultwarden-password-manager/password_strength.png){: .img-fluid}
 *Source: [xkcd 936](https://xkcd.com/936/)*
 
 There are several password managers to choose from; Bitwarden is a strong contender in the space, and I highly recommend it for the average person or enterprise. It is open source and has [weathered security audits](https://bitwarden.com/blog/security-through-transparency-eth-zurich-audits-bitwarden-cryptography/), and you can even self-host it. While I personally dislike hosting anything on the cloud, I really can't find an issue wrong with their model; your data is encrypted locally before it's even sent to their servers, so even Bitwarden themselves could not access your information.
