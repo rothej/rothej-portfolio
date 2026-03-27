@@ -16,13 +16,14 @@ PubkeyAuthentication <span class="nb">yes
 PrivateKey <span class="o">=</span> <span class="c"># Paste the contents of /etc/wireguard/privatekey here</span>
 Address <span class="o">=</span> 10.0.0.2/24
 DNS <span class="o">=</span> 1.1.1.1
+MTU <span class="o">=</span> 1200
 
 <span class="o">[</span>Peer]
 PublicKey <span class="o">=</span> <span class="c"># Your server's public key goes here.</span>
 Endpoint <span class="o">=</span> your-server-ip:51820
-AllowedIPs <span class="o">=</span> 0.0.0.0/0
+AllowedIPs <span class="o">=</span> 192.168.1.0/24, 10.0.0.0/24
 PersistentKeepalive <span class="o">=</span> 25
-</code></pre></div></div> <p>Note that you have three items to fill in above. You will need the PublicKey from the server, not from what you have here on the client. So hold off on that for now.</p> <p>The private key on the client can be acquired using:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo cat</span> /etc/wireguard/privatekey
+</code></pre></div></div> <p>Note that you have three items to fill in above. You will need the PublicKey from the server, not from what you have here on the client. So hold off on that for now.</p> <p>MTU is optional, but I found that on Xfinity’s public network it is necessary. A niche problem I spent a while debugging before <a href="https://arnesonium.com/2024/11/using-wireguard-over-xfinitywifi" rel="external nofollow noopener" target="_blank">finding the solution</a>. The split tunneling at AllowedIPs only routes home traffic through your home network, so you can access cameras and local infrastructure. All other traffic will not route through the VPN - this is much faster and best practice. If slow speed is OK or all traffic needs to route through the VPN for some other reason, <code class="language-plaintext highlighter-rouge">AllowedIPs</code> can be <code class="language-plaintext highlighter-rouge">0.0.0.0/0</code>.</p> <p>The private key on the client can be acquired using:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo cat</span> /etc/wireguard/privatekey
 </code></pre></div></div> <p>The public key on the client (which will be needed on the server) can be acquired using:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo cat</span> /etc/wireguard/publickey
 </code></pre></div></div> <p>Now SSH into the WireGuard server, and edit the WireGuard config using:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>vim /etc/wireguard/wg0.conf
 </code></pre></div></div> <p>Append the following to the file:</p> <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>Peer]
@@ -33,11 +34,12 @@ AllowedIPs <span class="o">=</span> 10.0.0.x/32
 PrivateKey <span class="o">=</span> <span class="c"># Paste(d) the contents of /etc/wireguard/privatekey here</span>
 Address <span class="o">=</span> 10.0.0.2/24
 DNS <span class="o">=</span> 1.1.1.1
+MTU <span class="o">=</span> 1200
 
 <span class="o">[</span>Peer]
 PublicKey <span class="o">=</span> <span class="c"># Your server's public key goes here.</span>
 Endpoint <span class="o">=</span> your-server-ip:51820
-AllowedIPs <span class="o">=</span> 0.0.0.0/0
+AllowedIPs <span class="o">=</span> 192.168.1.0/24, 10.0.0.0/24
 PersistentKeepalive <span class="o">=</span> 25
 </code></pre></div></div> <p>Three items to check, above. Make sure the <code class="language-plaintext highlighter-rouge">Address</code> on your client side matches <code class="language-plaintext highlighter-rouge">AllowedIps</code> on the server side.</p> <h1 id="automated-vpn-management">Automated VPN Management</h1> <p>Run this first to set the WireGuard client as disabled by default:</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl disable wg-quick@wg0
 <span class="nb">sudo </span>systemctl stop wg-quick@wg0
