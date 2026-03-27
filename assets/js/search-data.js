@@ -37,7 +37,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/projects/";
           },
-        },{id: "post-xilinx-amd-vivado-soc-fpga-development-and-debug-workflow",
+        },{id: "post-self-hosting-a-vaultwarden-password-manager",
+        
+          title: "Self-Hosting a Vaultwarden Password Manager",
+        
+        description: "Guide for setting up a Vaultwarden password manager host on a Linux server, to handle clients on the local network or over VPN.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/setting-up-a-vaultwarden-password-manager/";
+          
+        },
+      },{id: "post-xilinx-amd-vivado-soc-fpga-development-and-debug-workflow",
         
           title: "Xilinx/AMD Vivado SoC FPGA Development and Debug Workflow",
         
