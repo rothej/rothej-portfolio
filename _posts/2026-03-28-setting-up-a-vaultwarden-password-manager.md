@@ -143,4 +143,4 @@ The above code sets up auto-start configuration and generates a `systemd` file f
 
 # Conclusion
 
-You should now be able to use Vaultwarden in the browser of your choice. It should (when logged in) prompt you with the option to save passwords, and autopopulate them as needed. If you notice any issues with this guide or process, please feel free to reach out or leave a comment.
+You should now be able to use Vaultwarden in the browser of your choice. It should (when logged in) prompt you with the option to save passwords, and autopopulate them as needed. I hope this was helpful; and if you happen to notice any issues with this guide or process, please feel free to reach out or leave a comment.
