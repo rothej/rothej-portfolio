@@ -16,7 +16,7 @@ toc:
 citation: true
 ---
 
-![WireGuard Network Diagram](../../../assets/img/diagrams/2025-09-27-setting-up-a-wireguard-vpn-client-on-linux/wireguard-vpn-client-diagram.svg){: .img-fluid}
+![WireGuard Network Diagram](../../../assets/img/posts/2025-09-27-setting-up-a-wireguard-vpn-client-on-linux/wireguard-vpn-client-diagram.svg){: .img-fluid}
 
 ---
 

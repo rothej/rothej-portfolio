@@ -16,7 +16,7 @@ toc:
 citation: true
 ---
 
-![Zynq 7000 SoC Block Diagram](../../../assets/img/diagrams/2025-10-17-xilinx-soc-fpga-development-and-debug-workflow-guide/zynq-7000-soc.png){: .img-fluid}
+![Zynq 7000 SoC Block Diagram](../../../assets/img/posts/2025-10-17-xilinx-soc-fpga-development-and-debug-workflow-guide/zynq-7000-soc.png){: .img-fluid}
 *Source: AMD/Xilinx Zynq-7000 SoC Data Sheet: Overview DS190 (v1.11.1) July 2, 2018, Figure 1*
 
 ---
