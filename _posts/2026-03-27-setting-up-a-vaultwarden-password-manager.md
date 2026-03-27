@@ -34,7 +34,7 @@ This guide walks through setting up a lightweight, locally-hosted password manag
 
 # Background
 
-A password vault (or password manager) is a secure, encrypted digital storage system for username and password combinations. Remembering one password is much simpler than having to remember multiple. Why NIST took so long to come to this conclusion is, of course, out of scope for this guide, but feel free to [enjoy others' discourse](https://www.hivesystems.com/blog/nists-updated-password-security-guidance) on the topic.
+A password vault (or password manager) is a secure, encrypted digital storage system for username and password combinations. Remembering one password is much simpler than having to remember multiple. Why NIST took so long to come to this conclusion is out of scope for this guide, but feel free to [enjoy others' discourse](https://www.hivesystems.com/blog/nists-updated-password-security-guidance) on the topic.
 
 {: .text-center}
 ![xkcd: Password Strength](../../../assets/img/posts/2026-03-27-self-hosting-a-vaultwarden-password-manager/password_strength.png){: .img-fluid .dark-mode-invert}
@@ -43,10 +43,8 @@ A password vault (or password manager) is a secure, encrypted digital storage sy
 {: .text-center}
 
 <style>
-@media (prefers-color-scheme: dark) {
-  .dark-mode-invert {
-    filter: invert(1) hue-rotate(180deg);
-  }
+html[data-theme="dark"] .dark-mode-invert {
+  filter: invert(1);
 }
 </style>
 
