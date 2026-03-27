@@ -19,8 +19,9 @@ citation: true
 ---
 
 <div class="text-center">
-![Vaultwarden Logo](../../../assets/img/posts/2026-03-27-self-hosting-a-vaultwarden-password-manager/vaultwarden-logo-auto.svg){: .img-fluid}
-*Source: [Vaultwarden Github](https://github.com/dani-garcia/vaultwarden/tree/main)*
+<img src="../../../assets/img/posts/2026-03-27-self-hosting-a-vaultwarden-password-manager/vaultwarden-logo-auto.svg" alt="Vaultwarden Logo" class="img-fluid">
+<br>
+<em>Source: <a href="https://github.com/dani-garcia/vaultwarden/tree/main">Vaultwarden Github</a></em>
 </div>
 
 ---
@@ -35,11 +36,12 @@ This guide walks through setting up a lightweight, locally-hosted password manag
 
 A password vault (or password manager) is a secure, encrypted digital storage system for username and password combinations. Remembering one password is much simpler than having to remember multiple. Why NIST took so long to come to this conclusion is, of course, out of scope for this guide, but feel free to [enjoy others' discourse](https://www.hivesystems.com/blog/nists-updated-password-security-guidance) on the topic.
 
-<div class="text-center">
-<img src="../../../assets/img/posts/2026-03-28-self-hosting-a-vaultwarden-password-manager/password_strength.png" alt="xkcd: Password Strength" class="img-fluid dark-mode-invert">
-<br>
-<em>Source: <a href="https://xkcd.com/936/">xkcd 936</a></em>
-</div>
+{: .text-center}
+![xkcd: Password Strength](../../../assets/img/posts/2026-03-28-self-hosting-a-vaultwarden-password-manager/password_strength.png){: .img-fluid .dark-mode-invert}
+
+*Source: [xkcd 936](https://xkcd.com/936/)*
+{: .text-center}
+
 <style>
 @media (prefers-color-scheme: dark) {
   .dark-mode-invert {
@@ -48,7 +50,7 @@ A password vault (or password manager) is a secure, encrypted digital storage sy
 }
 </style>
 
-There are several password managers to choose from; Bitwarden is a strong contender in the space, and I highly recommend it for the average person or enterprise. It is open source and has [weathered security audits](https://bitwarden.com/blog/security-through-transparency-eth-zurich-audits-bitwarden-cryptography/), and you can even self-host it. While I personally dislike hosting anything on the cloud, I don't have an issue with their model from a security perspective; your data is encrypted locally before it's even sent to their servers, so even Bitwarden themselves could not access your information.
+There are several password managers to choose from; Bitwarden is a strong contender in the space, and I highly recommend it for the average person or enterprise. It is open source, has [weathered security audits](https://bitwarden.com/blog/security-through-transparency-eth-zurich-audits-bitwarden-cryptography/), and you can even self-host it. While I personally dislike hosting anything on the cloud, I don't have an issue with their model from a security perspective; your data is encrypted locally before it's even sent to their servers, so even Bitwarden themselves could not access your information.
 
 Some downsides exist, though; it's a resource hog when hosted locally, and resources matter when you keep stacking services on your home Debian device. The average user does not need the scalability and infrastructure that it provides. Additionally, some services such as autofilling passwords require a paid subscription, even when self-hosting Bitwarden.
 
