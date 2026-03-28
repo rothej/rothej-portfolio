@@ -52,7 +52,7 @@ There are several password managers to choose from; Bitwarden is a strong conten
 
 Some downsides exist, though; it's a resource hog when hosted locally, and resources matter when you keep stacking services on your home Debian device. The average user does not need the scalability and infrastructure that it provides. Additionally, some services such as autofilling passwords require a paid subscription, even when self-hosting.
 
-Thus, this guide settles on Vaultwarden for a self-hosted password vault. Vaultwarden is a lightweight re-write of Bitwarden in Rust. It uses much less CPU and RAM (~50MB to Bitwarden's ~1-2GB), and as a bonus it is easier to set up. The process is explained below; the length of this write-up should speak to its simplicity.
+Thus, this guide settles on Vaultwarden for a self-hosted password vault. Vaultwarden is a lightweight re-write of Bitwarden in Rust; it uses much less CPU and RAM (~50MB to Bitwarden's ~1-2GB), and as a bonus it is easier to set up. The process is explained below; the length of this write-up should speak to its simplicity.
 
 # Prerequisites
 
