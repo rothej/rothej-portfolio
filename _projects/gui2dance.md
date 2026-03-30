@@ -5,6 +5,6 @@ description: (TypeScript) Interactive 2-D solar system simulation. Deployed usin
 img: assets/img/gui2dance.png
 importance: 1
 category: Independent
-redirect: https://gui2dance.rothellc.com
+redirect: https://gui2dance.com
 related_publications: true
 ---
