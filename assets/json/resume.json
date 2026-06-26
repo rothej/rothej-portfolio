@@ -4,7 +4,7 @@
     "image": "assets/img/prof_pic.jpg",
     "email": "cv@joshrothe.us",
     "url": "https://joshrothe.us/",
-    "summary": "Senior engineer at Lockheed Martin with an M.S. in Electrical Engineering from Johns Hopkins University. HWIL lead with ownership of FPGA firmware, circuit design, wire harness design, and test system architecture. Experience spans software and firmware development, electrical design, mechanical design, and manufacturing engineering in aerospace and defense. Published research on CNN optimization for FPGA-based machine learning; contributor to open source ML frameworks (FINN, ONNX, QONNX).",
+    "summary": "Senior engineer at Lockheed Martin with an M.S. in Electrical Engineering from Johns Hopkins University. Comprehensive background spanning FPGAs, software and firmware development, electrical design, mechanical design, and manufacturing engineering in aerospace and defense. Published research on CNN optimization for FPGA-based machine learning; contributor to open source ML frameworks (FINN, ONNX, QONNX).",
     "location": {
       "city": "Denver",
       "countryCode": "US",
@@ -26,7 +26,7 @@
       "startDate": "August 2023",
       "endDate": "",
       "summary": "Current role, working as the HWIL Development Lead for Lockheed's MSC (Missile Simulation Center).",
-      "highlights": ["Led hardware development for HWIL test systems, owning architecture decisions, circuit design, FPGA firmware, cable harness design, and hardware procurement across multiple efforts.", "Interfaced with software teams and flight system stakeholders to translate requirements into test infrastructure, identifying and resolving requirement gaps or conflicts. Estimated cost and schedule for HWIL development tasks.", "Designed and simulated FPGA firmware in SystemVerilog and VHDL. Developed UVM and self-checking testbenches; authored test scripts and documentation for integration.", "Designed analog and digital circuitry in Cadence OrCAD, simulated in PSPICE, and prototyped via breadboard or protoboard.", "Led an embedded Microk8s experiment on the LINUSS satellite from concept through demonstration: defined technical approach, implemented a low-footprint solution in Python, and automated deployment with YAML and shell scripts.", "Served as technical POC and functional owner of RTOS lab test environment. Responsible for hardware/software configuration, cybersecurity (STIG) compliance, and lab property coordination."]
+      "highlights": ["Led hardware development for HWIL test systems, owning architecture decisions, circuit design, FPGA firmware, cable harness design, and hardware procurement across multiple efforts.", "Interfaced with software teams and flight system stakeholders to translate requirements into test infrastructure, identifying and resolving requirement gaps or conflicts. Estimated cost and schedule for HWIL development tasks.", "Designed and simulated FPGA firmware in SystemVerilog and VHDL. Developed UVM and self-checking testbenches; authored test scripts and documentation for integration.", "Designed analog and digital circuitry in Cadence OrCAD, simulated in PSPICE, and prototyped via breadboard or protoboard.", "Led an embedded Microk8s experiment on the LINUSS satellite from concept through demonstration: defined technical approach, implemented a low-footprint solution in Python, and automated deployment with YAML and shell scripts. Authored flight test plans and operated the flatsat for experiment demos."]
     },
     {
       "name": "Kratos Defense and Security Solutions, Inc.",
