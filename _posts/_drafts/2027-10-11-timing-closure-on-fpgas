@@ -5,10 +5,10 @@ featured: true
 giscus_comments: true
 authors:
   - name: Joshua Rothe
-    url: "https://portfolio.rothellc.com"
+    url: "https://joshrothe.us"
 excerpt: "Timing closure is a critical part of FPGA design, and verifying your firmware does not violate timing is mandatory if you want your implementation to perform as designed. Electrons move at a specific speed, and transistor switching speed is based on physical dimensions as well as internal capacitance. When you write RTL code you are designing hardware, flipping switches and filling Look-Up Tables (LUTs), and even environmental considerations such as temperature and humidity can affect the performance of programmable circuits. This guide goes over several methods for achieving timing closure on FPGA designs. Tradeoffs are discussed for each method, and design concerns are presented in a way that helps decide the best approach for the situation."
 date: 2027-02-17
-description: Guide that outlines various methods and approaches for timing closure on Xilinx/AMD FPGAs, using a Pyramidal Lucas-Kanade implementation to demonstrate timing closure techniques. In this two-part blog series, part 1 covers timin pitfalls in an unoptimized design.
+description: Guide that outlines various methods and approaches for timing closure on Xilinx/AMD FPGAs, using a Pyramidal Lucas-Kanade implementation to demonstrate timing closure techniques. In this two-part blog series, part 1 covers timing pitfalls in an unoptimized design.
 tags: [fpga, timing, xilinx, amd]
 categories: [fpga]
 toc:
@@ -27,6 +27,8 @@ citation: true
 
 Timing closure is a critical part of FPGA design, and verifying that firmware does not violate timing is mandatory if the implementation is to perform as designed. Electrons move at a specific speed, and transistor switching speed is based on physical dimensions as well as internal capacitance. When you write RTL code you are designing hardware, flipping switches and filling Look-Up Tables (LUTs), and even environmental considerations such as temperature and humidity can affect the performance of programmable circuits.
 
+Two critical aspects of timing closure are referred to as set up time and hold time. Set up time is how much time a transistor needs to reliably switch to the correct value before you can sample it. Hold time refers to how long the transitor needs to hold the value before you can change it. Since most designs interface with a clocked design (such as a processor on a SoM), both become critical to avoid undesired operation. One unreliable output due to violated timing constraints can propagate throughout a design and provide unexpected performance to every downstream asset; essentially making the design worthless.
+
 This guide focuses on concerns that arise from implementing a resource-heavy algorithm on hardware where consideration is only given to performance and speed for the algorithm being implemented. It points out common design pitfalls and leaves the designer with several factors to consider as they architecture a complex firmware design.
 
 # Background
@@ -38,7 +40,6 @@ Computer vision is algorithm-heavy; it is an ideal field to demonstrate the valu
 One important function of computer vision is simply discerning what the camera is seeing. A camera is essentially taking in a 3-dimensional space and transposing it onto a 2-dimensional image, so how does that image convey depth? It is useful, for both obstacle detection as well as target acquisition, for a vehicle to be able to discern background and foreground objects; applications such as these are perfect for algorithms like Lucas-Kanade.
 
 The Lucas-Kanade (or L-K) handles environmental depth detection by assuming that the flow of an image is essentially constant in a local area of pixels being examined. From the point of view of the observer vehicle, the background image will move much slower than an object in the foreground. It uses this assumption to join similar image flows together and determine individual objects presented to the camera on a 2-dimensional plane, representative of a 3-dimensional space. What this essentially means is that, using the camera data on a moving vehicle, it can pick out a fast-moving foreground item versus a slower moving background item.
-
 
 ---
 
