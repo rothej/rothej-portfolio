@@ -5,6 +5,7 @@ repo_description_lines_max: 2
 
 github_repos:
   - rothej/optical-flow-fpga
+  - rothej/fpga-cicd-toolchain-demo
 
 external_contributions:
   - repo: Xilinx/FINN
