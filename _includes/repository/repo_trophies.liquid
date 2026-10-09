@@ -1,3 +1,12 @@
 <div class="repo p-2 text-center">
-  <img src="https://streak-stats.demolab.com/?user={{ include.username }}&theme=transparent&hide_border=true" alt="GitHub Streak">
+  <img
+    class="only-light w-100"
+    alt="{{ include.username }} GitHub Streak"
+    src="{{ '/assets/img/github-stats/streak-' | append: include.username | append: '-light.svg' | relative_url }}"
+  >
+  <img
+    class="only-dark w-100"
+    alt="{{ include.username }} GitHub Streak"
+    src="{{ '/assets/img/github-stats/streak-' | append: include.username | append: '-dark.svg' | relative_url }}"
+  >
 </div>
