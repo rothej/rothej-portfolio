@@ -36,12 +36,13 @@
     <img
       class="only-light w-100"
       alt="{{ include.repository }}"
-      src="https://github-readme-stats-sigma-five.vercel.app/api/pin/?username={{ repo_url[0] }}&repo={{ repo_url[1] }}&theme={{ site.repo_theme_light }}&locale={{ lang }}&show_owner={{ show_owner }}&description_lines_count={{ max_lines }}"
+      src="{{ '/assets/img/github-stats/pin-' | append: repo_url[0] | append: '-' | append: repo_url[1] | append: '-light.svg' | relative_url }}"
     >
     <img
       class="only-dark w-100"
       alt="{{ include.repository }}"
-      src="https://github-readme-stats-sigma-five.vercel.app/api/pin/?username={{ repo_url[0] }}&repo={{ repo_url[1] }}&theme={{ site.repo_theme_dark }}&locale={{ lang }}&show_owner={{ show_owner }}&description_lines_count={{ max_lines }}"
+      src="{{ '/assets/img/github-stats/pin-' | append: repo_url[0] | append: '-' | append: repo_url[1] | append: '-dark.svg' | relative_url }}"
+
     >
   </a>
 </div>

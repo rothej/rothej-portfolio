@@ -1,0 +1,101 @@
+name: Update GitHub stats cards
+
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      # -------------------------------------------------------------
+      # User stats card (github_users)
+      # -------------------------------------------------------------
+      - name: User card - rothej (light)
+        uses: stats-organization/github-readme-stats-action@v2
+        with:
+          card: stats
+          options: username=rothej&show_icons=true&locale=en&theme=default
+          path: assets/img/github-stats/rothej-light.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: User card - rothej (dark)
+        uses: stats-organization/github-readme-stats-action@v2
+        with:
+          card: stats
+          options: username=rothej&show_icons=true&locale=en&theme=dark
+          path: assets/img/github-stats/rothej-dark.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # -------------------------------------------------------------
+      # Pin cards (github_repos) — show_owner=false (both are rothej's)
+      # -------------------------------------------------------------
+      - name: Pin - rothej/optical-flow-fpga (light)
+        uses: stats-organization/github-readme-stats-action@v2
+        with:
+          card: pin
+          options: username=rothej&repo=optical-flow-fpga&show_owner=false&description_lines_count=2&locale=en&theme=default
+          path: assets/img/github-stats/pin-rothej-optical-flow-fpga-light.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pin - rothej/optical-flow-fpga (dark)
+        uses: stats-organization/github-readme-stats-action@v2
+        with:
+          card: pin
+          options: username=rothej&repo=optical-flow-fpga&show_owner=false&description_lines_count=2&locale=en&theme=dark
+          path: assets/img/github-stats/pin-rothej-optical-flow-fpga-dark.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pin - rothej/fpga-cicd-toolchain-demo (light)
+        uses: stats-organization/github-readme-stats-action@v2
+        with:
+          card: pin
+          options: username=rothej&repo=fpga-cicd-toolchain-demo&show_owner=false&description_lines_count=2&locale=en&theme=default
+          path: assets/img/github-stats/pin-rothej-fpga-cicd-toolchain-demo-light.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pin - rothej/fpga-cicd-toolchain-demo (dark)
+        uses: stats-organization/github-readme-stats-action@v2
+        with:
+          card: pin
+          options: username=rothej&repo=fpga-cicd-toolchain-demo&show_owner=false&description_lines_count=2&locale=en&theme=dark
+          path: assets/img/github-stats/pin-rothej-fpga-cicd-toolchain-demo-dark.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      # -------------------------------------------------------------
+      # Streak stats (github_users)
+      # -------------------------------------------------------------
+      - name: Streak stats - rothej (light)
+        uses: DenverCoder1/github-readme-streak-stats@v1
+        with:
+          options: user=rothej&theme=default&hide_border=true&disable_animations=true
+          path: assets/img/github-stats/streak-rothej-light.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Streak stats - rothej (dark)
+        uses: DenverCoder1/github-readme-streak-stats@v1
+        with:
+          options: user=rothej&theme=dark&hide_border=true&disable_animations=true
+          path: assets/img/github-stats/streak-rothej-dark.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # -------------------------------------------------------------
+      - name: Commit updated cards
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add assets/img/github-stats/*.svg
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: update GitHub stats cards"
+            git push
+          fi
