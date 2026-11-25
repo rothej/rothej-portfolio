@@ -201,7 +201,13 @@ sudo systemctl disable wg-quick@wg0
 sudo systemctl stop wg-quick@wg0
 ```
 
-Run:
+Then, get your router's MAC address using:
+```bash
+ping -c1 192.168.1.1 >/dev/null; ip neigh show 192.168.1.1
+```
+Adjust the IP to your router's IP address. Output format should be something like `192.168.1.1 dev wlp4s0 lladdr aa:bb:cc:dd:ee:ff REACHABLE`.
+
+Next, create the automation file:
 ```bash
 sudo vim /etc/NetworkManager/dispatcher.d/99-wireguard-auto
 ```
@@ -212,56 +218,45 @@ Replace the script text with the following, adjusting the `HOME_*` values as nee
 
 INTERFACE=$1
 ACTION=$2
+case "$INTERFACE" in
+    wlp*|wlan*|en*|eth*) ;;
+    *) exit 0 ;;
+esac
 
 # Configuration. Change these as needed.
 HOME_NETWORK_GATEWAY="192.168.1.1" # Router's IP.
 HOME_WIREGUARD_SERVER="192.168.1.114" # WireGuard server IP.
-WIREGUARD_PORT="51820"
-HOME_EXTERNAL_IP="YOUR.EXTERNAL.IP" # Your external home network IP.
 LOG_FILE="/var/log/wireguard-auto.log"
-
-PING_TIMEOUT=5
-NC_TIMEOUT=10
+HOME_GATEWAY_MAC='fc:34:97:d8:04:48' # Router's mac address.
 
 log_message() {
     echo "$(date): [$INTERFACE/$ACTION] $1" | tee -a "$LOG_FILE"
 }
 
-is_wireguard_server_reachable() {
-    local server_ip="$1"
-    local port="$2"
-    
-    if command -v nc >/dev/null 2>&1; then
-        if nc -u -z -w 5 "$server_ip" "$port" >/dev/null 2>&1; then
-            log_message "Server $server_ip is reachable and responding"
+wireguard_handshake_ok() {
+    local i
+    for i in 1 2 3 4; do
+        # Send a packet into the tunnel so WireGuard starts a handshake.
+        ping -c 1 -W 1 "$HOME_WIREGUARD_SERVER" >/dev/null 2>&1
+        if wg show wg0 latest-handshakes 2>/dev/null | awk '$2 > 0 {found=1} END {exit !found}'; then
             return 0
-        else
-            log_message "WireGuard port $port on $server_ip is not responding"
-            return 1
         fi
-    else
-        # Fallback if nc is not available.
-        log_message "Error: nc not available"
-        return 1
-    fi
+        sleep 1
+    done
+    return 1
 }
 
 is_home_network() {
-    if ping -c 3 -W "$PING_TIMEOUT" "$HOME_NETWORK_GATEWAY" >/dev/null 2>&1; then
-        if ping -c 3 -W "$PING_TIMEOUT" "$HOME_WIREGUARD_SERVER" >/dev/null 2>&1; then
-            local_ip=$(ip route get 8.8.8.8 2>/dev/null | awk '{print $7; exit}')
-            if [[ "$local_ip" =~ ^192\.168\.1\. ]]; then
-                return 0
-            fi
-        fi
-    fi
-    return 1
+    # -I binds to the physical interface, so the tunnel can't answer
+    ping -c 1 -W 2 -I "$INTERFACE" "$HOME_NETWORK_GATEWAY" >/dev/null 2>&1 || return 1
+    local gw_mac
+    gw_mac=$(ip neigh show dev "$INTERFACE" "$HOME_NETWORK_GATEWAY" | grep -oP 'lladdr \K\S+')
+    [[ "${gw_mac,,}" == "${HOME_GATEWAY_MAC,,}" ]]
 }
 
 enable_wireguard() {
     if ! systemctl is-active --quiet wg-quick@wg0; then
         log_message "Enabling WireGuard"
-        systemctl enable wg-quick@wg0
         systemctl start wg-quick@wg0
     fi
 }
@@ -269,7 +264,6 @@ enable_wireguard() {
 disable_wireguard() {
     if systemctl is-active --quiet wg-quick@wg0; then
         log_message "Disabling WireGuard"
-        systemctl disable wg-quick@wg0
         systemctl stop wg-quick@wg0
     fi
 }
@@ -281,18 +275,18 @@ fi
 
 log_message "Network change detected on $1"
 
-sleep 10
+sleep 5
 
 if is_home_network; then
     log_message "Home network confirmed - ensuring WireGuard is disabled"
     disable_wireguard
 else
-    log_message "External network confirmed - testing VPN server"
-    if is_wireguard_server_reachable "$HOME_EXTERNAL_IP" "$WIREGUARD_PORT"; then
-        log_message "VPN server reachable - enabling WireGuard"
-        enable_wireguard
+    log_message "External network confirmed - starting WireGuard"
+    enable_wireguard
+    if wireguard_handshake_ok; then
+        log_message "Handshake succeeded - WireGuard is up"
     else
-        log_message "VPN server unreachable - WireGuard remains disabled"
+        log_message "No handshake - VPN server unreachable, disabling WireGuard"
         disable_wireguard
     fi
 fi
