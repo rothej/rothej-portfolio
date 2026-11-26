@@ -5,6 +5,6 @@ description: (Rust) Pixel-art solar system simulation, simulated with n-body gra
 img: assets/img/soldos.gif
 importance: 1
 category: Independent
-redirect: https://playsoldos.com
+redirect: https://soldosgame.com
 related_publications: true
 ---
